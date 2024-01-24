@@ -1,0 +1,165 @@
+#+AUTHOR: Zac Berkowitz
+#+EMAIL: zberkowitz@whoi.edu
+#+OPTIONS: num:1
+#+OPTIONS: toc:nil
+
+* Preliminary Meeting
+:PROPERTIES:
+:EXPORT_DATE: [2024-01-23 Tue 14:00]
+:EXPORT_AUTHOR: Zac Berkowitz
+:EXPORT_EMAIL: zberkowitz@whoi.edu
+:EXPORT_OPTIONS: num:1
+:EXPORT_OPTIONS: toc:nil
+:END:
+
+- Zoom link: https://whoi-edu.zoom.us/j/9397743203
+
+In attendance:
+- Masako Tominaga
+- Maurice Tivey
+- Dan Fornari
+- Zac Berkowitz
+
+** Summary
+This meeting provided a high-level overview of the requirements for self-contained logging software supporting APS1540 and HR2300 magnetometers.
+Support for these platforms are needed by Spring 2025 to support TowCam deployments on the Palmer.
+It was apparent from the discussion that magnetometer support for the TowCam deployments will not require any modification to existing TowCam Operations software.
+Therefore the bulk of the development time can be invested in developing the magnetometer logger with the expectation that it will satisfy the needs for TowCam's 2025 operations.
+
+** Magnetometer Logger
+
+*** Topics Covered with Enough Information
+These topics have been covered enough to provide sufficient guidence for development and are listed here for confirmation.
+
+- Multiplatform support desired.  Primary OS expectected to be Windows.
+- There is interest in the ability to view live magnetometer data.
+- Data to be logged in "Standard" DSL(?) format:
+#+begin_src text
+  # Example from 20131207_2000.DAT
+  # Fields:
+  # 1: 3-letter abbr (HMR: HR2300, APS: APS1540)
+  # 2: date
+  # 3: time
+  # 4: instrument number
+  # 5: magnetic field x-component (device dependant)
+  # 6: magnetic field y-component (device dependant)
+  # 7: magnetic field z-component (device dependant)
+  HMR 2013/12/07 20:00:00.019 0   3,813    1,846    1,015  
+  HMR 2013/12/07 20:00:00.121 0   3,827    1,803    1,016  
+  HMR 2013/12/07 20:00:00.223 0   3,845    1,770    1,020  
+  HMR 2013/12/07 20:00:00.327 0   3,853    1,742    1,023  
+  HMR 2013/12/07 20:00:00.429 0   3,859    1,724    1,028  
+  HMR 2013/12/07 20:00:00.531 0   3,862    1,712    1,032  
+  HMR 2013/12/07 20:00:00.633 0   3,863    1,710    1,037  
+  HMR 2013/12/07 20:00:00.738 0   3,860    1,715    1,041  
+  HMR 2013/12/07 20:00:00.838 0   3,854    1,727    1,046  
+#+end_src
+- Use of computer clock is OK for timestamping.  Assumption is that computer clock is synced to a source that is valid for postprocessing all data, including data not logged by the gui (e.g. gyros, USBL), via acceptable means.
+- Log timestamps will be in UTC
+- Data expected from serial and network (both UDP and TCP) sources
+
+*** Open Questions
+These topics need further discussion.
+
+- Is a "console only" version desired?
+- How is the software configured?
+- Log in "native" (e.g. raw, straght from sensor) format as well?
+- Display rotated field coordinates accounting for platform attitude if available?
+- Display/Log multiple magnetometers at once?
+- User "Alarms" to indicate abnormal conditions (no data, irregular data, etc.)?
+- License restrictions?  I anticipate using the [[https://www.qt.io/][Qt]] framework for cross-platform compatability.
+  Qt is used in may DSL and NDSF software programs.
+  The community (free) version of Qt is licensed under [[https://www.gnu.org/licenses/lgpl-3.0.en.html][(L)GPLv3]], which places some restrictions on licensing of the overall application.
+  In general it would require providing notification that Qt as a (L)GPLv3 library was used.
+  It does *not* mean that the full source code of the overall application must also be provided.
+- Where should the software live?
+  - WHOI has it's own gitlab instance at https://git.whoi.edu
+  - github: https://github.com
+  - gitlab: https://gitlab.com
+  - Something else?
+
+** TowCam Integration
+At a high-level the TowCam link can be considered a long ethernet cable attached to subsea instruments.
+Serial instruments installed on TowCam use Moxa serial/ethernet device servers to communicate with ship-board infrastructure.
+It is important that the TowCam network remains **isolated** from other networks for the duration of the deployment to protected the limited bandwidth avaiable on the link (approx 250kb/s)
+
+Under this expected setup it is sufficient to use a dedicated laptop attached to the TowCam network running the magnetometer logging software.
+The magnetometers will be configured such that their data streams are compatable for serial-to-ethernet transmission via the Moxa 5120s installed on TowCam.
+The magentometer logging software will be configured to record data via ethernet.
+
+*** Open Questions
+- Is "eyeball" syncing the magnetomter laptop's clock good enough?
+  It is for the rest of the TowCam system, but may not be for the magnetometers.
+  If more accuracy is needed then another way of syncing the magnetometer laptop clock will be required (e.g. from ship's network and using NTP and a second WiFi connection, or adding a serial buffer)
+
+
+** Opening Questions                                               :noexport:
+
+- Which program has priority for development?  Sounds like towcam has dates already, but the APS 1540 logger capability would be shared between the two so it might be the natural place to start.
+
+  Yes, the APS1540 or HR2300 sensors are the options and starting with the stand-alone logger for them would be the simplest/best.
+
+- List of data streams to be logged (e.g. APS1540, GPS, etc.) and where those streams can be expected to come from (e.g. serial ports, network  etc.).
+
+  One cruise we definitely need camera; the other cruise - not needed.
+  For the stand alone logger for the bottles, just time and output strings from the sensors (e.g. the attached DAT file is what Kinsey laptop used to spit out). 
+  For TowCam, we need to discuss with Dan, but what we have proposed are: mag, CTD, MAPR (will come with self recording system), USBL, a commercial methane sensor that we might be able to find (did you use this on German cruise recently when Michelle/Kapit ver. had issues?), and camera.
+  I've attached a couple of pictures and previous cruise report (see page 20 down for description of TowCam setting for an open-ocean magnetic tow (no camera)).
+
+- log format, file name format, file creation based on size or time - makes sense to match whatever you're doing already so that you don't have to change your own processing steps.
+
+  Log format would be ok with what Sentry has. (for APS1540 logs)
+
+#+begin_src text
+  # Example from 20131207_2000.DAT
+  HMR 2013/12/07 20:00:00.019 0   3,813    1,846    1,015  
+  HMR 2013/12/07 20:00:00.121 0   3,827    1,803    1,016  
+  HMR 2013/12/07 20:00:00.223 0   3,845    1,770    1,020  
+  HMR 2013/12/07 20:00:00.327 0   3,853    1,742    1,023  
+  HMR 2013/12/07 20:00:00.429 0   3,859    1,724    1,028  
+  HMR 2013/12/07 20:00:00.531 0   3,862    1,712    1,032  
+  HMR 2013/12/07 20:00:00.633 0   3,863    1,710    1,037  
+  HMR 2013/12/07 20:00:00.738 0   3,860    1,715    1,041  
+  HMR 2013/12/07 20:00:00.838 0   3,854    1,727    1,046  
+#+end_src
+
+- how you'd like the software to handle it's own configuration (e.g. through a config file?  Menu settings?)
+
+  TBD.
+
+- any required control of the instruments (e.g. ability to configure parameters or check parameter settings) beyond just initiating and logging a data stream
+
+  TBD, but I don't think so. I might be cool, though.
+
+- what kind of real-time information you'd like displayed.
+
+  TBD based on discussions above.
+
+- any parts about the existing GUI that you liked and would like to have in the new software
+- similarly, any parts about the existing GUI that you don't like and would want changed.
+
+** Followup Questions                                              :noexport:
+
+- Targeted OS?
+
+  Windows (for maggie)
+  
+- How "User Interactive" is the vision?
+- Any need for touch interface?
+- Desired Operations Alarms? (e.g. "no data within X seconds, irregular sampling, etc.")
+- Laptop clock sync'd to GPS good enough for time base?
+- Assume clock timestamp should be UTC
+
+** TowCam                                                          :noexport:
+- Existing program runs on MacOSX. Written by J.Howland, Likely Qt
+- TowCam 2025 spring
+- Valport 500p
+- 1 Hz
+- Logfile s in text broken into 1 hour chunks into specified directory
+- Timebase is laptop time
+- Serial stream from comms bottle
+- Camera via framegrabber
+- Comms bottle is a bunch of moxas/eth feeding into switch into DSL data link on subsea end
+- User ends on either side see regular ethernet. Dsl comms is virtual ethernet cable
+- Moxa 5210
+- **Maggies on 2025 towcam cruises can be handled w/ dedicated laptop using same stand-alone APS1540 logging solution**
