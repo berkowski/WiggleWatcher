@@ -1,18 +1,17 @@
 #+AUTHOR: Zac Berkowitz
 #+EMAIL: zberkowitz@whoi.edu
-#+OPTIONS: num:1
+#+OPTIONS: num:0
 #+OPTIONS: toc:nil
 
-* Preliminary Meeting
+* Preliminary Meeting Notes
 :PROPERTIES:
 :EXPORT_DATE: [2024-01-23 Tue 14:00]
 :EXPORT_AUTHOR: Zac Berkowitz
 :EXPORT_EMAIL: zberkowitz@whoi.edu
-:EXPORT_OPTIONS: num:1
-:EXPORT_OPTIONS: toc:nil
 :END:
 :LOGBOOK:
 CLOCK: [2024-01-23 Tue 14:00]--[2024-01-23 Tue 15:30] =>  1:30
+CLOCK: [2024-01-25 Thu 12:29]--[2024-01-25 Thu 12:42] =>  0:13
 :END:
 
 - Zoom link: https://whoi-edu.zoom.us/j/9397743203
@@ -27,14 +26,15 @@ In attendance:
 This meeting provided a high-level overview of the requirements for self-contained logging software supporting APS1540 and HR2300 magnetometers.
 Support for these platforms are needed by Spring 2025 to support TowCam deployments on the Palmer.
 It was apparent from the discussion that magnetometer support for the TowCam deployments will not require any modification to existing TowCam Operations software.
-Therefore the bulk of the development time can be invested in developing the magnetometer logger with the expectation that it will satisfy the needs for TowCam's 2025 operations.
+Therefore the bulk of the development time can be invested in developing the magnetometer logger with the expectation that it will satisfy the needs for TowCam's 2025 operations without special considerations.
 
 ** Magnetometer Logger
+A self-contained program to log data from magnetometers, possibly multiple simultaneously.
 
 *** Topics Covered with Enough Information
-These topics have been covered enough to provide sufficient guidence for development and are listed here for confirmation.
+These topics have been covered enough to provide sufficient guidance for development and are listed here for confirmation.
 
-- Multiplatform support desired.  Primary OS expectected to be Windows.
+- Multi-platform support desired.  Primary OS expected to be Windows.
 - There is interest in the ability to view live magnetometer data.
 - Data to be logged in "Standard" DSL(?) format:
 #+begin_src text
@@ -44,9 +44,9 @@ These topics have been covered enough to provide sufficient guidence for develop
   # 2: date
   # 3: time
   # 4: instrument number
-  # 5: magnetic field x-component (device dependant)
-  # 6: magnetic field y-component (device dependant)
-  # 7: magnetic field z-component (device dependant)
+  # 5: magnetic field x-component (device dependent)
+  # 6: magnetic field y-component (device dependent)
+  # 7: magnetic field z-component (device dependent)
   HMR 2013/12/07 20:00:00.019 0   3,813    1,846    1,015  
   HMR 2013/12/07 20:00:00.121 0   3,827    1,803    1,016  
   HMR 2013/12/07 20:00:00.223 0   3,845    1,770    1,020  
@@ -57,41 +57,46 @@ These topics have been covered enough to provide sufficient guidence for develop
   HMR 2013/12/07 20:00:00.738 0   3,860    1,715    1,041  
   HMR 2013/12/07 20:00:00.838 0   3,854    1,727    1,046  
 #+end_src
-- Use of computer clock is OK for timestamping.  Assumption is that computer clock is synced to a source that is valid for postprocessing all data, including data not logged by the gui (e.g. gyros, USBL), via acceptable means.
-- Log timestamps will be in UTC
+- Use of computer clock is OK for time-stamping.  Assumption is that computer clock is synced to a source that is valid for post-processing all data, including data not logged by the GUI (e.g. gyros, USBL), via acceptable means.
+- Log timestamps will be in UTC.
 - Data expected from serial and network (both UDP and TCP) sources
 
 *** Open Questions
-These topics need further discussion.
+These topics need further discussion but do not need to be finalized before work begins.
 
 - Is a "console only" version desired?
-- How is the software configured?
-- Log in "native" (e.g. raw, straght from sensor) format as well?
+- How should the software be configured?
+- Log in "native" (e.g. raw, straight from sensor) format as well?
+  - If so, then we can adjust the DSL format to be standard across instruments without loss of "original data".
+- Add metadata to the top of the DSL format data files?
+  Can make the files "self-describing" with comments that explain what each field is (particularly the units).
+  Metadata lines can be preceded with a standard comment character such as '#'.
 - Display rotated field coordinates accounting for platform attitude if available?
 - Display/Log multiple magnetometers at once?
 - User "Alarms" to indicate abnormal conditions (no data, irregular data, etc.)?
-- License restrictions?  I anticipate using the [[https://www.qt.io/][Qt]] framework for cross-platform compatability.
-  Qt is used in may DSL and NDSF software programs.
+- License restrictions?  I anticipate using the [[https://www.qt.io/][Qt]] framework for cross-platform compatibility.
+  Qt is used in many DSL and NDSF software programs.
   The community (free) version of Qt is licensed under [[https://www.gnu.org/licenses/lgpl-3.0.en.html][(L)GPLv3]], which places some restrictions on licensing of the overall application.
   In general it would require providing notification that Qt as a (L)GPLv3 library was used.
   It does *not* mean that the full source code of the overall application must also be provided.
 - Where should the software live?
-  - WHOI has it's own gitlab instance at https://git.whoi.edu
+  - WHOI has it's own gitlab instance at https://git.whoi.edu.
+    It's a little cumbersome to access outside of WHOI's intranet, more so for people not associated with WHOI.
   - github: https://github.com
   - gitlab: https://gitlab.com
   - Something else?
 
 ** TowCam Integration
-At a high-level the TowCam link can be considered a long ethernet cable attached to subsea instruments.
+At a high-level the TowCam link can be considered a long ethernet cable attached to sub-sea instruments.
 Serial instruments installed on TowCam use Moxa serial/ethernet device servers to communicate with ship-board infrastructure.
-It is important that the TowCam network remains **isolated** from other networks for the duration of the deployment to protected the limited bandwidth avaiable on the link (approx 250kb/s)
+It is important that the TowCam network remains **isolated** from other networks for the duration of the deployment to protected the limited bandwidth available on the link (approx 250kb/s)
 
 Under this expected setup it is sufficient to use a dedicated laptop attached to the TowCam network running the magnetometer logging software.
-The magnetometers will be configured such that their data streams are compatable for serial-to-ethernet transmission via the Moxa 5120s installed on TowCam.
-The magentometer logging software will be configured to record data via ethernet.
+The magnetometers will be configured such that their data streams are compatible for serial-to-ethernet transmission via the Moxa 5120s installed on TowCam.
+The magnetometer logging software will be configured to record data via ethernet.
 
 *** Open Questions
-- Is "eyeball" syncing the magnetomter laptop's clock good enough?
+- Is "eyeball" syncing the magnetometer laptop's clock good enough?
   It is for the rest of the TowCam system, but may not be for the magnetometers.
   If more accuracy is needed then another way of syncing the magnetometer laptop clock will be required (e.g. from ship's network and using NTP and a second WiFi connection, or adding a serial buffer)
 
