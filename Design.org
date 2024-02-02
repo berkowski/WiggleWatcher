@@ -1,0 +1,43 @@
+* Concepts
+** Sensors
+Components of a sensor:
+- =Metadata=: Sensor metadata
+  - configuration parameters?
+  - user-defined sensor name
+  - user-defined sensor description
+- =Records=: Rules for turning raw bytes/text into records
+** Sources
+Where the raw data is coming from (serial port, network socket, etc.)
+** Sinks
+- Where raw or modified data goes outside of the program (log files, network sockets, graphs, etc.)
+** Transformations
+Transformations take a complete record from the sensor and modify it to produce a new record.
+
+* APS1540 Magnetometer
+#+caption: ASCII data-only output from APS1540 () Fields are MX, MY, MZ, and T
+#+begin_src text
+  +0.2393145 +0.03288605 +0.1188259 +25.986<CR><LF?>
+#+end_src
+
+* DSL Log Format
+ASCII text format log file.
+Similar to existing log format used by DSL for APS1540 and HMR2300 magnetometers, but with extra header fields for description.
+
+#+begin_src text
+  # Fields:
+  # 1: 3-letter abbr (HMR: HR2300, APS: APS1540)
+  # 2: ISO8601 datetime
+  # 3: instrument number
+  # 4: magnetic field x-component (nT)
+  # 5: magnetic field y-component (nT)
+  # 6: magnetic field z-component (nT)
+  HMR 2013-12-07T20:00:00.019Z 0 38,130 18,460 10,150  
+  HMR 2013-12-07T20:00:00.121Z 0 38,270 18,030 10,160  
+  HMR 2013-12-07T20:00:00.223Z 0 38,450 17,700 10,200  
+  HMR 2013-12-07T20:00:00.327Z 0 38,530 17,420 10,230  
+  HMR 2013-12-07T20:00:00.429Z 0 38,590 17,240 10,280  
+  HMR 2013-12-07T20:00:00.531Z 0 38,620 17,120 10,320  
+  HMR 2013-12-07T20:00:00.633Z 0 38,630 17,100 10,370  
+  HMR 2013-12-07T20:00:00.738Z 0 38,600 17,150 10,410  
+  HMR 2013-12-07T20:00:00.838Z 0 38,540 17,270 10,460  
+#+end_src text
