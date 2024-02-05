@@ -4,7 +4,7 @@
 #include <QtCore/qobject.h>
 
 class QIODevice;
-class QList;
+class QAbstractSink;
 
 class QAbstractSensor: public QObject {
   Q_OBJECT
@@ -14,6 +14,6 @@ public:
 
 private:
   QIODevice* m_source = nullptr;
-  QList* m_sinks = nullptr;
-}
+  QList<QAbstractSink>* m_sinks = nullptr;
+};
 #endif
