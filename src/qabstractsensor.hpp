@@ -10,7 +10,11 @@ class QAbstractSensor: public QObject {
   Q_OBJECT
 
 public:
-  QAbstractSensor(QIODevice* source = nullptr);
+  QAbstractSensor(QIODevice *source, QObject* parent = nullptr)
+      : QObject(parent), m_source(source) {
+    m_source->setParent(this);
+}
+  
 
 private:
   QIODevice* m_source = nullptr;

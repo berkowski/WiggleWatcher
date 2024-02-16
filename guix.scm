@@ -5,7 +5,8 @@
              (guix build-system cmake)
              ((guix licenses) #:prefix license:)
              (gnu packages qt)
-             (gnu packages cpp))
+             (gnu packages cpp)
+             (gnu packages llvm))
 
 (package
  (name "MagGUI")
@@ -13,7 +14,9 @@
  (source #f)
  (build-system cmake-build-system)
  (native-inputs
-  (list ccls))
+  (list
+   qttools
+   clang-17))
  (propagated-inputs
   (list qtbase))
  (synopsis "Logging GUI for magnetometers")
