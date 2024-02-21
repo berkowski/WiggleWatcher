@@ -1,0 +1,50 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "windows-msvc2017",
+      "displayName": "Visual Studio 17 2017",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS": {
+          "type": "BOOLEAN",
+          "value": "ON"
+        }
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "msvc2017-debug",
+      "displayName": "MSVC 2017 Debug",
+      "configurePreset": "windows-msvc2017",
+      "configuration": "Debug",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "msvc2017-release",
+      "displayName": "MSVC 2017 Release",
+      "configurePreset": "windows-msvc2017",
+      "configuration": "Release",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    }
+  ]
+}
