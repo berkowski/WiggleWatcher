@@ -5,25 +5,25 @@
     "minor": 23,
     "patch": 0
   },
-    "configurePresets": [
-        {
-            "name": "build-directory",
-            "hidden": true,
-            "binaryDir": "${sourceDir}/build"
-        },
-        {
-            "name": "default",
-            "displayName": "Default non-windows configuration",
-            "inherits": [
-                "build-directory"
-            ]
-        },
+  "configurePresets": [
+    {
+      "name": "build-directory",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build"
+    },
+    {
+      "name": "default",
+      "displayName": "Default non-windows configuration",
+      "inherits": [
+        "build-directory"
+      ]
+    },
     {
       "name": "windows-msvc2017",
-        "displayName": "Visual Studio 17 2017",
-        "inherits": [
-            "build-directory"
-        ],
+      "displayName": "Visual Studio 17 2017",
+      "inherits": [
+        "build-directory"
+      ],
       "cacheVariables": {
         "CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS": {
           "type": "BOOLEAN",
@@ -60,28 +60,27 @@
         "rhs": "Windows"
       }
     },
-      {
-          "name": "debug",
-          "displayName": "default configuration (debug build)",
-          "configurePreset": "default",
-          "configuration": "Debug",
-          "condition": {
-              "type": "notEquals",
-              "lhs": "${hostSystemName}",
-              "rhs": "Windows"
-          }
-      },
-      {
-          "name": "release",
-          "displayName": "default configuration (release build)",
-          "configurePreset": "default",
-          "configuration": "Release",
-          "condition": {
-              "type": "notEquals",
-              "lhs": "${hostSystemName}",
-              "rhs": "Windows"
-          }
+    {
+      "name": "debug",
+      "displayName": "default configuration (debug build)",
+      "configurePreset": "default",
+      "configuration": "Debug",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
       }
-
+    },
+    {
+      "name": "release",
+      "displayName": "default configuration (release build)",
+      "configurePreset": "default",
+      "configuration": "Release",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    }
   ]
 }

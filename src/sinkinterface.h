@@ -4,10 +4,10 @@
 #include <QtCore/qobject.h>
 #include <QtCore/qvariant.h>
 
-class SinkInterface {
-
+class SinkInterface
+{
 public:
-  virtual auto write(const QVariant& record) -> void = 0;
+    virtual auto write(const QVariant &record) -> void = 0;
 };
 
 Q_DECLARE_INTERFACE(SinkInterface, "maggui.sinkinterface/1.0")
