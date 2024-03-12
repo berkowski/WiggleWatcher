@@ -58,3 +58,5 @@ compile_commands.json
 *_qmlcache.qrc
 
 # End of https://www.toptal.com/developers/gitignore/api/qt
+
+build/
