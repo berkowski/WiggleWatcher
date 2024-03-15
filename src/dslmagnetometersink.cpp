@@ -5,9 +5,8 @@
 #include <QtCore/qdir.h>
 #include <QtCore/qfile.h>
 
-const QMap<QString, QString> DslMagnetometerSink::DEFAULT_METADATA
-    = {{"Description", ""},
-       {"Field 1", "timestamp, ISO format (YYYY-MM-DDTHH:mm:ss.sss)"},
+const QMap<QString, QString> DslMagnetometerSink::FORMAT_HEADER
+    = {{"Field 1", "timestamp, ISO format (YYYY-MM-DDTHH:mm:ss.sss)"},
        {"Field 2", "magnetic field x-component (nT)"},
        {"Field 3", "magnetic field y-component (nT)"},
        {"Field 4", "magnetic field z-component (nT)"},
@@ -19,7 +18,6 @@ DslMagnetometerSink::DslMagnetometerSink(const QDir& path, QString prefix, QObje
     : QObject(parent)
     , m_path(path)
     , m_prefix(std::move(std::move(prefix)))
-    , m_metadata(DEFAULT_METADATA)
     , m_file(new QFile(this))
 {}
 
@@ -41,9 +39,16 @@ auto DslMagnetometerSink::openNewFileAndWriteMetadata(const QDateTime &timestamp
         = QStringLiteral("%1_%2.dat").arg(m_prefix, timestamp.toString(FILENAME_DATETIME_FMT));
     m_file->setFileName(m_path.filePath(filename));
     m_file->open(QIODevice::WriteOnly | QIODevice::Text);
-    // Write metadata to file
+    // Write custom metadata to file
     std::for_each(m_metadata.constKeyValueBegin(),
                   m_metadata.constKeyValueEnd(),
+                  [this](const auto &it) {
+                      this->m_file->write(
+                          DslMagnetometerSink::formatMetadata(it.first, it.second.toString()).toUtf8());
+                  });
+    // Write file format header lines
+    std::for_each(FORMAT_HEADER.constKeyValueBegin(),
+                  FORMAT_HEADER.constKeyValueEnd(),
                   [this](const auto &it) {
                       this->m_file->write(
                           DslMagnetometerSink::formatMetadata(it.first, it.second).toUtf8());
@@ -81,4 +86,17 @@ auto DslMagnetometerSink::toString(const VectorMagnetometerData &data) -> QStrin
 auto DslMagnetometerSink::formatMetadata(const QString &key, const QString &value) -> QString
 {
     return QStringLiteral("#%1: %2\n").arg(key, value);
+}
+void DslMagnetometerSink::setValue(const QString &name, QVariant value) {
+    m_metadata.insert(name, value);
+    emit metadataChanged(name, value);
+}
+
+const QVariant DslMagnetometerSink::value(const QString &name)
+{
+    return m_metadata.value(name);
+}
+const QMap<QString, QVariant> DslMagnetometerSink::values()
+{
+    return m_metadata;
 }

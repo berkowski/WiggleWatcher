@@ -14,6 +14,8 @@ target_sources(maggui-core PRIVATE
     # qdslfilesink.cpp
     # qrotatingfilesink.hpp
     types/vectormagnetometerdata.h
+    metadatainterface.h
+    sensorinterface.h
     sinkinterface.h
     dslmagnetometersink.h
     dslmagnetometersink.cpp
