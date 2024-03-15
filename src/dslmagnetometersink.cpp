@@ -1,7 +1,7 @@
 
 #include "dslmagnetometersink.h"
 
-#include <chrono>
+#include <utility>
 #include <QtCore/qdir.h>
 #include <QtCore/qfile.h>
 
@@ -15,10 +15,10 @@ const QMap<QString, QString> DslMagnetometerSink::DEFAULT_METADATA
 
 const QString DslMagnetometerSink::FILENAME_DATETIME_FMT = QStringLiteral("yyyyMMdd_HHmmss");
 
-DslMagnetometerSink::DslMagnetometerSink(QDir path, QString prefix, QObject *parent)
+DslMagnetometerSink::DslMagnetometerSink(const QDir& path, QString prefix, QObject *parent)
     : QObject(parent)
     , m_path(path)
-    , m_prefix(prefix)
+    , m_prefix(std::move(std::move(prefix)))
     , m_metadata(DEFAULT_METADATA)
     , m_file(new QFile(this))
 {}
@@ -38,7 +38,7 @@ auto DslMagnetometerSink::openNewFileAndWriteMetadata(const QDateTime &timestamp
         m_path.mkpath(".");
     }
     const auto filename
-        = QStringLiteral("%1_%2.dat").arg(m_prefix).arg(timestamp.toString(FILENAME_DATETIME_FMT));
+        = QStringLiteral("%1_%2.dat").arg(m_prefix, timestamp.toString(FILENAME_DATETIME_FMT));
     m_file->setFileName(m_path.filePath(filename));
     m_file->open(QIODevice::WriteOnly | QIODevice::Text);
     // Write metadata to file
@@ -80,5 +80,5 @@ auto DslMagnetometerSink::toString(const VectorMagnetometerData &data) -> QStrin
 
 auto DslMagnetometerSink::formatMetadata(const QString &key, const QString &value) -> QString
 {
-    return QStringLiteral("#%1: %2\n").arg(key).arg(value);
+    return QStringLiteral("#%1: %2\n").arg(key, value);
 }

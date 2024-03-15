@@ -21,7 +21,7 @@ public:
     static const QMap<QString, QString> DEFAULT_METADATA;
     static const QString FILENAME_DATETIME_FMT;
 
-    DslMagnetometerSink(QDir path = QDir(),
+    explicit DslMagnetometerSink(const QDir& path = QDir(),
                         QString prefix = QStringLiteral("mag"),
                         QObject *parent = nullptr);
 
@@ -32,7 +32,7 @@ public:
     // Only write data of type VectorMagnetometerData
     auto write(const QVariant &record) -> void override;
 
-    const auto path() noexcept -> QDir { return m_path; }
+    [[nodiscard]] auto path() const noexcept -> QDir { return m_path; }
 
     auto setPath(const QDir &path) -> void { m_path = path; }
 
