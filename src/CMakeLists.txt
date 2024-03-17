@@ -19,6 +19,12 @@ target_sources(maggui-core PRIVATE
     sinkinterface.h
     dslmagnetometersink.h
     dslmagnetometersink.cpp
+    sensorbase.h
+    sensorbase.cpp
+    textfilesink.h
+    textfilesink.cpp
+    iofactory.h
+    iofactory.cpp
 )
 
 target_link_libraries(maggui-core

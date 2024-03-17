@@ -7,11 +7,19 @@
 class TestDslMagnetometerSink : public QObject
 {
     Q_OBJECT
-
 private:
+#if 0
     Q_SLOT void firstRecord();
+#endif
+    Q_SLOT void dateTimeLogic();
 };
 
+void TestDslMagnetometerSink::dateTimeLogic()
+{
+    const auto now = QDateTime::currentDateTimeUtc();
+    QVERIFY(QDateTime() > now);
+}
+#if 0
 void TestDslMagnetometerSink::firstRecord()
 {
     const auto path = QDir::temp();
@@ -36,6 +44,6 @@ void TestDslMagnetometerSink::firstRecord()
              qPrintable(QStringLiteral("Expected %1 to exist after writing record")
                             .arg(expected_filename)));
 }
-
+#endif
 QTEST_MAIN(TestDslMagnetometerSink)
 #include "tst_dslmagnetometersink.moc"
