@@ -1,31 +1,34 @@
 #include "iofactory.h"
+#include "tcpsocketfactory.h"
+#include "udpsocketfactory.h"
 
 #include <QtNetwork/qudpsocket.h>
 #include <QtNetwork/qtcpsocket.h>
 #include <QtSerialPort/qserialport.h>
 
-class UdpSocketFactory {
-public:
-    static auto from_config() -> QUdpSocket* {
-        return nullptr;
-    }
-};
-
-class TcpSocketFactory {
-public:
-    static auto from_config() -> QTcpSocket* {
-        return nullptr;
-    }
-};
-
 class SerialPortFactory {
 public:
-    static auto from_config() -> QSerialPort* {
+    static auto from_string(const QString &string) -> QSerialPort * {
         return nullptr;
     }
 };
 
-auto IOFactory::from_config() -> QIODevice*
+auto IOFactory::from_string(const QString &string) -> QIODevice *
 {
-    return UdpSocketFactory::from_config();
+    QIODevice* io = nullptr;
+    io = SerialPortFactory::from_string(string);
+    if(io) {
+        return io;
+    }
+
+    io = UdpSocketFactory::from_string(string);
+    if(io) {
+        return io;
+    }
+
+    io = TcpSocketFactory::from_string(string);
+    if(io) {
+        return io;
+    }
+    return nullptr;
 }

@@ -1,8 +1,6 @@
 #ifndef DSLMAGNETOMETERSINK_H
 #define DSLMAGNETOMETERSINK_H
 
-#include "sinkinterface.h"
-#include "metadatainterface.h"
 #include "types/vectormagnetometerdata.h"
 
 #include <chrono>
@@ -13,10 +11,9 @@
 
 class QFile;
 
-class DslMagnetometerSink : public QObject, public SinkInterface, public MetadataInterface
+class DslMagnetometerSink : public QObject
 {
     Q_OBJECT
-    Q_INTERFACES(SinkInterface MetadataInterface)
     Q_PROPERTY(QDir path READ path WRITE setPath)
 public:
     /// Description of file format written in file header
@@ -32,12 +29,12 @@ public:
     // Implementation of SinkInterface
     //
     // Only write data of type VectorMagnetometerData
-    auto write(const QVariant &record) -> void override;
+    auto write(const QVariant &record) -> void ;
 
     // Implementation of MetadataInterface
-    auto setValue(const QString &name, QVariant value) -> void override;
-    [[nodiscard]] auto value(const QString &name) -> QVariant const override;
-    [[nodiscard]] auto values() -> QMap<QString, QVariant> const override;
+    auto setValue(const QString &name, QVariant value) -> void ;
+    [[nodiscard]] auto value(const QString &name) -> QVariant const ;
+    [[nodiscard]] auto values() -> QMap<QString, QVariant> const ;
 
     [[nodiscard]] auto path() const noexcept -> QDir { return m_path; }
 
