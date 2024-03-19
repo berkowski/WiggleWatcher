@@ -27,6 +27,22 @@ auto UdpSocketFactory::from_string(const QString &string) -> QUdpSocket * {
     }
 
     auto udp = new QUdpSocket(nullptr);
-    udp->bind(address, port);
+    // first bind to the local port
+    udp->bind(QHostAddress::Any, port, QAbstractSocket::BindFlag::ReuseAddressHint | QAbstractSocket::BindFlag::ShareAddress);
+    if(udp->state() != QAbstractSocket::SocketState::BoundState) {
+        qCritical("unable to bind on local port: %d.  error: %s", port, qUtf8Printable(udp->errorString()));
+        udp->deleteLater();
+        return nullptr;
+    }
+    qCritical() << "AFTER CONNECT: state: " << udp->state() << " remote: " << udp->peerName() << " " << udp->peerPort() << " local: " << udp->localAddress() << " " << udp->localPort() << " error: " << udp->errorString();
+    // then "connect" to the remote address/port.
+    udp->connectToHost(QStringLiteral("127.0.0.1"), 5556);
+    qCritical() << "AFTER CONNECT: state: " << udp->state() << " remote: " << udp->peerName() << " " << udp->peerPort() << " local: " << udp->localAddress() << " " << udp->localPort() << " error: " << udp->errorString();
+    if (udp->state() != QAbstractSocket::SocketState::ConnectedState) {
+        qCritical("unable to connect to remote: %s:%d.  error: %s", qUtf8Printable("127.0.0.1"), port, qUtf8Printable(udp->errorString()));
+        udp->deleteLater();
+        return nullptr;
+    }
+
     return udp;
 }

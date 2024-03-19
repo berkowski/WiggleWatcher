@@ -50,8 +50,10 @@ void TestUdpSocketFactory::validConfig()
 
     const auto result = UdpSocketFactory::from_string(config);
     QCOMPARE_NE(result, nullptr);
-    QCOMPARE_EQ(result->localAddress().toString(), host.toString());
+    QVERIFY(result->localAddress().isEqual(host, QHostAddress::TolerantConversion));
     QCOMPARE_EQ(result->localPort(), port);
+    result->abort();
+    delete result;
 }
 QTEST_MAIN(TestUdpSocketFactory)
 #include "tst_udpsocketfactory.moc"
