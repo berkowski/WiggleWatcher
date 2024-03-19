@@ -20,3 +20,8 @@ qt_add_executable(tst_udpsocketfactory tst_udpsocketfactory.cpp)
 add_test(NAME tst_udpsocketfactory COMMAND tst_udpsocketfactory)
 target_link_libraries(tst_udpsocketfactory PRIVATE maggui-core Qt::Test)
 target_include_directories(tst_udpsocketfactory PRIVATE ${CMAKE_CURRENT_LIST_DIR}/..)
+
+qt_add_executable(tst_serialportfactory tst_serialportfactory.cpp)
+add_test(NAME tst_serialportfactory COMMAND tst_serialportfactory)
+target_link_libraries(tst_serialportfactory PRIVATE maggui-core Qt::Test)
+target_include_directories(tst_serialportfactory PRIVATE ${CMAKE_CURRENT_LIST_DIR}/..)

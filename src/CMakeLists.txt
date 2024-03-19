@@ -17,6 +17,8 @@ target_sources(maggui-core PRIVATE
     tcpsocketfactory.cpp
     udpsocketfactory.h
     udpsocketfactory.cpp
+    serialportfactory.cpp
+    serialportfactory.h
 )
 
 target_link_libraries(maggui-core
