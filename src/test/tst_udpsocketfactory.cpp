@@ -25,6 +25,7 @@ void TestUdpSocketFactory::invalidConfig_data()
     QTest::newRow("wrong type (serial)") << "serial:///dev/ttyUSB0";
     QTest::newRow("invalid hostname") << "udp://&^%*^@!Q#$:4000";
     QTest::newRow("invalid port (negative)") << "tcp://127.0.0.1:-2341";
+    QTest::newRow("missing hostname") << "udp://2341";
 }
 void TestUdpSocketFactory::invalidConfig()
 {
@@ -36,22 +37,26 @@ void TestUdpSocketFactory::invalidConfig()
 void TestUdpSocketFactory::validConfig_data()
 {
     QTest::addColumn<QString>("config");
-    QTest::addColumn<QHostAddress>("host");
-    QTest::addColumn<int>("port");
+    QTest::addColumn<QHostAddress>("address");
+    QTest::addColumn<int>("remote_port");
+    QTest::addColumn<int>("local_port");
 
-    QTest::newRow("loopback (127.0.0.1)") << "udp://127.0.0.1:2341" << QHostAddress("127.0.0.1") << 2341;
-    QTest::newRow("'any' interface") << "udp://2341" << QHostAddress(QHostAddress::Any) << 2341;
+    QTest::newRow("same port on local") << "udp://127.0.0.1:2341" << QHostAddress("127.0.0.1") << 2341 << 2341;
+    QTest::newRow("different rx port") << "udp://127.0.0.1:2341:5555" << QHostAddress("127.0.0.1") << 2341 << 5555;
 }
+
 void TestUdpSocketFactory::validConfig()
 {
     QFETCH(QString, config);
-    QFETCH(QHostAddress, host);
-    QFETCH(int, port);
+    QFETCH(QHostAddress, address);
+    QFETCH(int, remote_port);
+    QFETCH(int, local_port);
 
     const auto result = UdpSocketFactory::from_string(config);
     QCOMPARE_NE(result, nullptr);
-    QVERIFY(result->localAddress().isEqual(host, QHostAddress::TolerantConversion));
-    QCOMPARE_EQ(result->localPort(), port);
+    QVERIFY(result->peerAddress().isEqual(address, QHostAddress::TolerantConversion));
+    QCOMPARE_EQ(result->peerPort(), remote_port);
+    QCOMPARE_EQ(result->localPort(), local_port);
     result->abort();
     delete result;
 }
