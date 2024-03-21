@@ -2,6 +2,7 @@
 
 #include <QtCore/qobject.h>
 #include <QtTest/qtest.h>
+#include <QtCore/qpointer.h>
 
 #include <QtSerialPort/qserialport.h>
 #include <QtSerialPort/qserialportinfo.h>
@@ -82,17 +83,16 @@ void TestSerialPortFactory::validConfig()
     QFETCH(QSerialPort::Parity, parity);
     QFETCH(QSerialPort::StopBits, stop_bits);
 
-    // wrap w/ a unique_ptr to make sure it gets deleted
-    const auto ptr = std::unique_ptr<QSerialPort>(SerialPortFactory::from_string(config));
-    const auto result = ptr.get();
+    // wrap w/ a QPointer to make sure it gets deleted
+    const auto ptr = QPointer<QSerialPort>(SerialPortFactory::from_string(config));
 
-    QCOMPARE_NE(result, nullptr);
-    QVERIFY(result->isOpen());
-    QCOMPARE_EQ(result->portName(), path);
-    QCOMPARE_EQ(result->baudRate(), baud_rate);
-    QCOMPARE_EQ(result->dataBits(), data_bits);
+    QCOMPARE(ptr.isNull(), false);
+    QVERIFY(ptr->isOpen());
+    QCOMPARE_EQ(ptr->portName(), path);
+    QCOMPARE_EQ(ptr->baudRate(), baud_rate);
+    QCOMPARE_EQ(ptr->dataBits(), data_bits);
 
-    result->close();
+    ptr->close();
 }
 
 void TestSerialPortFactory::validConfig_data()

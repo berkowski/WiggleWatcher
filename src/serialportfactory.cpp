@@ -2,8 +2,7 @@
 
 #include <QtCore/qregularexpression.h>
 #include <QtSerialPort/qserialport.h>
-
-#include <memory>
+#include <QtCore/qpointer.h>
 
 const QRegularExpression SerialPortFactory::RE = QRegularExpression("serial://([^:]+):([5678])([NEOSM])(1|1\\.5|2)@(\\d+)", QRegularExpression::CaseInsensitiveOption);
 
@@ -91,7 +90,7 @@ auto SerialPortFactory::from_string(const QString &string) -> QSerialPort *
         return nullptr;
     }
 
-    auto port = std::make_unique<QSerialPort>();
+    auto port = QPointer<QSerialPort>{new QSerialPort};
     port->setPortName(path);
 
     if(!port->setParity(parity)) {
@@ -123,5 +122,8 @@ auto SerialPortFactory::from_string(const QString &string) -> QSerialPort *
         qCritical() << "unable to open serial port " << path << ". error: " << error;
         return nullptr;
     }
-    return port.release();
+
+    const auto raw = port.data();
+    port.clear();
+    return raw;
 }
