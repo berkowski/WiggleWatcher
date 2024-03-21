@@ -2,13 +2,13 @@
 
 #include <chrono>
 #include <QtCore/qobject.h>
-#include <QtTest/qtest.h>
 #include <QtNetwork/qhostaddress.h>
 #include <QtNetwork/qudpsocket.h>
+#include <QtTest/qtest.h>
 
 class TestUdpSocketFactory : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 private:
     Q_SLOT void invalidConfig();
     Q_SLOT void invalidConfig_data();
@@ -41,8 +41,10 @@ void TestUdpSocketFactory::validConfig_data()
     QTest::addColumn<int>("remote_port");
     QTest::addColumn<int>("local_port");
 
-    QTest::newRow("same port on local") << "udp://127.0.0.1:2341" << QHostAddress("127.0.0.1") << 2341 << 2341;
-    QTest::newRow("different rx port") << "udp://127.0.0.1:2341:5555" << QHostAddress("127.0.0.1") << 2341 << 5555;
+    QTest::newRow("same port on local")
+        << "udp://127.0.0.1:2341" << QHostAddress("127.0.0.1") << 2341 << 2341;
+    QTest::newRow("different rx port")
+        << "udp://127.0.0.1:2341:5555" << QHostAddress("127.0.0.1") << 2341 << 5555;
 }
 
 void TestUdpSocketFactory::validConfig()

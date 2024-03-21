@@ -20,21 +20,21 @@ public:
     static const QMap<QString, QString> FORMAT_HEADER;
     static const QString FILENAME_DATETIME_FMT;
 
-    explicit DslMagnetometerSink(const QDir& path = QDir(),
-                        QString prefix = QStringLiteral("mag"),
-                        QObject *parent = nullptr);
+    explicit DslMagnetometerSink(const QDir &path = QDir(),
+                                 QString prefix = QStringLiteral("mag"),
+                                 QObject *parent = nullptr);
 
     auto write(const VectorMagnetometerData &record) -> void;
 
     // Implementation of SinkInterface
     //
     // Only write data of type VectorMagnetometerData
-    auto write(const QVariant &record) -> void ;
+    auto write(const QVariant &record) -> void;
 
     // Implementation of MetadataInterface
-    auto setValue(const QString &name, QVariant value) -> void ;
-    [[nodiscard]] auto value(const QString &name) -> QVariant const ;
-    [[nodiscard]] auto values() -> QMap<QString, QVariant> const ;
+    auto setValue(const QString &name, QVariant value) -> void;
+    [[nodiscard]] auto value(const QString &name) -> QVariant const;
+    [[nodiscard]] auto values() -> QMap<QString, QVariant> const;
 
     [[nodiscard]] auto path() const noexcept -> QDir { return m_path; }
 

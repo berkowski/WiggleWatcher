@@ -2,12 +2,12 @@
 
 #include <chrono>
 #include <QtCore/qobject.h>
-#include <QtTest/qtest.h>
 #include <QtNetwork/qhostaddress.h>
+#include <QtTest/qtest.h>
 
 class TestTcpSocketFactory : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 private:
     Q_SLOT void invalidConfig();
     Q_SLOT void invalidConfig_data();
@@ -38,7 +38,8 @@ void TestTcpSocketFactory::validConfig_data()
     QTest::addColumn<QHostAddress>("host");
     QTest::addColumn<int>("port");
 
-    QTest::newRow("loopback (127.0.0.1)") << "tcp://127.0.0.1:2341" << QHostAddress("127.0.0.1") << 2341;
+    QTest::newRow("loopback (127.0.0.1)")
+        << "tcp://127.0.0.1:2341" << QHostAddress("127.0.0.1") << 2341;
 }
 void TestTcpSocketFactory::validConfig()
 {

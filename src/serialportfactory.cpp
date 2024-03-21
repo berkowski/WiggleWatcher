@@ -1,10 +1,12 @@
 #include "serialportfactory.h"
 
+#include <QtCore/qpointer.h>
 #include <QtCore/qregularexpression.h>
 #include <QtSerialPort/qserialport.h>
-#include <QtCore/qpointer.h>
 
-const QRegularExpression SerialPortFactory::RE = QRegularExpression("serial://([^:]+):([5678])([NEOSM])(1|1\\.5|2)@(\\d+)", QRegularExpression::CaseInsensitiveOption);
+const QRegularExpression SerialPortFactory::RE
+    = QRegularExpression("serial://([^:]+):([5678])([NEOSM])(1|1\\.5|2)@(\\d+)",
+                         QRegularExpression::CaseInsensitiveOption);
 
 auto SerialPortFactory::from_string(const QString &string) -> QSerialPort *
 {
@@ -38,25 +40,20 @@ auto SerialPortFactory::from_string(const QString &string) -> QSerialPort *
         qFatal("BUG: Invalid serial port data size: %s", qUtf8Printable(match.captured(2)));
     }
 
-    const auto parity = [&](bool& ok) {
+    const auto parity = [&](bool &ok) {
         const auto str = match.captured(3).toUpper();
         ok = true;
         if (str == QStringLiteral("N")) {
             return QSerialPort::Parity::NoParity;
-        }
-        else if (str == QStringLiteral("E")) {
+        } else if (str == QStringLiteral("E")) {
             return QSerialPort::Parity::EvenParity;
-        }
-        else if (str == QStringLiteral("O")) {
+        } else if (str == QStringLiteral("O")) {
             return QSerialPort::Parity::OddParity;
-        }
-        else if (str == QStringLiteral("S")) {
+        } else if (str == QStringLiteral("S")) {
             return QSerialPort::Parity::SpaceParity;
-        }
-        else if (str == QStringLiteral("M")) {
+        } else if (str == QStringLiteral("M")) {
             return QSerialPort::Parity::MarkParity;
-        }
-        else {
+        } else {
             ok = false;
             return QSerialPort::Parity::NoParity;
         }
@@ -66,7 +63,7 @@ auto SerialPortFactory::from_string(const QString &string) -> QSerialPort *
         qFatal("BUG: Unexpected serial port parity: %s", qUtf8Printable(match.captured(3)));
     }
 
-    const auto stop_bits = [&](bool& ok) {
+    const auto stop_bits = [&](bool &ok) {
         const auto str = match.captured(4);
         ok = true;
         if (str == QStringLiteral("1")) {
@@ -86,34 +83,40 @@ auto SerialPortFactory::from_string(const QString &string) -> QSerialPort *
 
     const auto baud = match.captured(5).toInt(&ok);
     if (!ok || baud <= 0) {
-        qCritical("invalid baud rate: %s in config string: %s", qUtf8Printable(match.captured(2)), string);
+        qCritical("invalid baud rate: %s in config string: %s",
+                  qUtf8Printable(match.captured(2)),
+                  string);
         return nullptr;
     }
 
     auto port = QPointer<QSerialPort>{new QSerialPort};
     port->setPortName(path);
 
-    if(!port->setParity(parity)) {
+    if (!port->setParity(parity)) {
         const auto error = port->error();
-        qCritical() << "unable to set parity to " << parity << " on " << path << ". error: " << error;
+        qCritical() << "unable to set parity to " << parity << " on " << path
+                    << ". error: " << error;
         return nullptr;
     }
 
-    if(!port->setDataBits(data_bits)) {
+    if (!port->setDataBits(data_bits)) {
         const auto error = port->error();
-        qCritical() << "unable to set data bits to " << data_bits << " on " << path << ". error: " << error;
+        qCritical() << "unable to set data bits to " << data_bits << " on " << path
+                    << ". error: " << error;
         return nullptr;
     }
 
-    if(!port->setStopBits(stop_bits)) {
+    if (!port->setStopBits(stop_bits)) {
         const auto error = port->error();
-        qCritical() << "unable to set stop bits to " << stop_bits << " on " << path << ". error: " << error;
+        qCritical() << "unable to set stop bits to " << stop_bits << " on " << path
+                    << ". error: " << error;
         return nullptr;
     }
 
-    if(!port->setBaudRate(baud)) {
+    if (!port->setBaudRate(baud)) {
         const auto error = port->error();
-        qCritical() << "unable to set baud rate to " << baud << " on " << path << ". error: " << error;
+        qCritical() << "unable to set baud rate to " << baud << " on " << path
+                    << ". error: " << error;
         return nullptr;
     }
 

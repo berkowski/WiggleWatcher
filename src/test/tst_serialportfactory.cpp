@@ -1,15 +1,15 @@
 #include "serialportfactory.h"
 
 #include <QtCore/qobject.h>
-#include <QtTest/qtest.h>
 #include <QtCore/qpointer.h>
+#include <QtTest/qtest.h>
 
 #include <QtSerialPort/qserialport.h>
 #include <QtSerialPort/qserialportinfo.h>
 
 class TestSerialPortFactory : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 private:
     Q_SLOT void initTestCase()
     {
@@ -71,7 +71,6 @@ void TestSerialPortFactory::invalidConfigParameters_data()
     QTest::newRow("invalid parity ('NONE')") << "serial:///dev/ttyUSB0:8NONE1@9600";
     QTest::newRow("invalid stop bits (4)") << "serial:///dev/ttyUSB0:8N4@9600";
     QTest::newRow("invalid stop bits (missing)") << "serial:///dev/ttyUSB0:8N@9600";
-
 }
 
 void TestSerialPortFactory::validConfig()
@@ -110,15 +109,9 @@ void TestSerialPortFactory::validConfig_data()
 
     const auto config = QStringLiteral("serial://%1:8N1@9600").arg(port_info.portName());
     QTest::newRow(qUtf8Printable(QStringLiteral("valid (%1)").arg(config)))
-        << config
-        << port_info.portName()
-        << 9600
-        << QSerialPort::DataBits::Data8
-        << QSerialPort::Parity::NoParity
-        << QSerialPort::StopBits::OneStop;
-
+        << config << port_info.portName() << 9600 << QSerialPort::DataBits::Data8
+        << QSerialPort::Parity::NoParity << QSerialPort::StopBits::OneStop;
 }
-
 
 QTEST_MAIN(TestSerialPortFactory)
 #include "tst_serialportfactory.moc"

@@ -1,8 +1,8 @@
 #ifndef MAGGUI_TEXTFILESINK_H
 #define MAGGUI_TEXTFILESINK_H
 
-#include <QtCore/qobject.h>
 #include <QtCore/qdir.h>
+#include <QtCore/qobject.h>
 #include <QtCore/qstring.h>
 
 #include <chrono>
@@ -32,14 +32,14 @@ public:
     ///
     /// \param datetime
     /// \return
-    [[nodiscard]] auto filenameForDateTime(const QDateTime& datetime) const -> QString;
+    [[nodiscard]] auto filenameForDateTime(const QDateTime &datetime) const -> QString;
 
 public slots:
     /// Write a string to the file
     ///
     /// Creates a new file with header information if needed.
     /// \param string
-    auto write(const QString& string) -> void;
+    auto write(const QString &string) -> void;
 
     /// Write future data into a new file
     ///
@@ -52,28 +52,21 @@ public slots:
     ///
     /// The user comment is written after the metadata fields in the header of each file
     /// \param comment
-    auto setUserComment(const QString& comment) noexcept -> void
-    {
-        userComment_ = comment;
-    }
+    auto setUserComment(const QString &comment) noexcept -> void { userComment_ = comment; }
 
     /// Get the user comment
     ///
     /// The user comment is written after the metadata fields in the header of each file
     /// \return
-    [[nodiscard]] auto userComment() const noexcept -> QString
-    {
-        return userComment_;
-    }
+    [[nodiscard]] auto userComment() const noexcept -> QString { return userComment_; }
 
 private:
-    QFile* file = nullptr;
+    QFile *file = nullptr;
     QDir dir;
     QString prefix;
     QString suffix;
     QMap<QString, QString> metadata;
     QString userComment_;
 };
-
 
 #endif //MAGGUI_TEXTFILESINK_H

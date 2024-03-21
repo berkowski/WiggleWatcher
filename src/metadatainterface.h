@@ -15,14 +15,14 @@ public:
     /// overwritten with the new value
     /// \param name
     /// \param value
-    virtual auto setValue(const QString& name, QVariant value) -> void = 0;
+    virtual auto setValue(const QString &name, QVariant value) -> void = 0;
 
     /// Get a metadata value
     ///
     /// Get the value of the metadata item associated with the given name.
     /// \param name
     /// \return
-    [[nodiscard]] virtual auto value(const QString& name) -> QVariant const = 0;
+    [[nodiscard]] virtual auto value(const QString &name) -> QVariant const = 0;
 
     /// Get all metadata values
     ///

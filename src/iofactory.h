@@ -8,7 +8,6 @@ class QIODevice;
 class IOFactory
 {
 public:
-
     /// # Build a QIODevice from a string
     ///
     /// Helps provide protocol-agnostic IO interfaces using

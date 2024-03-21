@@ -14,7 +14,7 @@ const QMap<QString, QString> DslMagnetometerSink::FORMAT_HEADER
 
 const QString DslMagnetometerSink::FILENAME_DATETIME_FMT = QStringLiteral("yyyyMMdd_HHmmss");
 
-DslMagnetometerSink::DslMagnetometerSink(const QDir& path, QString prefix, QObject *parent)
+DslMagnetometerSink::DslMagnetometerSink(const QDir &path, QString prefix, QObject *parent)
     : QObject(parent)
     , m_path(path)
     , m_prefix(std::move(std::move(prefix)))
@@ -44,7 +44,8 @@ auto DslMagnetometerSink::openNewFileAndWriteMetadata(const QDateTime &timestamp
                   m_metadata.constKeyValueEnd(),
                   [this](const auto &it) {
                       this->m_file->write(
-                          DslMagnetometerSink::formatMetadata(it.first, it.second.toString()).toUtf8());
+                          DslMagnetometerSink::formatMetadata(it.first, it.second.toString())
+                              .toUtf8());
                   });
     // Write file format header lines
     std::for_each(FORMAT_HEADER.constKeyValueBegin(),
@@ -87,7 +88,8 @@ auto DslMagnetometerSink::formatMetadata(const QString &key, const QString &valu
 {
     return QStringLiteral("#%1: %2\n").arg(key, value);
 }
-void DslMagnetometerSink::setValue(const QString &name, QVariant value) {
+void DslMagnetometerSink::setValue(const QString &name, QVariant value)
+{
     m_metadata.insert(name, value);
     emit metadataChanged(name, value);
 }

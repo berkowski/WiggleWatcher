@@ -4,8 +4,8 @@
 
 #include "textfilesink.h"
 
-#include <QtCore/qfile.h>
 #include <QtCore/qdir.h>
+#include <QtCore/qfile.h>
 #include <QtCore/qmap.h>
 
 const QString TextFileSink::DATETIME_FMT = QStringLiteral("yyyyMMdd_HHmmss");
@@ -36,7 +36,8 @@ auto TextFileSink::currentFileName() const -> QString
     return {};
 }
 
-auto TextFileSink::write(const QString &string) -> void {
+auto TextFileSink::write(const QString &string) -> void
+{
     if (!file->isOpen()) {
         if (file->fileName().isEmpty()) {
             const auto filename = filenameForDateTime(QDateTime::currentDateTimeUtc());
@@ -49,15 +50,14 @@ auto TextFileSink::write(const QString &string) -> void {
         }
 
         // write header
-        std::for_each(
-            metadata.constKeyValueBegin(),
-            metadata.constKeyValueEnd(),
-            [&](const auto &it) {
-                file->write(QStringLiteral("#%1: %2").arg(it.first, it.second).toUtf8());
-            });
+        std::for_each(metadata.constKeyValueBegin(),
+                      metadata.constKeyValueEnd(),
+                      [&](const auto &it) {
+                          file->write(QStringLiteral("#%1: %2").arg(it.first, it.second).toUtf8());
+                      });
 
         // write format comments, if needed
-        if(!userComment_.isEmpty()) {
+        if (!userComment_.isEmpty()) {
             file->write(userComment_.toUtf8());
         }
     }
@@ -78,8 +78,8 @@ auto TextFileSink::rollover(const QDateTime &datetime) -> void
         file->flush();
         file->close();
         // if it's empty, remove it
-        if(file->size() == 0) {
-            if(!file->remove()) {
+        if (file->size() == 0) {
+            if (!file->remove()) {
                 qWarning("Unable to remove empty file: '%s'", qUtf16Printable(file->fileName()));
             }
         }

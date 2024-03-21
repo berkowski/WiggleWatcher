@@ -5,16 +5,17 @@
 
 class QIODevice;
 
-class SensorBase: public QObject
+class SensorBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit SensorBase(QIODevice* io, QObject* parent = nullptr);
+    explicit SensorBase(QIODevice *io, QObject *parent = nullptr);
 
 protected slots:
-    virtual auto handleReadyRead(QIODevice*) -> void {};
+    virtual auto handleReadyRead(QIODevice *) -> void{};
+
 private:
-    QIODevice* io;
+    QIODevice *io;
 };
 
 #endif //SENSORBASE_H
