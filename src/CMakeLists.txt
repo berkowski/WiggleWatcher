@@ -5,6 +5,7 @@ qt_add_library(maggui-core)
 
 target_sources(maggui-core PRIVATE
     types/vectormagnetometerdata.h
+    types/vectormagnetometerdata.cpp
     # dslmagnetometersink.h
     # dslmagnetometersink.cpp
     sensorbase.h

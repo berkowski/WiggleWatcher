@@ -1,10 +1,7 @@
-//
-// Created by zac on 3/21/24.
-//
-
 #include "aps1540magnetometer.h"
 
 #include <QtCore/qiodevice.h>
+#include <QtCore/qregularexpression.h>
 
 Aps1540Magnetometer::Aps1540Magnetometer(QIODevice *io, QObject *parent)
     : Magnetometer(io, parent)
@@ -43,5 +40,28 @@ void Aps1540Magnetometer::handleReadyRead(QIODevice *device)
 }
 auto Aps1540Magnetometer::stringToData(const QString &string) -> VectorMagnetometerData
 {
-    return VectorMagnetometerData();
+    const auto fields = string.simplified().split(' ', Qt::SkipEmptyParts);
+    if (fields.size() != 4) {
+        return {};
+    }
+    auto ok = true;
+    const auto GAUSS_TO_NANO_TESLA = 100000.0;
+    const auto x = fields.at(0).toDouble(&ok) * GAUSS_TO_NANO_TESLA;
+    if (!ok) {
+        return {};
+    }
+    const auto y = fields.at(1).toDouble(&ok) * GAUSS_TO_NANO_TESLA;
+    if (!ok) {
+        return {};
+    }
+    const auto z = fields.at(2).toDouble(&ok) * GAUSS_TO_NANO_TESLA;
+    if (!ok) {
+        return {};
+    }
+    const auto temperature = fields.at(3).toDouble(&ok);
+    if (!ok) {
+        return {};
+    }
+
+    return VectorMagnetometerData{QDateTime{}, x, y, z, temperature};
 }

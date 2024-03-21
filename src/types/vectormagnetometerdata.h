@@ -51,4 +51,5 @@ auto VectorMagnetometerData::operator==(const VectorMagnetometerData &other) con
            && y == other.y && z == other.z;
 }
 
+auto operator<<(QDebug dbg, const VectorMagnetometerData &data) -> QDebug;
 #endif
