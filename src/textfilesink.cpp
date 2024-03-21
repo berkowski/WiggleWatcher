@@ -36,7 +36,7 @@ auto TextFileSink::currentFileName() const -> QString
     return {};
 }
 
-auto TextFileSink::write(const QString &string) -> void
+auto TextFileSink::write(const QByteArray &bytes) -> void
 {
     if (!file->isOpen()) {
         if (file->fileName().isEmpty()) {
@@ -61,7 +61,7 @@ auto TextFileSink::write(const QString &string) -> void
             file->write(userComment_.toUtf8());
         }
     }
-    file->write(string.toUtf8());
+    file->write(bytes);
 }
 
 auto TextFileSink::filenameForDateTime(const QDateTime &datetime) const -> QString
@@ -80,7 +80,7 @@ auto TextFileSink::rollover(const QDateTime &datetime) -> void
         // if it's empty, remove it
         if (file->size() == 0) {
             if (!file->remove()) {
-                qWarning("Unable to remove empty file: '%s'", qUtf16Printable(file->fileName()));
+                qWarning() << "Unable to remove empty file: '%s'" << file->fileName();
             }
         }
     }

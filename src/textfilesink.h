@@ -38,8 +38,8 @@ public slots:
     /// Write a string to the file
     ///
     /// Creates a new file with header information if needed.
-    /// \param string
-    auto write(const QString &string) -> void;
+    /// \param bytes
+    auto write(const QByteArray &bytes) -> void;
 
     /// Write future data into a new file
     ///
