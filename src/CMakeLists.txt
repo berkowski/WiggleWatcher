@@ -5,8 +5,8 @@ qt_add_library(maggui-core)
 
 target_sources(maggui-core PRIVATE
     types/vectormagnetometerdata.h
-    dslmagnetometersink.h
-    dslmagnetometersink.cpp
+    # dslmagnetometersink.h
+    # dslmagnetometersink.cpp
     sensorbase.h
     sensorbase.cpp
     textfilesink.h
@@ -19,6 +19,10 @@ target_sources(maggui-core PRIVATE
     udpsocketfactory.cpp
     serialportfactory.cpp
     serialportfactory.h
+    magnetometer.h
+    magnetometer.cpp
+    aps1540magnetometer.h
+    aps1540magnetometer.cpp
 )
 
 target_link_libraries(maggui-core

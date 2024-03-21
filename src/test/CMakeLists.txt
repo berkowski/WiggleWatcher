@@ -25,3 +25,8 @@ qt_add_executable(tst_serialportfactory tst_serialportfactory.cpp)
 add_test(NAME tst_serialportfactory COMMAND tst_serialportfactory)
 target_link_libraries(tst_serialportfactory PRIVATE maggui-core Qt::Test)
 target_include_directories(tst_serialportfactory PRIVATE ${CMAKE_CURRENT_LIST_DIR}/..)
+
+qt_add_executable(tst_aps1540magnetometer tst_aps1540magnetometer.cpp)
+add_test(NAME tst_aps1540magnetometer COMMAND tst_aps1540magnetometer)
+target_link_libraries(tst_aps1540magnetometer PRIVATE maggui-core Qt::Test)
+target_include_directories(tst_aps1540magnetometer PRIVATE ${CMAKE_CURRENT_LIST_DIR}/..)

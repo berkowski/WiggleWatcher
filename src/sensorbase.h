@@ -9,10 +9,12 @@ class SensorBase : public QObject
 {
     Q_OBJECT
 public:
+    Q_SIGNAL void bytesRead(const QByteArray &);
+
     explicit SensorBase(QIODevice *io, QObject *parent = nullptr);
 
 protected slots:
-    virtual auto handleReadyRead(QIODevice *) -> void{};
+    virtual auto handleReadyRead(QIODevice *) -> void = 0;
 
 private:
     QIODevice *io;
