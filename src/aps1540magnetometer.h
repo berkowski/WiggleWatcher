@@ -1,9 +1,10 @@
 #ifndef MAGGUI_APS1540MAGNETOMETER_H
 #define MAGGUI_APS1540MAGNETOMETER_H
 
+#include "maggui-core_global.h"
 #include "magnetometer.h"
 
-class Aps1540Magnetometer : public Magnetometer
+class MAGGUI_CORE_EXPORT Aps1540Magnetometer : public Magnetometer
 {
     Q_OBJECT
 

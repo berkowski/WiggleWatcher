@@ -1,11 +1,13 @@
 #ifndef SERIALPORTFACTORY_H
 #define SERIALPORTFACTORY_H
 
+#include "maggui-core_global.h"
+
 #include <QtCore/qstring.h>
 
 class QSerialPort;
 
-class SerialPortFactory
+class MAGGUI_CORE_EXPORT SerialPortFactory
 {
 public:
     static const QRegularExpression RE;

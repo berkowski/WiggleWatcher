@@ -1,11 +1,13 @@
 #ifndef MAGGUI_UDPSOCKETFACTORY_H
 #define MAGGUI_UDPSOCKETFACTORY_H
 
+#include "maggui-core_global.h"
+
 #include <QtCore/qregularexpression.h>
 
 class QUdpSocket;
 
-class UdpSocketFactory
+class MAGGUI_CORE_EXPORT UdpSocketFactory
 {
 public:
     static const QRegularExpression RE;

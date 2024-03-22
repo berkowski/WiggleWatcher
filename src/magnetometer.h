@@ -1,10 +1,11 @@
 #ifndef MAGGUI_MAGNETOMETER_H
 #define MAGGUI_MAGNETOMETER_H
 
+#include "maggui-core_global.h"
 #include "sensorbase.h"
 #include "types/vectormagnetometerdata.h"
 
-class Magnetometer : public SensorBase
+class MAGGUI_CORE_EXPORT Magnetometer : public SensorBase
 {
     Q_OBJECT
 public:

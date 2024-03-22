@@ -1,10 +1,12 @@
 #ifndef MAGGUI_VECTORMAGNETOMETERDATA_H
 #define MAGGUI_VECTORMAGNETOMETERDATA_H
 
+#include "../maggui-core_global.h"
+
 #include <QtCore/qdatetime.h>
 #include <QtCore/qmetatype.h>
 
-struct VectorMagnetometerData
+struct MAGGUI_CORE_EXPORT VectorMagnetometerData
 {
     inline VectorMagnetometerData() noexcept;
     explicit inline VectorMagnetometerData(
@@ -51,5 +53,5 @@ auto VectorMagnetometerData::operator==(const VectorMagnetometerData &other) con
            && y == other.y && z == other.z;
 }
 
-auto operator<<(QDebug dbg, const VectorMagnetometerData &data) -> QDebug;
+MAGGUI_CORE_EXPORT auto operator<<(QDebug dbg, const VectorMagnetometerData &data) -> QDebug;
 #endif

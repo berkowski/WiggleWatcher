@@ -24,12 +24,6 @@
       "inherits": [
         "build-directory"
       ],
-      "cacheVariables": {
-        "CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS": {
-          "type": "BOOLEAN",
-          "value": "ON"
-        }
-      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",

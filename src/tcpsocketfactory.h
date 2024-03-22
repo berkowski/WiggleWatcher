@@ -1,11 +1,13 @@
 #ifndef MAGGUI_TCPSOCKETFACTORY_H
 #define MAGGUI_TCPSOCKETFACTORY_H
 
+#include "maggui-core_global.h"
+
 #include <QtCore/qregularexpression.h>
 
 class QTcpSocket;
 
-class TcpSocketFactory
+class MAGGUI_CORE_EXPORT TcpSocketFactory
 {
 public:
     static const QRegularExpression RE;

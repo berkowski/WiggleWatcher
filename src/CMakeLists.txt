@@ -24,7 +24,10 @@ target_sources(maggui-core PRIVATE
     magnetometer.cpp
     aps1540magnetometer.h
     aps1540magnetometer.cpp
+    maggui-core_global.h
 )
+
+target_compile_definitions(maggui-core PRIVATE MAGGUI_CORE_LIBRARY)
 
 target_link_libraries(maggui-core
     PUBLIC Qt::Core Qt::Network Qt::SerialPort)

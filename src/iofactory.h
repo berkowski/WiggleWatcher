@@ -1,11 +1,14 @@
 #ifndef IOFACTORY_H
 #define IOFACTORY_H
 
+#include "maggui-core_global.h"
+
 #include <QString>
+
 class QIODevice;
 
 /// Helper class to build QIODevice objects from strings
-class IOFactory
+class MAGGUI_CORE_EXPORT IOFactory
 {
 public:
     /// # Build a QIODevice from a string

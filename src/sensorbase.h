@@ -1,11 +1,13 @@
 #ifndef SENSORBASE_H
 #define SENSORBASE_H
 
+#include "maggui-core_global.h"
+
 #include <QtCore/qobject.h>
 
 class QIODevice;
 
-class SensorBase : public QObject
+class MAGGUI_CORE_EXPORT SensorBase : public QObject
 {
     Q_OBJECT
 public:

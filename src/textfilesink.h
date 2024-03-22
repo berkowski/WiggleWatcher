@@ -1,18 +1,18 @@
 #ifndef MAGGUI_TEXTFILESINK_H
 #define MAGGUI_TEXTFILESINK_H
 
+#include "maggui-core_global.h"
+
 #include <QtCore/qdir.h>
 #include <QtCore/qobject.h>
 #include <QtCore/qstring.h>
-
-#include <chrono>
 
 class QFile;
 class QDir;
 class QString;
 class QDateTime;
 
-class TextFileSink : public QObject
+class MAGGUI_CORE_EXPORT TextFileSink : public QObject
 {
     Q_OBJECT
 public:
