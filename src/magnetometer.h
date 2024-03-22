@@ -3,7 +3,7 @@
 
 #include "maggui-core_global.h"
 #include "sensorbase.h"
-#include "types/vectormagnetometerdata.h"
+#include "vectormagnetometerdata.h"
 
 class MAGGUI_CORE_EXPORT Magnetometer : public SensorBase
 {

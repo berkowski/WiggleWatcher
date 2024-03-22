@@ -1,7 +1,7 @@
 #ifndef MAGGUI_VECTORMAGNETOMETERDATA_H
 #define MAGGUI_VECTORMAGNETOMETERDATA_H
 
-#include "../maggui-core_global.h"
+#include "maggui-core_global.h"
 
 #include <QtCore/qdatetime.h>
 #include <QtCore/qmetatype.h>

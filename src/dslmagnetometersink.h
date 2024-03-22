@@ -1,7 +1,7 @@
 #ifndef DSLMAGNETOMETERSINK_H
 #define DSLMAGNETOMETERSINK_H
 
-#include "types/vectormagnetometerdata.h"
+#include "vectormagnetometerdata.h"
 
 #include <chrono>
 
