@@ -9,6 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+find_package(Qt6 REQUIRED COMPONENTS Core)
+qt_standard_project_setup()
+
 include(CTest)
 add_subdirectory(src)
-
+add_subdirectory(utils)

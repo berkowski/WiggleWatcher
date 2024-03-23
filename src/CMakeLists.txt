@@ -1,6 +1,4 @@
 find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network)
-qt_standard_project_setup()
-
 qt_add_library(maggui-core)
 
 target_sources(maggui-core PRIVATE
