@@ -137,7 +137,6 @@ void TestAps1540Magnetometer::handleReadyRead_with_partial()
     QCOMPARE_EQ(data.temperature, expected.temperature);
 }
 
-
 // invalid format should still emit bytesRead
 void TestAps1540Magnetometer::handleReadyRead_with_invalid_format()
 {

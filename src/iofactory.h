@@ -54,7 +54,7 @@ public:
     /// - Data bits: 5, 6, 7, 8, or 9
     /// - Parity: N (none), E (even), O (odd), S (space), or M (mark)
     /// - Stop: 1, 1.5, or 2
-    auto from_string(const QString &string) -> QIODevice *;
+    static auto from_string(const QString &string) -> QIODevice *;
 };
 
 #endif //IOFACTORY_H
