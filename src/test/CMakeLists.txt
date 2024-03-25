@@ -30,3 +30,8 @@ qt_add_executable(tst_aps1540magnetometer tst_aps1540magnetometer.cpp)
 add_test(NAME tst_aps1540magnetometer COMMAND tst_aps1540magnetometer)
 target_link_libraries(tst_aps1540magnetometer PRIVATE maggui-core Qt::Test)
 target_include_directories(tst_aps1540magnetometer PRIVATE ${CMAKE_CURRENT_LIST_DIR}/..)
+
+qt_add_executable(tst_sensorbase tst_sensorbase.cpp)
+add_test(NAME tst_sensorbase COMMAND tst_sensorbase)
+target_link_libraries(tst_sensorbase PRIVATE maggui-core Qt::Test)
+target_include_directories(tst_sensorbase PRIVATE ${CMAKE_CURRENT_LIST_DIR}/..)

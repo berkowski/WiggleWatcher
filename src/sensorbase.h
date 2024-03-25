@@ -3,6 +3,7 @@
 
 #include "maggui-core_global.h"
 
+#include <QtCore/qmetatype.h>
 #include <QtCore/qobject.h>
 
 class QIODevice;
@@ -11,9 +12,18 @@ class MAGGUI_CORE_EXPORT SensorBase : public QObject
 {
     Q_OBJECT
 public:
-    Q_SIGNAL void bytesRead(const QByteArray &);
+    enum SensorType {
+        UNKNOWN = 0,
+        APS1540,
+        HMR2300,
+        USER_TYPE,
+    };
+    Q_ENUM(SensorType)
 
+    Q_SIGNAL void bytesRead(const QByteArray &);
     explicit SensorBase(QIODevice *io, QObject *parent = nullptr);
+
+    [[nodiscard]] virtual auto type() const noexcept -> SensorType = 0;
 
 protected slots:
     virtual auto handleReadyRead(QIODevice *) -> void = 0;
@@ -21,5 +31,8 @@ protected slots:
 private:
     QIODevice *io;
 };
+
+auto toString(SensorBase::SensorType t) -> QString;
+auto fromString(const QString &string) -> SensorBase::SensorType;
 
 #endif //SENSORBASE_H

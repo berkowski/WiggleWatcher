@@ -11,6 +11,7 @@ class TestAps1540Magnetometer : public QObject
 {
     Q_OBJECT
 private:
+    Q_SLOT void sensorType();
     Q_SLOT void stringToData();
     Q_SLOT void stringToData_data();
 
@@ -19,6 +20,14 @@ private:
     Q_SLOT void handleReadyRead_with_partial();
     Q_SLOT void handleReadyRead_with_invalid_format();
 };
+
+void TestAps1540Magnetometer::sensorType()
+{
+    auto buffer = new QBuffer;
+    auto sensor = Aps1540Magnetometer(buffer);
+
+    QCOMPARE_EQ(sensor.type(), SensorBase::SensorType::APS1540);
+}
 
 void TestAps1540Magnetometer::stringToData()
 {

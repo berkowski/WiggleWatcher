@@ -11,7 +11,7 @@ class MAGGUI_CORE_EXPORT Aps1540Magnetometer : public Magnetometer
 public:
     explicit Aps1540Magnetometer(QIODevice *io, QObject *parent = nullptr);
     ~Aps1540Magnetometer() override = default;
-
+    [[nodiscard]] auto type() const noexcept -> SensorType override { return SensorType::APS1540; }
     static auto stringToData(const QString &string) -> VectorMagnetometerData;
 
 protected:
