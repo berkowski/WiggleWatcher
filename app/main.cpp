@@ -1,13 +1,13 @@
-#include <core/iofactory.h>
 #include <core/aps1540magnetometer.h>
+#include <core/iofactory.h>
 #include <core/textfilesink.h>
 
-#include <QtCore/qtimer.h>
 #include <QtCore/qcoreapplication.h>
+#include <QtCore/qtimer.h>
 
 #include <chrono>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     auto app = QCoreApplication{argc, argv};
 
@@ -30,10 +30,9 @@ int main(int argc, char* argv[])
         raw_logger.rollover(QDateTime::currentDateTimeUtc());
     });
 
-    QObject::connect(&aps1540, &Aps1540Magnetometer::bytesRead, [&](const auto& bytes) {
+    QObject::connect(&aps1540, &Aps1540Magnetometer::bytesRead, [&](const auto &bytes) {
         qInfo() << QString::fromUtf8(bytes);
     });
-
 
     rollover_timer.start();
     return QCoreApplication::exec();

@@ -1,7 +1,7 @@
-#include  <core/iofactory.h>
 #include "serialportfactory.h"
 #include "tcpsocketfactory.h"
 #include "udpsocketfactory.h"
+#include <core/iofactory.h>
 
 #include <QtNetwork/qtcpsocket.h>
 #include <QtNetwork/qudpsocket.h>

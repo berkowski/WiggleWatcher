@@ -56,7 +56,7 @@ public:
     /// - Stop: 1, 1.5, or 2
     static auto from_string(const QString &string) -> QIODevice *;
 
-    static auto to_string(const QIODevice* device) -> QString;
+    static auto to_string(const QIODevice *device) -> QString;
 };
 
 #endif //IOFACTORY_H

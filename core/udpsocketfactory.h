@@ -33,7 +33,7 @@ public:
     /// \return
     static auto from_string(const QString &string) -> QUdpSocket *;
 
-    static auto to_string(const QUdpSocket* device) -> QString;
+    static auto to_string(const QUdpSocket *device) -> QString;
 };
 
 #endif //MAGGUI_UDPSOCKETFACTORY_H

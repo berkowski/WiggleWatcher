@@ -78,6 +78,4 @@ auto UdpSocketFactory::to_string(const QUdpSocket *device) -> QString
         string += QStringLiteral(":%1").arg(local_port);
     }
     return string;
-
-
 }
