@@ -13,5 +13,5 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 qt_standard_project_setup()
 
 include(CTest)
-add_subdirectory(src)
+add_subdirectory(core)
 add_subdirectory(utils)

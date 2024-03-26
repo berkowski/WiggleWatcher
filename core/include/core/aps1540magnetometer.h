@@ -1,7 +1,7 @@
 #ifndef MAGGUI_APS1540MAGNETOMETER_H
 #define MAGGUI_APS1540MAGNETOMETER_H
 
-#include "maggui-core_global.h"
+#include "global.h"
 #include "magnetometer.h"
 
 class MAGGUI_CORE_EXPORT Aps1540Magnetometer : public Magnetometer

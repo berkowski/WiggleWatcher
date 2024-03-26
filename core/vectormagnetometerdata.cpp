@@ -1,4 +1,4 @@
-#include "vectormagnetometerdata.h"
+#include <core/vectormagnetometerdata.h>
 
 auto operator<<(QDebug dbg, const VectorMagnetometerData &data) -> QDebug
 {

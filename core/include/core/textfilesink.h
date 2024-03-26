@@ -1,11 +1,11 @@
 #ifndef MAGGUI_TEXTFILESINK_H
 #define MAGGUI_TEXTFILESINK_H
 
-#include "maggui-core_global.h"
+#include "global.h"
 
-#include <QtCore/qdir.h>
-#include <QtCore/qobject.h>
-#include <QtCore/qstring.h>
+#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qdir.h"
+#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qobject.h"
+#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qstring.h"
 
 class QFile;
 class QDir;

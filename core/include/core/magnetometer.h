@@ -1,7 +1,7 @@
 #ifndef MAGGUI_MAGNETOMETER_H
 #define MAGGUI_MAGNETOMETER_H
 
-#include "maggui-core_global.h"
+#include "global.h"
 #include "sensorbase.h"
 #include "vectormagnetometerdata.h"
 

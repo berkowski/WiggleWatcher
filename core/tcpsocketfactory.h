@@ -1,7 +1,7 @@
 #ifndef MAGGUI_TCPSOCKETFACTORY_H
 #define MAGGUI_TCPSOCKETFACTORY_H
 
-#include "maggui-core_global.h"
+#include <core/global.h>
 
 #include <QtCore/qregularexpression.h>
 

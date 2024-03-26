@@ -1,8 +1,4 @@
-//
-// Created by Zac on 3/15/2024.
-//
-
-#include "textfilesink.h"
+#include <core/textfilesink.h>
 
 #include <QtCore/qdir.h>
 #include <QtCore/qfile.h>

@@ -1,10 +1,10 @@
 #ifndef SENSORBASE_H
 #define SENSORBASE_H
 
-#include "maggui-core_global.h"
+#include "global.h"
 
-#include <QtCore/qmetatype.h>
-#include <QtCore/qobject.h>
+#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qmetatype.h"
+#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qobject.h"
 
 class QIODevice;
 

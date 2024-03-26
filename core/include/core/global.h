@@ -1,5 +1,5 @@
-#ifndef MAGGUI_CORE_GLOBAL_H
-#define MAGGUI_CORE_GLOBAL_H
+#ifndef MAGGUI_GLOBAL_H
+#define MAGGUI_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 
@@ -8,4 +8,4 @@
 #else
 #define MAGGUI_CORE_EXPORT Q_DECL_IMPORT
 #endif
-#endif //MAGGUI_CORE_GLOBAL_H
+#endif //MAGGUI_GLOBAL_H

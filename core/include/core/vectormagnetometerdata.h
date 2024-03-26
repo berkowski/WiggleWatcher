@@ -1,10 +1,10 @@
 #ifndef MAGGUI_VECTORMAGNETOMETERDATA_H
 #define MAGGUI_VECTORMAGNETOMETERDATA_H
 
-#include "maggui-core_global.h"
+#include "global.h"
 
-#include <QtCore/qdatetime.h>
-#include <QtCore/qmetatype.h>
+#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qdatetime.h"
+#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qmetatype.h"
 
 struct MAGGUI_CORE_EXPORT VectorMagnetometerData
 {

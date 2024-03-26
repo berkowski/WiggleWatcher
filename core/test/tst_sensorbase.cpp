@@ -1,4 +1,4 @@
-#include "sensorbase.h"
+#include "../include/core/sensorbase.h"
 #include <QtTest/qtest.h>
 
 class TestSensorBase : public QObject

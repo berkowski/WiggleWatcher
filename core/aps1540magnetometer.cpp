@@ -1,4 +1,4 @@
-#include "aps1540magnetometer.h"
+#include <core/aps1540magnetometer.h>
 
 #include <QtCore/qiodevice.h>
 #include <QtCore/qregularexpression.h>

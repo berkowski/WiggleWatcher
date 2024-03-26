@@ -1,4 +1,4 @@
-#include "serialportfactory.h"
+#include "../serialportfactory.h"
 
 #include <QtCore/qobject.h>
 #include <QtCore/qpointer.h>

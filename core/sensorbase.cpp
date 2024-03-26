@@ -1,6 +1,6 @@
-#include "sensorbase.h"
+#include <core/sensorbase.h>
 
-#include <QMetaEnum>
+#include <QtCore/qmetaobject.h>
 #include <QtCore/qiodevice.h>
 
 SensorBase::SensorBase(QIODevice *io_, QObject *parent)

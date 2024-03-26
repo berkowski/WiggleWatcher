@@ -1,7 +1,7 @@
 #ifndef SERIALPORTFACTORY_H
 #define SERIALPORTFACTORY_H
 
-#include "maggui-core_global.h"
+#include <core/global.h>
 
 #include <QtCore/qstring.h>
 

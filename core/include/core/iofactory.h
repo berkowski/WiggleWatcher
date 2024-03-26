@@ -1,9 +1,9 @@
 #ifndef IOFACTORY_H
 #define IOFACTORY_H
 
-#include "maggui-core_global.h"
+#include "global.h"
 
-#include <QString>
+#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/QString"
 
 class QIODevice;
 

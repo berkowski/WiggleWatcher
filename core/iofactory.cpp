@@ -1,4 +1,4 @@
-#include "iofactory.h"
+#include  <core/iofactory.h>
 #include "serialportfactory.h"
 #include "tcpsocketfactory.h"
 #include "udpsocketfactory.h"
