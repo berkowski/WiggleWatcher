@@ -14,4 +14,5 @@ qt_standard_project_setup()
 
 include(CTest)
 add_subdirectory(core)
+add_subdirectory(app)
 add_subdirectory(utils)

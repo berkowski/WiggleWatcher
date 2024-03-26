@@ -9,6 +9,10 @@ Aps1540Magnetometer::Aps1540Magnetometer(QIODevice *io, QObject *parent)
 
 void Aps1540Magnetometer::handleReadyRead(QIODevice *device)
 {
+    // for some reason need to peek at buffer for canReadLine() to have
+    // a chance at returning true.  This was noticed during initial testing
+    // using UDP sockets on loopback
+    device->peek(device->bytesAvailable());
     while (device->canReadLine()) {
         const auto timestamp = QDateTime::currentDateTimeUtc();
 
@@ -30,7 +34,6 @@ void Aps1540Magnetometer::handleReadyRead(QIODevice *device)
         data.timestamp = timestamp;
         emit valueChanged(data);
     }
-
     if (device->bytesAvailable() > 1024) {
         const auto contents = device->readAll();
         qWarning() << "Read " << contents.size()

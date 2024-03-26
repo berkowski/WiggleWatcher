@@ -101,8 +101,7 @@ int main(int argc, char *argv[])
             const auto t = t_offset + 4 * qSin(phase_rad);
 
             stream << qSetRealNumberPrecision(8) << x << '\t' << y << '\t' << z << '\t'
-                   << qSetRealNumberPrecision(4) << t << "\r\n"
-                   << Qt::flush;
+                   << qSetRealNumberPrecision(4) << t << Qt::endl;
 
             const auto bytes = buffer.toUtf8();
             if (stdout_io) {

@@ -1,7 +1,7 @@
 find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network)
 
 qt_add_library(core STATIC)
-add_library(maggui::core ALIAS core)
+add_library(${PROJECT_NAME}::Core ALIAS core)
 
 set(core-sources-public
     include/core/vectormagnetometerdata.h
