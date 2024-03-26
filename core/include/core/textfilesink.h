@@ -60,6 +60,8 @@ public slots:
     /// \return
     [[nodiscard]] auto userComment() const noexcept -> QString { return userComment_; }
 
+    auto flush() noexcept -> void;
+
 private:
     QFile *file = nullptr;
     QDir dir;

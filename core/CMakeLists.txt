@@ -11,6 +11,7 @@ set(core-sources-public
     include/core/magnetometer.h
     include/core/aps1540magnetometer.h
     include/core/global.h
+    include/core/filetimer.h
 )
 
 set(core-sources-private
@@ -26,6 +27,7 @@ set(core-sources-private
     serialportfactory.h
     magnetometer.cpp
     aps1540magnetometer.cpp
+    filetimer.cpp
 )
 
 target_sources(core

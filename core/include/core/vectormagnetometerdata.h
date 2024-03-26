@@ -1,10 +1,10 @@
 #ifndef MAGGUI_VECTORMAGNETOMETERDATA_H
 #define MAGGUI_VECTORMAGNETOMETERDATA_H
 
-#include "global.h"
+#include <core/global.h>
 
-#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qdatetime.h"
-#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/qmetatype.h"
+#include <QtCore/qdatetime.h>
+#include <QtCore/qmetatype.h>
 
 struct MAGGUI_CORE_EXPORT VectorMagnetometerData
 {
@@ -14,6 +14,8 @@ struct MAGGUI_CORE_EXPORT VectorMagnetometerData
     [[nodiscard]] inline auto isNull() const noexcept -> bool;
 
     inline auto operator==(VectorMagnetometerData const &other) const -> bool;
+
+    [[nodiscard]] auto toDslFormat() const noexcept -> QString;
 
     //! Timestamp of data
     QDateTime timestamp;
@@ -52,6 +54,5 @@ auto VectorMagnetometerData::operator==(const VectorMagnetometerData &other) con
     return !isNull() && !other.isNull() && timestamp == other.timestamp && x == other.x
            && y == other.y && z == other.z;
 }
-
 MAGGUI_CORE_EXPORT auto operator<<(QDebug dbg, const VectorMagnetometerData &data) -> QDebug;
 #endif

@@ -83,3 +83,10 @@ auto TextFileSink::rollover(const QDateTime &datetime) -> void
     // set the new filename but don't open it yet, that'll happen on the first call to 'write'
     file->setFileName(next_filename);
 }
+
+auto TextFileSink::flush() noexcept -> void
+{
+    if (file->isOpen()) {
+        file->flush();
+    }
+}
