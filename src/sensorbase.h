@@ -32,7 +32,7 @@ private:
     QIODevice *io;
 };
 
-auto toString(SensorBase::SensorType t) -> QString;
-auto fromString(const QString &string) -> SensorBase::SensorType;
+MAGGUI_CORE_EXPORT auto toString(SensorBase::SensorType t) -> QString;
+MAGGUI_CORE_EXPORT auto fromString(const QString &string) -> SensorBase::SensorType;
 
 #endif //SENSORBASE_H

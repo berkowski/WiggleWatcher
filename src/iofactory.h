@@ -55,6 +55,8 @@ public:
     /// - Parity: N (none), E (even), O (odd), S (space), or M (mark)
     /// - Stop: 1, 1.5, or 2
     static auto from_string(const QString &string) -> QIODevice *;
+
+    static auto to_string(const QIODevice* device) -> QString;
 };
 
 #endif //IOFACTORY_H

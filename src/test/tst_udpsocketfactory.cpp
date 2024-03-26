@@ -59,6 +59,11 @@ void TestUdpSocketFactory::validConfig()
     QVERIFY(result->peerAddress().isEqual(address, QHostAddress::TolerantConversion));
     QCOMPARE_EQ(result->peerPort(), remote_port);
     QCOMPARE_EQ(result->localPort(), local_port);
+
+    // test generation of config string
+    const auto generated_config = UdpSocketFactory::to_string(result);
+    QCOMPARE(generated_config, config);
+
     result->abort();
     delete result;
 }

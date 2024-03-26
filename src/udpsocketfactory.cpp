@@ -64,3 +64,20 @@ auto UdpSocketFactory::from_string(const QString &string) -> QUdpSocket *
     }
     return udp;
 }
+auto UdpSocketFactory::to_string(const QUdpSocket *device) -> QString
+{
+    if (!device) {
+        return {};
+    }
+
+    const auto remote_port = device->peerPort();
+    const auto local_port = device->localPort();
+
+    auto string = QStringLiteral("udp://%1:%2").arg(device->peerName()).arg(remote_port);
+    if (remote_port != local_port) {
+        string += QStringLiteral(":%1").arg(local_port);
+    }
+    return string;
+
+
+}

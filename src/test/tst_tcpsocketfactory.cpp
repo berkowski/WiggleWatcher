@@ -3,6 +3,7 @@
 #include <chrono>
 #include <QtCore/qobject.h>
 #include <QtNetwork/qhostaddress.h>
+#include <QtNetwork/qtcpserver.h>
 #include <QtTest/qtest.h>
 
 class TestTcpSocketFactory : public QObject
@@ -47,11 +48,19 @@ void TestTcpSocketFactory::validConfig()
     QFETCH(QHostAddress, host);
     QFETCH(int, port);
 
+    auto server = QTcpServer{};
+    QVERIFY(server.listen(QHostAddress::Any, port));
+
     const auto result = TcpSocketFactory::from_string(config);
+    QTRY_COMPARE(result->waitForConnected(5000), true);
     QCOMPARE_NE(result, nullptr);
     QCOMPARE(result->peerName(), host.toString());
-    // can't test port value -- only availble after connectio is made
-    // QVERIFY(result->peerPort() == port);
+
+    // can't test port value -- only available after connection is made
+    QCOMPARE(result->peerPort(), port);
+
+    const auto generated_config = TcpSocketFactory::to_string(result);
+    QCOMPARE(generated_config, config);
 }
 QTEST_MAIN(TestTcpSocketFactory)
 #include "tst_tcpsocketfactory.moc"

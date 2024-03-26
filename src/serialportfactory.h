@@ -12,6 +12,7 @@ class MAGGUI_CORE_EXPORT SerialPortFactory
 public:
     static const QRegularExpression RE;
     static auto from_string(const QString &string) -> QSerialPort *;
+    static auto to_string(const QSerialPort* device) -> QString;
 };
 
 #endif //SERIALPORTFACTORY_H

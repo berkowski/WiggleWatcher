@@ -85,7 +85,7 @@ auto SerialPortFactory::from_string(const QString &string) -> QSerialPort *
     if (!ok || baud <= 0) {
         qCritical("invalid baud rate: %s in config string: %s",
                   qUtf8Printable(match.captured(2)),
-                  string);
+                  qUtf8Printable(string));
         return nullptr;
     }
 
@@ -129,4 +129,62 @@ auto SerialPortFactory::from_string(const QString &string) -> QSerialPort *
     const auto raw = port.data();
     port.clear();
     return raw;
+}
+
+auto SerialPortFactory::to_string(const QSerialPort *device) -> QString
+{
+    if (!device) {
+        return {};
+    }
+    const auto data_bits = [&]() {
+        switch (device->dataBits()) {
+        case QSerialPort::DataBits::Data5:
+            return QChar{'5'};
+        case QSerialPort::DataBits::Data6:
+            return QChar{'6'};
+        case QSerialPort::DataBits::Data7:
+            return QChar{'7'};
+        case QSerialPort::DataBits::Data8:
+            return QChar{'8'};
+        default:
+            Q_UNREACHABLE();
+        }
+    }();
+
+    const auto parity = [&]() {
+        switch (device->parity()) {
+        case QSerialPort::Parity::NoParity:
+            return QChar{'N'};
+        case QSerialPort::Parity::EvenParity:
+            return QChar{'E'};
+        case QSerialPort::Parity::OddParity:
+            return QChar{'O'};
+        case QSerialPort::Parity::SpaceParity:
+            return QChar{'S'};
+        case QSerialPort::Parity::MarkParity:
+            return QChar{'M'};
+        default:
+            Q_UNREACHABLE();
+        }
+    }();
+
+    const auto stop_bits = [&]() {
+        switch (device->stopBits()) {
+        case QSerialPort::StopBits::OneStop:
+            return QString{"1"};
+        case QSerialPort::StopBits::OneAndHalfStop:
+            return QString{"1.5"};
+        case QSerialPort::StopBits::TwoStop:
+            return QString{"2"};
+        default:
+            Q_UNREACHABLE();
+        }
+    }();
+
+    return QStringLiteral("serial://%1:%2%3%4@%5")
+        .arg(device->portName())
+        .arg(data_bits)
+        .arg(parity)
+        .arg(stop_bits)
+        .arg(device->baudRate());
 }

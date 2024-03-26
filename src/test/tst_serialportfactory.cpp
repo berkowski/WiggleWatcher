@@ -91,6 +91,9 @@ void TestSerialPortFactory::validConfig()
     QCOMPARE_EQ(ptr->baudRate(), baud_rate);
     QCOMPARE_EQ(ptr->dataBits(), data_bits);
 
+    // test that we generate the original config string again
+    const auto generated_config = SerialPortFactory::to_string(ptr);
+    QCOMPARE(generated_config, config);
     ptr->close();
 }
 

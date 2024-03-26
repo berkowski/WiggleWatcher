@@ -36,3 +36,11 @@ auto TcpSocketFactory::from_string(const QString &string) -> QTcpSocket *
     tcp->connectToHost(address, port);
     return tcp;
 }
+auto TcpSocketFactory::to_string(const QTcpSocket *device) -> QString
+{
+    if (!device) {
+        return {};
+    }
+
+    return QStringLiteral("tcp://%1:%2").arg(device->peerName()).arg(device->peerPort());
+}
