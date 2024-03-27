@@ -15,6 +15,7 @@ TextFileSink::TextFileSink(const QDir &dir,
     , suffix(suffix)
     , dir(dir)
     , file(new QFile(this))
+    , rollover_interval(std::chrono::hours(1))
 {
     if (!prefix.isEmpty() && !prefix.endsWith("_")) {
         this->prefix = prefix + QStringLiteral("_");
@@ -34,17 +35,34 @@ auto TextFileSink::currentFileName() const -> QString
 
 auto TextFileSink::write(const QByteArray &bytes) -> void
 {
-    if (!file->isOpen()) {
+    const auto now = QDateTime::currentDateTimeUtc();
+    auto write_header = false;
+    if (now >= next_rollover) {
+        auto next = QDateTime{};
         if (file->fileName().isEmpty()) {
-            const auto filename = filenameForDateTime(QDateTime::currentDateTimeUtc());
-            file->setFileName(filename);
+            file->setFileName(filenameForDateTime(now));
+            next = QDateTime::fromSecsSinceEpoch(std::chrono::duration_cast<std::chrono::seconds>(((std::chrono::milliseconds(now.toMSecsSinceEpoch()) / rollover_interval) + 1) * rollover_interval).count());
+        }
+        else {
+            file->close();
+            if (file->size() == 0) {
+                if (!file->remove()) {
+                    qWarning() << "Unable to remove empty file: '%s'" << file->fileName();
+                }
+            }
+            file->setFileName(filenameForDateTime(next_rollover));
+            next = next_rollover + rollover_interval;
         }
 
         if (!file->open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Truncate)) {
             qCritical("Unable to open file for writing: '%s'", qUtf8Printable(file->fileName()));
             return;
         }
+        write_header = true;
+        next_rollover = next;
+    }
 
+    if (write_header) {
         // write header
         std::for_each(metadata.constKeyValueBegin(),
                       metadata.constKeyValueEnd(),
@@ -58,6 +76,11 @@ auto TextFileSink::write(const QByteArray &bytes) -> void
         }
     }
     file->write(bytes);
+}
+
+auto TextFileSink::setRolloverInterval(const std::chrono::milliseconds &duration) noexcept -> void
+{
+    rollover_interval = duration;
 }
 
 auto TextFileSink::filenameForDateTime(const QDateTime &datetime) const -> QString

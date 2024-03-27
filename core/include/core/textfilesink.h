@@ -8,6 +8,7 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qdatetime.h>
 
+#include <chrono>
 
 class QFile;
 class QDir;
@@ -36,12 +37,33 @@ public:
     /// \return
     [[nodiscard]] auto filenameForDateTime(const QDateTime &datetime) const -> QString;
 
+    [[nodiscard]] inline auto rolloverIntervalAsDuration() const noexcept -> std::chrono::milliseconds
+    {
+        return rollover_interval;
+    }
+
+    [[nodiscard]] inline auto rolloverInterval() const noexcept -> int
+    {
+        return static_cast<int>(rollover_interval.count());
+    }
+
+    [[nodiscard]] inline auto timeUntilRolloverAsDuration() const noexcept -> std::chrono::milliseconds
+    {
+        return QDateTime::currentDateTimeUtc() - next_rollover;
+    }
+
+    [[nodiscard]] inline auto timeUntilRollover() const noexcept -> int
+    {
+        return timeUntilRolloverAsDuration().count();
+    }
 public slots:
     /// Write a string to the file
     ///
     /// Creates a new file with header information if needed.
     /// \param bytes
     auto write(const QByteArray &bytes) -> void;
+
+    auto setRolloverInterval(const std::chrono::milliseconds& duration) noexcept -> void;
 
     /// Write future data into a new file
     ///
@@ -71,6 +93,8 @@ private:
     QString suffix;
     QMap<QString, QString> metadata;
     QString userComment_;
+    std::chrono::milliseconds rollover_interval;
+    QDateTime next_rollover;
 };
 
 #endif //MAGGUI_TEXTFILESINK_H
