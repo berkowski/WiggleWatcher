@@ -1,8 +1,14 @@
+include(GenerateExportHeader)
+
 find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network)
 
 qt_add_library(core STATIC)
 add_library(${PROJECT_NAME}::Core ALIAS core)
-
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/core)
+generate_export_header(core
+    PREFIX_NAME MAGGUI_
+    EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/include/core/global.h
+)
 set(core-sources-public
     include/core/vectormagnetometerdata.h
     include/core/sensorbase.h
@@ -10,7 +16,6 @@ set(core-sources-public
     include/core/iofactory.h
     include/core/magnetometer.h
     include/core/aps1540magnetometer.h
-    include/core/global.h
     include/core/filetimer.h
 )
 
@@ -41,7 +46,6 @@ target_include_directories(core
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"
 )
 
-target_compile_definitions(core PRIVATE MAGGUI_CORE_LIBRARY)
 
 target_link_libraries(core
     PUBLIC Qt::Core Qt::Network Qt::SerialPort)

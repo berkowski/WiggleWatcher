@@ -1,9 +1,9 @@
 #ifndef IOFACTORY_H
 #define IOFACTORY_H
 
-#include "global.h"
+#include <core/global.h>
 
-#include "../../../../../../../../gnu/store/wq488jkxrfswnsx7f0r8fxfywr17wqdr-profile/include/qt6/QtCore/QString"
+#include <QtCore/qstring.h>
 
 class QIODevice;
 

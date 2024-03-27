@@ -1,9 +1,9 @@
 #ifndef MAGGUI_MAGNETOMETER_H
 #define MAGGUI_MAGNETOMETER_H
 
-#include "global.h"
-#include "sensorbase.h"
-#include "vectormagnetometerdata.h"
+#include <core/global.h>
+#include <core/sensorbase.h>
+#include <core/vectormagnetometerdata.h>
 
 class MAGGUI_CORE_EXPORT Magnetometer : public SensorBase
 {
