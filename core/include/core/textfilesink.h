@@ -21,7 +21,8 @@ class MAGGUI_CORE_EXPORT TextFileSink : public QObject
 public:
     static const QString DATETIME_FMT;
 
-    Q_SIGNAL void filenameChanged(QString);
+    Q_SIGNAL void fileNameChanged(QString);
+    Q_SIGNAL void bytesWritten(qint64);
 
     explicit TextFileSink(const QDir &dir = QDir{},
                           const QString &prefix = QStringLiteral("raw"),
@@ -51,7 +52,12 @@ public:
 
     [[nodiscard]] inline auto timeUntilRolloverAsDuration() const noexcept -> std::chrono::milliseconds
     {
-        return QDateTime::currentDateTimeUtc() - next_rollover;
+        if (next_rollover.isNull()) {
+            return std::chrono::milliseconds(-1);
+        }
+        else {
+            return next_rollover - QDateTime::currentDateTimeUtc();
+        }
     }
 
     [[nodiscard]] inline auto timeUntilRollover() const noexcept -> int
@@ -59,7 +65,19 @@ public:
         return static_cast<int>(timeUntilRolloverAsDuration().count());
     }
 
+    [[nodiscard]] auto isActive() const noexcept -> bool;
+
+    [[nodiscard]] inline auto dir() const noexcept -> QDir
+    {
+        return dir_;
+    }
+
 public slots:
+
+    auto start() -> void;
+
+    auto stop() -> void;
+
     /// Write a string to the file
     ///
     /// Creates a new file with header information if needed.
@@ -74,6 +92,9 @@ public slots:
     /// \param header
     auto setHeader(const QString &header) noexcept -> void { header_ = header; }
 
+    auto setHeader(const QStringList &lines) noexcept -> void {
+        header_ = lines.join(QChar{'\n'});
+    }
     /// Get the user comment
     ///
     /// The header written to the top of every file
@@ -92,7 +113,7 @@ private:
     auto rollover(const QDateTime &datetime) -> void;
 
     QFile *file = nullptr;
-    QDir dir;
+    QDir dir_;
     QString prefix;
     QString suffix;
     QString header_;
