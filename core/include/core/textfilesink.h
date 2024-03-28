@@ -21,6 +21,8 @@ class MAGGUI_CORE_EXPORT TextFileSink : public QObject
 public:
     static const QString DATETIME_FMT;
 
+    Q_SIGNAL void filenameChanged(QString);
+
     explicit TextFileSink(const QDir &dir = QDir{},
                           const QString &prefix = QStringLiteral("raw"),
                           const QString &suffix = QStringLiteral(".txt"),
@@ -54,8 +56,9 @@ public:
 
     [[nodiscard]] inline auto timeUntilRollover() const noexcept -> int
     {
-        return timeUntilRolloverAsDuration().count();
+        return static_cast<int>(timeUntilRolloverAsDuration().count());
     }
+
 public slots:
     /// Write a string to the file
     ///
@@ -65,6 +68,22 @@ public slots:
 
     auto setRolloverInterval(const std::chrono::milliseconds& duration) noexcept -> void;
 
+    /// Set the user comment
+    ///
+    /// The header written to the top of every file
+    /// \param header
+    auto setHeader(const QString &header) noexcept -> void { header_ = header; }
+
+    /// Get the user comment
+    ///
+    /// The header written to the top of every file
+    /// \return
+    [[nodiscard]] auto header() const noexcept -> QString { return header_; }
+
+    auto flush() noexcept -> void;
+
+private:
+
     /// Write future data into a new file
     ///
     /// The current file is closed and removed if empty.
@@ -72,27 +91,11 @@ public slots:
     /// \param datetime
     auto rollover(const QDateTime &datetime) -> void;
 
-    /// Set the user comment
-    ///
-    /// The user comment is written after the metadata fields in the header of each file
-    /// \param comment
-    auto setUserComment(const QString &comment) noexcept -> void { userComment_ = comment; }
-
-    /// Get the user comment
-    ///
-    /// The user comment is written after the metadata fields in the header of each file
-    /// \return
-    [[nodiscard]] auto userComment() const noexcept -> QString { return userComment_; }
-
-    auto flush() noexcept -> void;
-
-private:
     QFile *file = nullptr;
     QDir dir;
     QString prefix;
     QString suffix;
-    QMap<QString, QString> metadata;
-    QString userComment_;
+    QString header_;
     std::chrono::milliseconds rollover_interval;
     QDateTime next_rollover;
 };

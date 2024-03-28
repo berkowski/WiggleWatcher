@@ -27,53 +27,20 @@ TextFileSink::TextFileSink(const QDir &dir,
 
 auto TextFileSink::currentFileName() const -> QString
 {
-    if (file->isOpen()) {
-        return file->fileName();
-    }
-    return {};
+    return file->fileName();
 }
 
 auto TextFileSink::write(const QByteArray &bytes) -> void
 {
     const auto now = QDateTime::currentDateTimeUtc();
-    auto write_header = false;
     if (now >= next_rollover) {
-        auto next = QDateTime{};
-        if (file->fileName().isEmpty()) {
-            file->setFileName(filenameForDateTime(now));
-            next = QDateTime::fromSecsSinceEpoch(std::chrono::duration_cast<std::chrono::seconds>(((std::chrono::milliseconds(now.toMSecsSinceEpoch()) / rollover_interval) + 1) * rollover_interval).count());
-        }
-        else {
-            file->close();
-            if (file->size() == 0) {
-                if (!file->remove()) {
-                    qWarning() << "Unable to remove empty file: '%s'" << file->fileName();
-                }
-            }
-            file->setFileName(filenameForDateTime(next_rollover));
-            next = next_rollover + rollover_interval;
-        }
-
+        rollover(now);
         if (!file->open(QFile::OpenModeFlag::WriteOnly | QFile::OpenModeFlag::Truncate)) {
             qCritical("Unable to open file for writing: '%s'", qUtf8Printable(file->fileName()));
             return;
         }
-        write_header = true;
-        next_rollover = next;
-    }
-
-    if (write_header) {
-        // write header
-        std::for_each(metadata.constKeyValueBegin(),
-                      metadata.constKeyValueEnd(),
-                      [&](const auto &it) {
-                          file->write(QStringLiteral("#%1: %2").arg(it.first, it.second).toUtf8());
-                      });
-
-        // write format comments, if needed
-        if (!userComment_.isEmpty()) {
-            file->write(userComment_.toUtf8());
-        }
+        // write the header
+        file->write(header_.toUtf8());
     }
     file->write(bytes);
 }
@@ -91,20 +58,30 @@ auto TextFileSink::filenameForDateTime(const QDateTime &datetime) const -> QStri
 
 auto TextFileSink::rollover(const QDateTime &datetime) -> void
 {
-    const auto next_filename = filenameForDateTime(datetime);
-    // clean up current file if open
+    // close the file if open, deleting it as well if empty
     if (file->isOpen()) {
-        file->flush();
         file->close();
-        // if it's empty, remove it
-        if (file->size() == 0) {
-            if (!file->remove()) {
-                qWarning() << "Unable to remove empty file: '%s'" << file->fileName();
-            }
+        if (file->size() == 0 && !file->remove()) {
+            qWarning() << "Unable to remove empty file: '%s'" << file->fileName();
         }
     }
-    // set the new filename but don't open it yet, that'll happen on the first call to 'write'
-    file->setFileName(next_filename);
+
+    // calculate the new filename
+    if (next_rollover.isNull()) {
+        file->setFileName(filenameForDateTime(datetime));
+        emit filenameChanged(file->fileName());
+        const auto intervals_since_epoch = std::chrono::milliseconds(datetime.toMSecsSinceEpoch()) / rollover_interval;
+        const auto next_rollover_ms = (intervals_since_epoch + 1) * rollover_interval;
+        next_rollover = QDateTime::fromSecsSinceEpoch(std::chrono::duration_cast<std::chrono::seconds>(next_rollover_ms).count());
+    }
+    else {
+        while (next_rollover < datetime) {
+            next_rollover += rollover_interval;
+        }
+        file->setFileName(filenameForDateTime(next_rollover));
+        emit filenameChanged(file->fileName());
+    }
+
 }
 
 auto TextFileSink::flush() noexcept -> void

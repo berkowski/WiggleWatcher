@@ -42,9 +42,7 @@ auto UdpSocketFactory::from_string(const QString &string) -> QUdpSocket *
 
     auto udp = new QUdpSocket(nullptr);
     // first bind to the local port
-    udp->bind(QHostAddress::Any,
-              local_port,
-              QAbstractSocket::BindFlag::ReuseAddressHint | QAbstractSocket::BindFlag::ShareAddress);
+    udp->bind(local_port, QAbstractSocket::BindFlag::ReuseAddressHint | QAbstractSocket::BindFlag::ShareAddress);
     if (udp->state() != QAbstractSocket::SocketState::BoundState) {
         qCritical("unable to bind on local port: %d.  error: %s",
                   local_port,
