@@ -1,0 +1,17 @@
+#  Copyright © 2024 Tobias Erbsland https://erbsland.dev/ and EducateIT GmbH https://educateit.ch/
+#  According to the copyright terms specified in the file "COPYRIGHT.md".
+#  SPDX-License-Identifier: LGPL-3.0-or-later
+
+
+header = """
+// Copyright © {year} Tobias Erbsland https://erbsland.dev/ and EducateIT GmbH https://educateit.ch/
+// According to the copyright terms specified in the file "COPYRIGHT.md".
+// SPDX-License-Identifier: LGPL-3.0-or-later
+#pragma once
+
+
+"""
+
+excluded_directories = ["impl"]
+create_global_includes = false
+create_all_base_dir = 'qt'
