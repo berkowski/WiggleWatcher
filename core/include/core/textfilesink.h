@@ -90,10 +90,15 @@ public slots:
     ///
     /// The header written to the top of every file
     /// \param header
-    auto setHeader(const QString &header) noexcept -> void { header_ = header; }
+    auto setHeader(const QString &header) noexcept -> void {
+      header_ = header;
+      if (!header_.endsWith(QChar{'\n'})) {
+        header_.append(QChar{'\n'});
+      }
+    }
 
     auto setHeader(const QStringList &lines) noexcept -> void {
-        header_ = lines.join(QChar{'\n'});
+      setHeader(lines.join(QChar{'\n'}));
     }
     /// Get the user comment
     ///

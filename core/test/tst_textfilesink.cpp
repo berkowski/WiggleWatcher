@@ -12,6 +12,8 @@ private:
     Q_SLOT void initialState();
     Q_SLOT void writeWhileStopped();
     Q_SLOT void callingStartWritesNoData();
+    Q_SLOT void headerIsWritten();
+    Q_SLOT void headerGetsANewline();
 };
 
 
@@ -82,6 +84,38 @@ void TestTextFileSink::callingStartWritesNoData()
 
     // but has no data
     QCOMPARE(file_info.size(), 0);
+}
+
+void TestTextFileSink::headerIsWritten()
+{
+    const auto dir = QDir::temp();
+    auto sink = TextFileSink{dir};
+    const auto header = "# Some header string\n";
+    sink.setHeader(header);
+    sink.start();
+    QVERIFY(sink.isActive());
+    const auto filename = sink.currentFileName();
+    QVERIFY(!filename.isEmpty());
+
+    // write some dummy data to also write header
+    sink.write(QStringLiteral("some data\n").toUtf8());
+    sink.flush();
+
+    auto file_ = QFile{filename};
+    QVERIFY(file_.open(QIODevice::ReadOnly));
+    const auto contents = file_.readAll();
+    file_.close();
+    sink.stop();
+    file_.remove();
+    QVERIFY(contents.startsWith(header));
+
+}
+
+void TestTextFileSink::headerGetsANewline() {
+    auto sink = TextFileSink{};
+    const auto header = "# some header without a newline";
+    sink.setHeader(header);
+    QCOMPARE(header +QStringLiteral("\n"), sink.header());
 }
 
 QTEST_MAIN(TestTextFileSink)
