@@ -9,6 +9,7 @@
              (gnu packages qt)
              (gnu packages cpp)
              (gnu packages llvm)
+             (gnu packages cmake)
              (ice-9 match)
              (srfi srfi-1))
 
@@ -86,6 +87,9 @@ interacting with serial ports from within Qt.")
  (version "0")
  (source #f)
  (build-system cmake-build-system)
+ (arguments
+  (list
+   #:cmake cmake))
  (native-inputs
   (list
    qttools
