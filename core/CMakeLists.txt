@@ -17,6 +17,8 @@ set(core-sources-public
     include/core/magnetometer.h
     include/core/aps1540magnetometer.h
     include/core/filetimer.h
+    #include/core/loggingcore.h
+    include/core/settings.h
 )
 
 set(core-sources-private
@@ -33,6 +35,8 @@ set(core-sources-private
     magnetometer.cpp
     aps1540magnetometer.cpp
     filetimer.cpp
+    #loggingcore.cpp
+    settings.cpp
 )
 
 target_sources(core
@@ -49,7 +53,9 @@ target_include_directories(core
 
 
 target_link_libraries(core
-    PUBLIC Qt::Core Qt::Network Qt::SerialPort)
+    PUBLIC Qt::Core Qt::Network Qt::SerialPort
+    PRIVATE erbsland-qt-toml
+)
 
 if (BUILD_TESTING)
   add_subdirectory("test")
