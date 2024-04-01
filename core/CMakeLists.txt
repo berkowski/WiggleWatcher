@@ -36,8 +36,9 @@ set(core-sources-private
 )
 
 target_sources(core
-    PUBLIC ${core-sources-public}
-    PRIVATE ${core-sources-private}
+    PRIVATE
+        ${core-sources-public}
+        ${core-sources-private}
 )
 
 target_include_directories(core

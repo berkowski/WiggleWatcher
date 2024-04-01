@@ -7,4 +7,4 @@ target_sources(${PROJECT_NAME}
     main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}::Core Qt6::Network)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}::Core)
