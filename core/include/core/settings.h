@@ -6,6 +6,7 @@
 
 #include <QtCore/qmetatype.h>
 
+#include <chrono>
 #include <memory>
 
 namespace erbsland::qt::toml
@@ -29,6 +30,10 @@ public:
     auto setDir(const QString &dir) noexcept -> void;
     [[nodiscard]] auto dir() const noexcept -> QString;
 
+    auto setInterval(const std::chrono::minutes& minutes) noexcept -> void;
+    [[nodiscard]] auto interval() const noexcept -> std::chrono::minutes;
+
+    [[nodiscard]] auto toString() const noexcept -> QString;
 
 private:
     explicit Settings(std::shared_ptr<erbsland::qt::toml::Value>&& toml);
