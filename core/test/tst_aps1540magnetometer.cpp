@@ -7,6 +7,8 @@
 #include <QtTest/qsignalspy.h>
 #include <QtTest/qtest.h>
 
+using namespace maggui;
+
 class TestAps1540Magnetometer : public QObject
 {
     Q_OBJECT

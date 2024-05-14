@@ -7,9 +7,10 @@ add_library(${PROJECT_NAME}::Core ALIAS core)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/core)
 generate_export_header(core
     PREFIX_NAME MAGGUI_
-    EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/include/core/global.h
+    EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/include/core/export.h
 )
 set(core-sources-public
+    include/core/global.h
     include/core/vectormagnetometerdata.h
     include/core/sensorbase.h
     include/core/textfilesink.h
@@ -19,6 +20,7 @@ set(core-sources-public
     include/core/filetimer.h
     #include/core/loggingcore.h
     include/core/settings.h
+    include/core/sensorbase.h
 )
 
 set(core-sources-private
@@ -37,6 +39,9 @@ set(core-sources-private
     filetimer.cpp
     #loggingcore.cpp
     settings.cpp
+    sensorfactory.h
+    sensorfactory.cpp
+    sensorkind.cpp
 )
 
 target_sources(core

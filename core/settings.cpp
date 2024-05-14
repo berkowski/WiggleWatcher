@@ -10,9 +10,14 @@
 using namespace Qt::Literals::StringLiterals;
 using Value = erbsland::qt::toml::Value;
 
-// required keys
+// required log keys
 const auto KEY_LOG_PATH = u"path"_s;
 const auto KEY_LOG_INTERVAL = u"interval"_s;
+
+// required sensor keys
+const auto KEY_SENSOR_NAME = u"name"_s;
+const auto KEY_SENSOR_CONNECTION = u"connection"_s;
+const auto KEY_SENSOR_TYPE = u"type"_s;
 
 struct ValidationParams {
     QString section;
@@ -20,9 +25,15 @@ struct ValidationParams {
     Value::Type type_;
 };
 
-const auto VALIDATION_KEYS = QList<ValidationParams>{
+const auto LOG_VALIDATION_KEYS = QList<ValidationParams>{
     {"log", KEY_LOG_PATH, Value::Type::String},
-    {"log", KEY_LOG_INTERVAL, Value::Type::Integer}
+    {"log", KEY_LOG_INTERVAL, Value::Type::Integer},
+};
+
+const auto SENSOR_VALIDATION_KEYS = QList<ValidationParams>{
+        {"sensor", KEY_SENSOR_NAME, Value::Type::String},
+        {"sensor", KEY_SENSOR_CONNECTION, Value::Type::String},
+        {"sensor", KEY_SENSOR_TYPE, Value::Type::String},
 };
 
 namespace
@@ -59,7 +70,7 @@ namespace
             return {false, QStringLiteral("invalid toml object")};
         }
 
-        for (auto it = VALIDATION_KEYS.constBegin(); it != VALIDATION_KEYS.constEnd(); ++it) {
+        for (auto it = LOG_VALIDATION_KEYS.constBegin(); it != LOG_VALIDATION_KEYS.constEnd(); ++it) {
             const auto result = check_toml_key(toml, *it);
             if(!result.first) {
                 return result;

@@ -29,6 +29,21 @@
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
       }
+    },
+    {
+      "hidden": true,
+      "name": "Qt",
+      "cacheVariables": {
+        "CMAKE_PREFIX_PATH": "$env{QTDIR}"
+      },
+      "environment": {
+        "PATH": "$penv{PATH};$env{QTDIR}/bin"
+      },
+      "vendor": {
+        "qt-project.org/Qt": {
+          "checksum": "Sp19WUpde73JS7nK33HZMqVZTyI="
+        }
+      }
     }
   ],
   "buildPresets": [

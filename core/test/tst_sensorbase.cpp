@@ -1,6 +1,8 @@
 #include "../include/core/sensorbase.h"
 #include <QtTest/qtest.h>
 
+using namespace maggui;
+
 class TestSensorBase : public QObject
 {
     Q_OBJECT
@@ -11,10 +13,19 @@ private:
 
 void TestSensorBase::sensorType()
 {
-    QFETCH(SensorBase::SensorType, enum_);
+    QFETCH(SensorKind, enum_);
     QFETCH(QString, string);
+    QFETCH(bool, expected_success);
 
-    const auto enum_from_string = fromString(string);
+
+    auto ok = false;
+    const auto enum_from_string = fromString(string, &ok);
+    QCOMPARE(ok, expected_success);
+
+    if (!expected_success) {
+        return;
+    }
+
     QCOMPARE_EQ(enum_from_string, enum_);
 
     const auto string_from_enum = toString(enum_);
@@ -23,14 +34,14 @@ void TestSensorBase::sensorType()
 
 void TestSensorBase::sensorType_data()
 {
-    QTest::addColumn<SensorBase::SensorType>("enum_");
+    QTest::addColumn<SensorKind>("enum_");
     QTest::addColumn<QString>("string");
+    QTest::addColumn<bool>("expected_success");
 
-    QTest::addRow("unknown") << SensorBase::SensorType::UNKNOWN << "unknown";
-    QTest::addRow("UNKNOWN") << SensorBase::SensorType::UNKNOWN << "UNKNOWN";
-    QTest::addRow("APS1540") << SensorBase::SensorType::APS1540 << "APS1540";
-    QTest::addRow("HMR2300") << SensorBase::SensorType::HMR2300 << "HMR2300";
-    QTest::addRow("USER_TYPE") << SensorBase::SensorType::USER_TYPE << "USER_TYPE";
+    QTest::addRow("unknown") << SensorKind::APS1540 << "unknown" << false;
+    QTest::addRow("UNKNOWN") << SensorKind::APS1540 << "UNKNOWN" << false;
+    QTest::addRow("APS1540") << SensorKind::APS1540 << "APS1540" << true;
+    QTest::addRow("HMR2300") << SensorKind::HMR2300 << "HMR2300" << true;
 }
 
 QTEST_MAIN(TestSensorBase)

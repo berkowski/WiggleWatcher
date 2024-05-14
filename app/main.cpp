@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     auto raw_logger = TextFileSink{log_root, QStringLiteral("raw"), QStringLiteral(".txt")};
     raw_logger.setRolloverInterval(std::chrono::seconds(10));
 
-    auto io = IOFactory::from_string("udp://127.0.0.1:5001:5000");
+    auto io = IOFactory::from_string("udp://127.0.0.1:70001:70000");
     if (!io) {
         qFatal() << "Unable to open udp socket";
     }
