@@ -1,17 +1,17 @@
-#include "../include/core/sensorbase.h"
+#include "../include/core/global.h"
 #include <QtTest/qtest.h>
 
 using namespace maggui;
 
-class TestSensorBase : public QObject
+class TestSensorKind : public QObject
 {
     Q_OBJECT
 private:
-    Q_SLOT void sensorType();
-    Q_SLOT void sensorType_data();
+    Q_SLOT void sensorKind();
+    Q_SLOT void sensorKind_data();
 };
 
-void TestSensorBase::sensorType()
+void TestSensorKind::sensorKind()
 {
     QFETCH(SensorKind, enum_);
     QFETCH(QString, string);
@@ -32,7 +32,7 @@ void TestSensorBase::sensorType()
     QCOMPARE_EQ(string_from_enum, string.toUpper());
 }
 
-void TestSensorBase::sensorType_data()
+void TestSensorKind::sensorKind_data()
 {
     QTest::addColumn<SensorKind>("enum_");
     QTest::addColumn<QString>("string");
@@ -44,5 +44,5 @@ void TestSensorBase::sensorType_data()
     QTest::addRow("HMR2300") << SensorKind::HMR2300 << "HMR2300" << true;
 }
 
-QTEST_MAIN(TestSensorBase)
-#include "tst_sensorbase.moc"
+QTEST_MAIN(TestSensorKind)
+#include "tst_sensorkind.moc"

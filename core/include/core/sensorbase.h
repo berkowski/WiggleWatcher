@@ -2,7 +2,6 @@
 #define SENSORBASE_H
 
 #include <core/global.h>
-#include <core/sensorkind.h>
 
 #include <QtCore/qmetatype.h>
 #include <QtCore/qobject.h>

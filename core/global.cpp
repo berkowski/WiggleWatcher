@@ -1,8 +1,8 @@
 #include <core/global.h>
 #include <QtCore/qmetaobject.h>
 
-using namespace maggui;
-
+namespace maggui
+{
 auto toString(SensorKind t) -> QString
 {
     const auto meta = QMetaEnum::fromType<SensorKind>();
@@ -25,3 +25,4 @@ auto fromString(const QString &string, bool *ok) -> SensorKind
         return static_cast<SensorKind>(index);
     }
 }
+} // namespace maggui

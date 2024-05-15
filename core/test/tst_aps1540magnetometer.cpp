@@ -28,7 +28,7 @@ void TestAps1540Magnetometer::sensorType()
     auto buffer = new QBuffer;
     auto sensor = Aps1540Magnetometer(buffer);
 
-    QCOMPARE_EQ(sensor.type(), SensorBase::SensorType::APS1540);
+    QCOMPARE_EQ(sensor.type(), SensorKind::APS1540);
 }
 
 void TestAps1540Magnetometer::stringToData()
