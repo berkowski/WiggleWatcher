@@ -72,6 +72,12 @@ public:
         return dir_;
     }
 
+    /// Get the user comment
+    ///
+    /// The header written to the top of every file
+    /// \return
+    [[nodiscard]] auto header() const noexcept -> QString { return header_; }
+
 public slots:
 
     auto start() -> void;
@@ -100,13 +106,9 @@ public slots:
     auto setHeader(const QStringList &lines) noexcept -> void {
       setHeader(lines.join(QChar{'\n'}));
     }
-    /// Get the user comment
-    ///
-    /// The header written to the top of every file
-    /// \return
-    [[nodiscard]] auto header() const noexcept -> QString { return header_; }
-
     auto flush() noexcept -> void;
+
+    auto setDir(QDir dir) -> void;
 
 private:
 

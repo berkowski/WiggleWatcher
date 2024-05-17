@@ -3,6 +3,7 @@
 #include <QtCore/qdir.h>
 #include <QtCore/qfile.h>
 #include <QtCore/qmap.h>
+#include <QtCore/qtimezone.h>
 
 const QString TextFileSink::DATETIME_FMT = QStringLiteral("yyyyMMdd_HHmmss");
 
@@ -132,4 +133,16 @@ auto TextFileSink::stop() -> void
     }
     file->setFileName({});
     next_rollover = QDateTime{};
+}
+
+auto TextFileSink::setDir(QDir d) -> void
+{
+    if (d != dir()) {
+        const auto restart = isActive();
+        stop();
+        dir_ = std::move(d);
+        if (restart) {
+            start();
+        }
+    }
 }
