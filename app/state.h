@@ -20,7 +20,7 @@ class StateObject: public QObject {
  Q_OBJECT
 
  public:
-  explicit StateObject(QObject* parent=nullptr);
+  explicit StateObject(QObject* parent=nullptr, QWidget* widget=nullptr);
 
   [[nodiscard]] auto isRecordingEnabled() const noexcept -> bool {
     return state.recording;
@@ -39,6 +39,7 @@ class StateObject: public QObject {
   
  private:
   maggui::State state;
+  QWidget* widget;
 };
   
 
