@@ -17,7 +17,12 @@ auto StateObject::setRecordingEnabled(bool enabled) noexcept -> void {
 
 auto StateObject::setLogDirectory(QString directory) noexcept -> void {
   if (directory != state.log_directory) {
-    state.log_directory = directory;
-    emit stateChanged(state);
+    if (QFileInfo(directory).isWritable()) {
+       state.log_directory = directory;
+       emit stateChanged(state);
+    }
+    else {
+	qWarning() << directory << " is not writable.";
+    }
   }
 }

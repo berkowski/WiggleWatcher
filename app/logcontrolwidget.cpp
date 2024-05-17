@@ -16,12 +16,7 @@ auto LogControlWidget::on_logDirectoryButton_clicked() -> void {
     const auto current_directory = ui->logDirectory->text();
     const auto dir = QFileDialog::getExistingDirectory(this, tr("Save logs to..."), current_directory, QFileDialog::ShowDirsOnly);
     if (!dir.isNull() && dir != current_directory) {
-      if (QFileInfo(dir).isWritable()) {
         emit userChangedLogDirectory(dir);
-      }
-      else {
-	qWarning() << dir << " is not writable.";
-      }
     }
 }
 
