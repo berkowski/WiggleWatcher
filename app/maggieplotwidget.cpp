@@ -98,7 +98,12 @@ auto MaggiePlotWidget::onTimerUpdate() -> void {
 
   // rescale vertical axis
   std::for_each(std::begin(axis_rects), std::end(axis_rects), [&](auto& rect) {
-    rect->axis(QCPAxis::AxisType::atLeft)->rescale(true);
+    auto y_axis = rect->axis(QCPAxis::AxisType::atLeft); 
+    y_axis->rescale(true);
+    const auto range = y_axis->range();
+    if (range.size() < 10) {
+      y_axis->setRange(range.center() - 5, range.center() + 5);
+    }
   });
       
   plot->replot();
