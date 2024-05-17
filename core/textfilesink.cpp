@@ -94,7 +94,7 @@ auto TextFileSink::rollover(const QDateTime &datetime) -> void
         emit fileNameChanged(file->fileName());
         const auto intervals_since_epoch = std::chrono::milliseconds(datetime.toMSecsSinceEpoch()) / rollover_interval;
         const auto next_rollover_ms = (intervals_since_epoch + 1) * rollover_interval;
-        next_rollover = QDateTime::fromSecsSinceEpoch(std::chrono::duration_cast<std::chrono::seconds>(next_rollover_ms).count());
+        next_rollover = QDateTime::fromSecsSinceEpoch(std::chrono::duration_cast<std::chrono::seconds>(next_rollover_ms).count(), QTimeZone::utc());
     }
     else {
         while (next_rollover < datetime) {
