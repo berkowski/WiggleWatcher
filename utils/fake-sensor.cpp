@@ -6,6 +6,7 @@
 #include <QtCore/qmath.h>
 #include <QtCore/qtextstream.h>
 #include <QtCore/qthread.h>
+#include <QRandomGenerator>
 
 #include <cstdio>
 
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
     parser.addOptions({
         {{"q", "quiet"}, QCoreApplication::translate("main", "don't print output to stdout")},
         {{"r", "rate"}, QCoreApplication::translate("main", "update rate"), "HZ", "8.0"},
+	{{"n", "noise"}, QCoreApplication::translate("main", "add noise")},
     });
 
     parser.addPositionalArgument(
@@ -94,9 +96,17 @@ int main(int argc, char *argv[])
             while (phase_rad > TWO_M_PI) {
                 phase_rad -= TWO_M_PI;
             }
-            const auto x = A * qSin(phase_rad + xp_offset);
-            const auto y = A * qSin(phase_rad + yp_offset);
-            const auto z = A * qSin(phase_rad + zp_offset);
+	    auto noise_x = 0.0;
+	    auto noise_y = 0.0;
+	    auto noise_z = 0.0;
+	    if (parser.isSet("noise")) {
+	      noise_x = (QRandomGenerator::global()->generateDouble() - 0.5) * 0.25;
+	      noise_y = (QRandomGenerator::global()->generateDouble() - 0.5) * 0.25;
+	      noise_z = (QRandomGenerator::global()->generateDouble() - 0.5) * 0.25;
+	    }
+            const auto x = A * qSin(phase_rad + xp_offset) + noise_x;
+            const auto y = A * qSin(phase_rad + yp_offset) + noise_y;
+            const auto z = A * qSin(phase_rad + zp_offset) + noise_z;
 
             const auto t = t_offset + 4 * qSin(phase_rad);
 
