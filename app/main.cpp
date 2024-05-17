@@ -3,7 +3,7 @@
 #include <core/textfilesink.h>
 
 #include "state.h"
-#include "logcontrolwidget.h"
+#include "centralwidget.h"
 
 #include <QtWidgets/qapplication.h>
 #include <QtCore/qdir.h>
@@ -19,12 +19,12 @@ int main(int argc, char *argv[])
 
 
     // setup gui
-    auto gui = LogControlWidget{};
+    auto gui = CentralWidget{};
     
     // make connections
-    QObject::connect(&state, &StateObject::stateChanged, &gui, &LogControlWidget::updateState);
-    QObject::connect(&gui, &LogControlWidget::userSetRecordingEnabled, &state, &StateObject::setRecordingEnabled);
-    QObject::connect(&gui, &LogControlWidget::userChangedLogDirectory, &state, &StateObject::setLogDirectory);
+    QObject::connect(&state, &StateObject::stateChanged, &gui, &CentralWidget::updateState);
+    QObject::connect(&gui, &CentralWidget::userSetRecordingEnabled, &state, &StateObject::setRecordingEnabled);
+    QObject::connect(&gui, &CentralWidget::userChangedLogDirectory, &state, &StateObject::setLogDirectory);
     
     // propagate initial state to widgets
     state.stateChanged(state.currentState());

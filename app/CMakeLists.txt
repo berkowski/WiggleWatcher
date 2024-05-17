@@ -9,7 +9,11 @@ target_sources(${PROJECT_NAME}
     logcontrolwidget.ui
     logcontrolwidget.h
     logcontrolwidget.cpp
+    maggieplotwidget.h
+    maggieplotwidget.cpp
+    centralwidget.h
+    centralwidget.cpp
     main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}::Core Qt::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}::Core qcustomplot::qcustomplot Qt::Widgets)
