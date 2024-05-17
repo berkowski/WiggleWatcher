@@ -77,9 +77,9 @@ int main(int argc, char *argv[])
         const auto frequency_rad_s = TWO_M_PI * 1.0 / 60.0;
 
         const auto A = 1.0;
-        const auto xp_offset = 0.0;
-        const auto yp_offset = 120.0;
-        const auto zp_offset = 240.0;
+        const auto xp_offset = 0.0 * M_PI / 180.0;
+        const auto yp_offset = 120.0 * M_PI / 180.0;
+        const auto zp_offset = 240.0 * M_PI / 180.0;
 
         auto t_offset = 25.0;
 
