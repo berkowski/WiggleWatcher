@@ -4,6 +4,8 @@ qt_add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
     PRIVATE
+    state.h
+    state.cpp
     logcontrolwidget.ui
     logcontrolwidget.h
     logcontrolwidget.cpp

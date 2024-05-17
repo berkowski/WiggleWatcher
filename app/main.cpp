@@ -2,15 +2,34 @@
 #include <core/iofactory.h>
 #include <core/textfilesink.h>
 
-#include <QtCore/qcoreapplication.h>
+#include "state.h"
+#include "logcontrolwidget.h"
+
+#include <QtWidgets/qapplication.h>
 #include <QtCore/qdir.h>
 
 #include <chrono>
 
 int main(int argc, char *argv[])
 {
-    auto app = QCoreApplication{argc, argv};
+    auto app = QApplication{argc, argv};
 
+    // initialize state
+    auto state = StateObject{};
+
+
+    // setup gui
+    auto gui = LogControlWidget{};
+    
+    // make connections
+    QObject::connect(&state, &StateObject::stateChanged, &gui, &LogControlWidget::updateState);
+    QObject::connect(&gui, &LogControlWidget::userSetRecordingEnabled, &state, &StateObject::setRecordingEnabled);
+    QObject::connect(&gui, &LogControlWidget::userChangedLogDirectory, &state, &StateObject::setLogDirectory);
+    
+    // propagate initial state to widgets
+    state.stateChanged(state.currentState());
+
+    #if 0
     const auto log_root = QDir::tempPath();
     qInfo() << "Logging to: " << log_root;
     auto raw_logger = TextFileSink{log_root, QStringLiteral("raw"), QStringLiteral(".txt")};
@@ -32,6 +51,9 @@ int main(int argc, char *argv[])
     QObject::connect(&aps1540, &Aps1540Magnetometer::bytesRead, [&](const auto &bytes) {
         qInfo() << QString::fromUtf8(bytes);
     });
+    #endif
 
-    return QCoreApplication::exec();
+    gui.show();
+
+    return QApplication::exec();
 }
