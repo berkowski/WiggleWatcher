@@ -7,6 +7,7 @@
 
 class LogControlWidget;
 class MaggiePlotWidget;
+class VectorMagnetometerData;
 
 class CentralWidget: public QWidget {
 Q_OBJECT
@@ -19,6 +20,7 @@ signals:
 
 public slots:
     auto updateState(maggui::State state) -> void;
+    auto addVectorMagnetometerData(const QString& name, const VectorMagnetometerData& data) -> void;
 
 private:
     LogControlWidget* log_control_widget;

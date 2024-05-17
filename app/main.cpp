@@ -54,6 +54,10 @@ int main(int argc, char *argv[])
             });
 
             QObject::connect(&aps1540, &Aps1540Magnetometer::bytesRead, &raw_logger, &TextFileSink::write);
+	    QObject::connect(&aps1540, &Magnetometer::valueChanged, [&](const VectorMagnetometerData& data) {
+	      gui.addVectorMagnetometerData("aps1540", data);
+	    });
+
             // QObject::connect(&aps1540, &Aps1540Magnetometer::bytesRead, [&](const auto &bytes) {
             //     qInfo() << QString::fromUtf8(bytes);
             // });

@@ -2,6 +2,8 @@
 #include "maggieplotwidget.h"
 #include "logcontrolwidget.h"
 
+#include <core/vectormagnetometerdata.h>
+
 #include <QtWidgets/qlayout.h>
 CentralWidget::CentralWidget(QWidget *parent): log_control_widget(new LogControlWidget), maggie_plot_widget(new MaggiePlotWidget) {
     auto layout = new QVBoxLayout();
@@ -15,4 +17,10 @@ CentralWidget::CentralWidget(QWidget *parent): log_control_widget(new LogControl
 
 auto CentralWidget::updateState(maggui::State state) -> void {
     log_control_widget->updateState(std::move(state));
+}
+
+auto CentralWidget::addVectorMagnetometerData(const QString& name, const VectorMagnetometerData& data) -> void {
+
+  maggie_plot_widget->addVectorMagnetometerData(name, data);
+
 }
