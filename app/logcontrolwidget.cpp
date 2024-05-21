@@ -8,8 +8,8 @@
 
 LogControlWidget::LogControlWidget(QWidget *parent): QWidget(parent), ui(std::make_unique<Ui::LogControlWidget>()) {
     ui->setupUi(this);
-    QObject::connect(ui->logDirectoryButton, &QToolButton::clicked, this, &LogControlWidget::logDirectoryButtonClicked());
-    QObject::connect(ui->recordButton, &QPushButton::clicked, [&](){emit setRecordingTriggered(!recording);});
+    QObject::connect(ui->logDirectoryButton, &QToolButton::clicked, this, &LogControlWidget::setLogDirectoryTriggered);
+    QObject::connect(ui->recordButton, &QPushButton::clicked, [&](){emit setRecordingTriggered();});
 }
 
 LogControlWidget::~LogControlWidget() = default;
@@ -20,13 +20,10 @@ auto LogControlWidget::updateState(maggui::State state) -> void {
     ui->logDirectory->setText(state.log_directory);
   }
 
-  if (state.recording != recording) {
-    if (state.recording) {
+  if (state.recording) {
       ui->recordButton->setText("&Stop\nRecording");
-    }
-    else {
-      ui->recordButton->setText("&Record");
-    }
-    recording = state.recording;
+  }
+  else {
+    ui->recordButton->setText("&Record");
   }
 }

@@ -17,8 +17,8 @@ public:
     ~LogControlWidget() override;
 
 signals:
-    auto logDirectoryButtonClicked() -> void;
-    auto setRecordingTriggered(bool enabled) -> void;
+    auto setLogDirectoryTriggered() -> void;
+    auto setRecordingTriggered() -> void;
 
 public slots:
     auto updateState(maggui::State state) -> void;

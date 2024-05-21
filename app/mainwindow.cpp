@@ -15,11 +15,12 @@ MainWindow::MainWindow(QWidget *parent,  Qt::WindowFlags flags): QMainWindow(par
 {
     ui->setupUi(this);
 
-    const auto central_widget = new CentralWidget;
-    setCentralWidget(new CentralWidget);
+    auto central_widget = qobject_cast<CentralWidget*>(centralWidget());
+    QObject::connect(central_widget, &CentralWidget::setLogDirectoryTriggered, this,
+                     &MainWindow::onSetLogDirectoryTriggered);
 
-    QObject::connect(central_widget, &CentralWidget::ogDirectory, this, &MainWindow::chooseLogDirectory);
-    QObject::connect(central_widget, &CentralWidget::userSetRecordingEnabled, this, &MainWindow::userSetRecordingEnabled);
+    QObject::connect(central_widget, &CentralWidget::setRecordingTriggered, this,
+                     &MainWindow::setRecordingTriggered);
 
     QObject::connect(ui->actionAPS1540_Manual, &QAction::triggered, this, &MainWindow::showAps1540Manual);
     QObject::connect(ui->actionHMR2300_Manual, &QAction::triggered, this, &MainWindow::showHmr2300Manual);
@@ -29,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent,  Qt::WindowFlags flags): QMainWindow(par
 MainWindow::~MainWindow() = default;
 
 auto MainWindow::updateState(maggui::State state) -> void {
+    log_directory = state.log_directory;
     qobject_cast<CentralWidget*>(centralWidget())->updateState(std::move(state));
 }
 
@@ -71,10 +73,9 @@ auto MainWindow::showHmr2300Manual() -> void
     }
 }
 
-auto MainWindow::chooseLogDirectory() -> void {
+auto MainWindow::onSetLogDirectoryTriggered() -> void {
     const auto dir = QFileDialog::getExistingDirectory(this, tr("Save logs to..."), log_directory, QFileDialog::ShowDirsOnly);
-    if (!dir.isNull() && dir != log_directory) {
-        log_directory = dir;
-        emit logDirectoryChanged(dir);
+    if (!dir.isNull()) {
+        emit logDirectoryChanged(QDir::toNativeSeparators(dir));
     }
 }

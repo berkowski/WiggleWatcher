@@ -9,8 +9,8 @@ CentralWidget::CentralWidget(QWidget *parent): log_control_widget(new LogControl
     layout->addWidget(log_control_widget, 0);
     setLayout(layout);
 
-    QObject::connect(log_control_widget, &LogControlWidget::userChangedLogDirectory, this, &CentralWidget::userChangedLogDirectory);
-    QObject::connect(log_control_widget, &LogControlWidget::userSetRecordingEnabled, this, &CentralWidget::userSetRecordingEnabled);
+    QObject::connect(log_control_widget, &LogControlWidget::setLogDirectoryTriggered, this, &CentralWidget::setLogDirectoryTriggered);
+    QObject::connect(log_control_widget, &LogControlWidget::setRecordingTriggered, this, &CentralWidget::setRecordingTriggered);
 }
 
 auto CentralWidget::updateState(maggui::State state) -> void {

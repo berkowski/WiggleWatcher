@@ -32,6 +32,7 @@ class StateObject: public QObject {
   
  public slots:
    auto setRecordingEnabled(bool enabled) noexcept -> void;
+   auto toggleRecordingEnabled() noexcept -> void;
    auto setLogDirectory(QString directory) noexcept -> void;
 
  signals:

@@ -67,8 +67,9 @@ int main(int argc, char *argv[])
     }
     // make connections
     QObject::connect(&state, &StateObject::stateChanged, &gui, &MainWindow::updateState);
-    QObject::connect(&gui, &MainWindow::userSetRecordingEnabled, &state, &StateObject::setRecordingEnabled);
-    QObject::connect(&gui, &MainWindow::userChangedLogDirectory, &state, &StateObject::setLogDirectory);
+    QObject::connect(&gui,
+                     &MainWindow::setRecordingTriggered, &state, &StateObject::toggleRecordingEnabled);
+    QObject::connect(&gui, &MainWindow::logDirectoryChanged, &state, &StateObject::setLogDirectory);
     
     // propagate initial state to widgets
     state.stateChanged(state.currentState());

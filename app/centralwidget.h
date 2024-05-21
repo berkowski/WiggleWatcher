@@ -16,8 +16,8 @@ public:
     explicit CentralWidget(QWidget *parent=nullptr);
 
 signals:
-    auto changeLogDirectoryTriggered() -> void;
-    auto recordingEnabledTriggered(bool enabled) -> void;
+    auto setLogDirectoryTriggered() -> void;
+    auto setRecordingTriggered() -> void;
 
 public slots:
     auto updateState(maggui::State state) -> void;
