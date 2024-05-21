@@ -24,6 +24,9 @@ public slots:
     auto updateState(maggui::State state) -> void;
     auto addVectorMagnetometerData(const QString& name, const VectorMagnetometerData& data) -> void;
 
+private slots:
+    auto showAps1540Manual() -> void;
+    auto showHmr2300Manual() -> void;
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;

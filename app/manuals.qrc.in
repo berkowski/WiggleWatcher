@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/documents">
+        <file>APS1540_manual.pdf</file>
+        <file>SmartDigitalMagnetometerHMR2300_ds.pdf</file>
+    </qresource>
+</RCC>

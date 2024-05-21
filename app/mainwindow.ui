@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>906</width>
-     <height>22</height>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -37,6 +37,7 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionAPS1540_Manual"/>
+    <addaction name="actionHMR2300_Manual"/>
     <addaction name="separator"/>
     <addaction name="action_About"/>
    </widget>
@@ -49,7 +50,7 @@
     <string>E&amp;xit</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::QuitRole</enum>
+    <enum>QAction::MenuRole::QuitRole</enum>
    </property>
   </action>
   <action name="action_Load_Settings">
@@ -67,12 +68,17 @@
     <string>&amp;About</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::AboutRole</enum>
+    <enum>QAction::MenuRole::AboutRole</enum>
    </property>
   </action>
   <action name="actionAPS1540_Manual">
    <property name="text">
     <string>APS1540 Manual</string>
+   </property>
+  </action>
+  <action name="actionHMR2300_Manual">
+   <property name="text">
+    <string>HMR2300 Manual</string>
    </property>
   </action>
  </widget>
