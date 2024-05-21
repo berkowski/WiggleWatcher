@@ -73,7 +73,6 @@ MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
 
     // setup plot timer
     timer->setInterval(std::chrono::duration_cast<std::chrono::milliseconds>(PLOT_UPDATE_INTERVAL).count());
-    qInfo() << "timer interval: " << timer->interval();
     QObject::connect(timer, &QTimer::timeout, this, &MaggiePlotWidget::onTimerUpdate);
     timer->start();
     

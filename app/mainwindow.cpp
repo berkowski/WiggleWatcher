@@ -39,10 +39,9 @@ auto MainWindow::addVectorMagnetometerData(const QString& name, const VectorMagn
 
 auto MainWindow::showAps1540Manual() -> void
 {
-    qWarning() << "manual exists: " << std::boolalpha << QFile::exists(":/manuals/APS1540_manual.pdf");
 
     const auto local = QDir::temp().filePath("APS1540_manual.pdf");
-    if(!QFile::exists(local) && !QFile::copy(":/manuals/APS1540_manual.pdf", local))
+    if(!QFile::exists(local) && !QFile::copy(":/documents/APS1540_manual.pdf", local))
     {
         const auto message = QString("Unable to copy APS1540 manual to %1").arg(local);
         qWarning() << message;
@@ -58,7 +57,7 @@ auto MainWindow::showAps1540Manual() -> void
 auto MainWindow::showHmr2300Manual() -> void
 {
     const auto local = QDir::temp().filePath("SmartDigitalMagnetometerHMR2300_ds.pdf");
-    if(!QFile::exists(local) && !QFile::copy(":/manuals/SmartDigitalMagnetometerHMR2300_ds.pdf", local))
+    if(!QFile::exists(local) && !QFile::copy(":/documents/SmartDigitalMagnetometerHMR2300_ds.pdf", local))
     {
         const auto message = QString("Unable to copy HMR2300 manual to %1").arg(local);
         qWarning() << message;
