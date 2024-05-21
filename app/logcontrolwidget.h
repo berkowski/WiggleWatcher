@@ -17,8 +17,8 @@ public:
     ~LogControlWidget() override;
 
 signals:
-    auto userChangedLogDirectory(QString) -> void;
-    auto userSetRecordingEnabled(bool enabled) -> void;
+    auto logDirectoryButtonClicked() -> void;
+    auto setRecordingTriggered(bool enabled) -> void;
 
 public slots:
     auto updateState(maggui::State state) -> void;
@@ -26,11 +26,6 @@ public slots:
 private:
     std::unique_ptr<Ui::LogControlWidget> ui;
     bool recording = false;
-			  
-private slots:
-    auto on_logDirectoryButton_clicked() -> void;
-    auto on_recordButton_clicked() -> void;
-
 };
 
 

@@ -5,8 +5,9 @@
 
 #include <QtCore/qdir.h>
 #include <QtCore/qurl.h>
-#include <QtWidgets/qmessagebox.h>
 #include <QtGui/qdesktopservices.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qfiledialog.h>
 
 #include <memory>
 
@@ -17,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent,  Qt::WindowFlags flags): QMainWindow(par
     const auto central_widget = new CentralWidget;
     setCentralWidget(new CentralWidget);
 
-    QObject::connect(central_widget, &CentralWidget::userChangedLogDirectory, this, &MainWindow::userChangedLogDirectory);
+    QObject::connect(central_widget, &CentralWidget::ogDirectory, this, &MainWindow::chooseLogDirectory);
     QObject::connect(central_widget, &CentralWidget::userSetRecordingEnabled, this, &MainWindow::userSetRecordingEnabled);
 
     QObject::connect(ui->actionAPS1540_Manual, &QAction::triggered, this, &MainWindow::showAps1540Manual);
@@ -67,5 +68,13 @@ auto MainWindow::showHmr2300Manual() -> void
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(local)))
     {
         qWarning() << "Unable to open " << local << " using default application";
+    }
+}
+
+auto MainWindow::chooseLogDirectory() -> void {
+    const auto dir = QFileDialog::getExistingDirectory(this, tr("Save logs to..."), log_directory, QFileDialog::ShowDirsOnly);
+    if (!dir.isNull() && dir != log_directory) {
+        log_directory = dir;
+        emit logDirectoryChanged(dir);
     }
 }

@@ -8,17 +8,11 @@
 
 LogControlWidget::LogControlWidget(QWidget *parent): QWidget(parent), ui(std::make_unique<Ui::LogControlWidget>()) {
     ui->setupUi(this);
+    QObject::connect(ui->logDirectoryButton, &QToolButton::clicked, this, &LogControlWidget::logDirectoryButtonClicked());
+    QObject::connect(ui->recordButton, &QPushButton::clicked, [&](){emit setRecordingTriggered(!recording);});
 }
 
 LogControlWidget::~LogControlWidget() = default;
-
-auto LogControlWidget::on_logDirectoryButton_clicked() -> void {
-    const auto current_directory = ui->logDirectory->text();
-    const auto dir = QFileDialog::getExistingDirectory(this, tr("Save logs to..."), current_directory, QFileDialog::ShowDirsOnly);
-    if (!dir.isNull() && dir != current_directory) {
-        emit userChangedLogDirectory(dir);
-    }
-}
 
 auto LogControlWidget::updateState(maggui::State state) -> void {
 
@@ -35,9 +29,4 @@ auto LogControlWidget::updateState(maggui::State state) -> void {
     }
     recording = state.recording;
   }
-}
-
-auto LogControlWidget::on_recordButton_clicked() -> void
-{
-  emit userSetRecordingEnabled(!recording);
 }

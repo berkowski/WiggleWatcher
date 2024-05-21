@@ -17,12 +17,13 @@ public:
     ~MainWindow() override;
 
 signals:
-    auto userChangedLogDirectory(QString) -> void;
     auto userSetRecordingEnabled(bool enabled) -> void;
+    auto logDirectoryChanged(const QString&) -> void;
 
 public slots:
     auto updateState(maggui::State state) -> void;
     auto addVectorMagnetometerData(const QString& name, const VectorMagnetometerData& data) -> void;
+    auto chooseLogDirectory() -> void;
 
 private slots:
     auto showAps1540Manual() -> void;
@@ -30,6 +31,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;
+    QString log_directory;
 };
 
 #endif //MAGGUI_MAINWINDOW_H
