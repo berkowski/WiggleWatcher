@@ -3,7 +3,7 @@
 #include <core/textfilesink.h>
 
 #include "state.h"
-#include "centralwidget.h"
+#include "mainwindow.h"
 
 #include <QtWidgets/qapplication.h>
 #include <QtCore/qdir.h>
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     // read settings
 
     // setup gui
-    auto gui = CentralWidget{};
+    auto gui = MainWindow{};
 
     // initialize state
     auto state = StateObject{&app, &gui};
@@ -54,8 +54,8 @@ int main(int argc, char *argv[])
             });
 
             QObject::connect(&aps1540, &Aps1540Magnetometer::bytesRead, &raw_logger, &TextFileSink::write);
-	    QObject::connect(&aps1540, &Magnetometer::valueChanged, [&](const VectorMagnetometerData& data) {
-	      gui.addVectorMagnetometerData("aps1540", data);
+	        QObject::connect(&aps1540, &Magnetometer::valueChanged, [&](const VectorMagnetometerData& data) {
+	        gui.addVectorMagnetometerData("aps1540", data);
 	    });
 
             // QObject::connect(&aps1540, &Aps1540Magnetometer::bytesRead, [&](const auto &bytes) {
@@ -66,9 +66,9 @@ int main(int argc, char *argv[])
         io_threads.push_back(io_thread);
     }
     // make connections
-    QObject::connect(&state, &StateObject::stateChanged, &gui, &CentralWidget::updateState);
-    QObject::connect(&gui, &CentralWidget::userSetRecordingEnabled, &state, &StateObject::setRecordingEnabled);
-    QObject::connect(&gui, &CentralWidget::userChangedLogDirectory, &state, &StateObject::setLogDirectory);
+    QObject::connect(&state, &StateObject::stateChanged, &gui, &MainWindow::updateState);
+    QObject::connect(&gui, &MainWindow::userSetRecordingEnabled, &state, &StateObject::setRecordingEnabled);
+    QObject::connect(&gui, &MainWindow::userChangedLogDirectory, &state, &StateObject::setLogDirectory);
     
     // propagate initial state to widgets
     state.stateChanged(state.currentState());

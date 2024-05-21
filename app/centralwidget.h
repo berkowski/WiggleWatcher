@@ -2,6 +2,7 @@
 #define MAGGUI_CENTRALWIDGET_H
 
 #include "state.h"
+#include <core/vectormagnetometerdata.h>
 
 #include <QtWidgets/qwidget.h>
 

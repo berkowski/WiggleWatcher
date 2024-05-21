@@ -2,8 +2,6 @@
 #include "maggieplotwidget.h"
 #include "logcontrolwidget.h"
 
-#include <core/vectormagnetometerdata.h>
-
 #include <QtWidgets/qlayout.h>
 CentralWidget::CentralWidget(QWidget *parent): log_control_widget(new LogControlWidget), maggie_plot_widget(new MaggiePlotWidget) {
     auto layout = new QVBoxLayout();
