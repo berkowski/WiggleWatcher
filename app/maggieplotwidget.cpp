@@ -12,6 +12,21 @@ enum MaggiePlotIndex {
     NUM_PLOTS,
 };
 
+auto toString(MaggiePlotIndex index) -> QString {
+    switch (index) {
+    case MaggiePlotIndex::X:
+        return QString{"X"};
+    case MaggiePlotIndex::Y:
+        return QString{"Y"};
+    case MaggiePlotIndex::Z:
+        return QString{"Z"};
+    case MaggiePlotIndex::TOTAL:
+        return QString{"Total"};
+    default:
+        Q_UNREACHABLE();
+    }
+}
+
 MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
   : QWidget(parent)
   , plot(new QCustomPlot(this))
@@ -21,6 +36,8 @@ MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
     plot->plotLayout()->clear();
     plot->plotLayout()->setWrap(0);
     plot->plotLayout()->setFillOrder(QCPLayoutGrid::FillOrder::foRowsFirst);
+    plot->setAutoAddPlottableToLegend(false);
+
     axis_rects.resize(MaggiePlotIndex::NUM_PLOTS);
 
     // x-axis datetime ticker
@@ -28,28 +45,39 @@ MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
     datetime_ticker->setDateTimeFormat("MMM dd\nHH:mm");
 
     // create plot axes
+    auto enum_index = 0;
     std::for_each(std::begin(axis_rects), std::end(axis_rects), [&](auto& it) {
         // make a new axis item
         it = new QCPAxisRect(plot);
 
-	// hide all axis except the left y for now, but set the x-axis ticker and enable
-	// grid lines.  Disable vertical dragging and zooming.
-	auto axes = it->axes();
-	std::for_each(std::begin(axes), std::end(axes), [&](auto& axis) {
-	  if (axis->axisType() == QCPAxis::AxisType::atRight || axis->axisType() == QCPAxis::AxisType::atTop)  {
-	    axis->setVisible(false);
-	  }
-	  else if(axis->axisType() == QCPAxis::AxisType::atBottom) {
-	    axis->setTicker(datetime_ticker);
-	    axis->setTickLabels(false);
-	    axis->setTicks(false);
-	    
+        // hide all axis except the left y for now, but set the x-axis ticker and enable
+        // grid lines.  Disable vertical dragging and zooming.
+        auto axes = it->axes();
+        std::for_each(std::begin(axes), std::end(axes), [&](auto& axis) {
+          if (axis->axisType() == QCPAxis::AxisType::atRight || axis->axisType() == QCPAxis::AxisType::atTop)  {
+            axis->setVisible(false);
+          }
+          else if(axis->axisType() == QCPAxis::AxisType::atBottom) {
+            axis->setTicker(datetime_ticker);
+            axis->setTickLabels(false);
+            axis->setTicks(false);
+
             it->setRangeZoomAxes(axis, nullptr);
-	    it->setRangeDragAxes(axis, nullptr);
-	  }
-	});
-	
-	plot->plotLayout()->addElement(it);
+            it->setRangeDragAxes(axis, nullptr);
+          }
+          else if(axis->axisType() == QCPAxis::AxisType::atLeft) {
+              axis->setLabel(QString("%1 (nT)").arg(toString(static_cast<MaggiePlotIndex>(enum_index))));
+              axis->ticker()->setTickStepStrategy(QCPAxisTicker::TickStepStrategy::tssReadability);
+          }
+        });
+        auto axes_layout = it->insetLayout();
+        auto legend = new QCPLegend{};
+        legend->setBrush(QBrush{Qt::black, Qt::SolidPattern});
+        legend->setFillOrder(QCPLayoutGrid::FillOrder::foColumnsFirst);
+        axes_layout->addElement(static_cast<QCPLayoutElement*>(legend), Qt::AlignLeft | Qt::AlignTop);
+
+        plot->plotLayout()->addElement(it);
+        enum_index++;
     });
 
     // link scrolling of x-axes
@@ -120,7 +148,11 @@ auto MaggiePlotWidget::addVectorMagnetometerData(const QString& name, const Vect
       
       auto graph = plot->addGraph(x_axis, y_axis);
       graph->setName(name);
-      
+
+      // add to legend
+      auto legend = dynamic_cast<QCPLegend*>(it->insetLayout()->elementAt(0));
+      Q_ASSERT(legend);
+      graph->addToLegend(legend);
       maggie_graphs.push_back(graph);
     });
     assert(maggie_graphs.size() == MaggiePlotIndex::NUM_PLOTS);
