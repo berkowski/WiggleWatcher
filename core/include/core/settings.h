@@ -19,8 +19,14 @@ class SensorBase;
 class MAGGUI_CORE_EXPORT Settings
 {
 public:
-    ~Settings() = default;
+    struct Sensor {
+        QString name;
+        QString description;
+        QString connection;
+        maggui::SensorKind kind;
+    };
 
+    ~Settings() = default;
     static auto fromFile(const QString &path) -> Settings;
     static auto fromString(const QString &string) -> Settings;
     [[nodiscard]] auto toString() const noexcept -> QString;
@@ -36,12 +42,18 @@ public:
     auto setInterval(const std::chrono::minutes& minutes) noexcept -> void;
     [[nodiscard]] auto interval() const noexcept -> std::chrono::minutes;
 
-    auto sensor(const QString& name) const noexcept -> SensorBase*;
-    auto sensors() const noexcept -> QList<SensorBase*>;
+    auto sensor(const QString& name) const noexcept -> std::shared_ptr<Sensor>;
+    auto sensors() const noexcept -> QList<std::shared_ptr<Sensor>>;
 
 private:
     explicit Settings(std::shared_ptr<erbsland::qt::toml::Value>&& toml);
-    std::shared_ptr<erbsland::qt::toml::Value> toml;
+    bool is_valid = false;
+
+    QString log_directory;
+    std::chrono::minutes log_interval{};
+
+    QList<std::shared_ptr<Sensor>> sensors_;
+    //std::shared_ptr<erbsland::qt::toml::Value> toml;
 };
 
 Q_DECLARE_METATYPE(Settings)
