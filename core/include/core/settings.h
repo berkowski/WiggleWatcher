@@ -14,6 +14,8 @@ namespace erbsland::qt::toml
 class Value;
 }
 
+class SensorBase;
+
 class MAGGUI_CORE_EXPORT Settings
 {
 public:
@@ -21,6 +23,7 @@ public:
 
     static auto fromFile(const QString &path) -> Settings;
     static auto fromString(const QString &string) -> Settings;
+    [[nodiscard]] auto toString() const noexcept -> QString;
 
     static auto validateString(const QString& toml) -> bool;
     static auto validateFile(const QString& file) -> bool;
@@ -33,7 +36,8 @@ public:
     auto setInterval(const std::chrono::minutes& minutes) noexcept -> void;
     [[nodiscard]] auto interval() const noexcept -> std::chrono::minutes;
 
-    [[nodiscard]] auto toString() const noexcept -> QString;
+    auto sensor(const QString& name) const noexcept -> SensorBase*;
+    auto sensors() const noexcept -> QList<SensorBase*>;
 
 private:
     explicit Settings(std::shared_ptr<erbsland::qt::toml::Value>&& toml);

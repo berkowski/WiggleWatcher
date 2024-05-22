@@ -17,7 +17,7 @@ const auto KEY_LOG_INTERVAL = u"interval"_s;
 // required sensor keys
 const auto KEY_SENSOR_NAME = u"name"_s;
 const auto KEY_SENSOR_CONNECTION = u"connection"_s;
-const auto KEY_SENSOR_TYPE = u"type"_s;
+const auto KEY_SENSOR_TYPE = u"kind"_s;
 
 struct ValidationParams {
     QString section;
@@ -74,6 +74,21 @@ namespace
             const auto result = check_toml_key(toml, *it);
             if(!result.first) {
                 return result;
+            }
+        }
+
+        const auto sensors = toml->arrayValue(QStringLiteral("sensor"));
+
+        if(sensors->size() < 1) {
+            return {false, QString{"Missing [[sensor]] entry."}};
+        }
+
+        for (const auto& sensor: *sensors) {
+            for (auto it = SENSOR_VALIDATION_KEYS.constBegin(); it != SENSOR_VALIDATION_KEYS.constEnd(); ++it) {
+                const auto result = check_toml_key(sensor, *it);
+                if (!result.first) {
+                    return result;
+                }
             }
         }
         return {true, {}};
@@ -178,4 +193,12 @@ auto Settings::toString() const noexcept -> QString {
     stream << Qt::endl;
 
     return string;
+}
+auto Settings::sensor(const QString &name) const noexcept -> SensorBase *
+{
+    return nullptr;
+}
+auto Settings::sensors() const noexcept -> QList<SensorBase *>
+{
+    return QList<SensorBase *>();
 }
