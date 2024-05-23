@@ -260,7 +260,7 @@ public: // conversion
     ///
     /// @return The integer, if this value is of the `Type::Integer`, otherwise the value 0.
     ///
-    [[nodiscard]] auto toInteger() const noexcept -> int64_t;
+    [[nodiscard]] auto toInteger() const noexcept -> qint64;
 
     /// Get an float from this value.
     ///

@@ -39,6 +39,7 @@ auto TextFileSink::write(const QByteArray &bytes) -> void
 
     const auto now = QDateTime::currentDateTimeUtc();
     if (now >= next_rollover) {
+        qWarning() << "Rollover:  now: " << now << " next: " << next_rollover;
         rollover(now);
     }
     if (!file->isOpen()) {
@@ -119,7 +120,9 @@ auto TextFileSink::isActive() const noexcept -> bool
 
 auto TextFileSink::start() -> void
 {
-    rollover(QDateTime::currentDateTimeUtc());
+    if(!isActive()) {
+        rollover(QDateTime::currentDateTimeUtc());
+    }
 }
 
 auto TextFileSink::stop() -> void
@@ -133,6 +136,7 @@ auto TextFileSink::stop() -> void
     }
     file->setFileName({});
     next_rollover = QDateTime{};
+    Q_ASSERT(next_rollover.isNull());
 }
 
 auto TextFileSink::setDir(QDir d) -> void

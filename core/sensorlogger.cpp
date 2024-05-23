@@ -15,6 +15,11 @@ SensorLogger::SensorLogger(SensorBase *base, QObject *parent) : QObject(parent)
     sensor->moveToThread(thread);
     thread->start();
 }
+SensorLogger::~SensorLogger() {
+    // Allow thread to exit cleanly
+    thread->quit();
+    while (thread->isRunning()) {}
+}
 
 void SensorLogger::setLogDirectory(const QString &directory)
 {

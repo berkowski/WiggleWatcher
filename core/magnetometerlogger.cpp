@@ -9,12 +9,14 @@ MagnetometerLogger::MagnetometerLogger(Magnetometer *magnetometer, QObject *pare
 {
 
     // emit on new data
-    QObject::connect(magnetometer, &Magnetometer::valueChanged, [&](const auto& value) {
-        emit valueChanged(magnetometer->name(), magnetometer->type(), QVariant::fromValue(value));
+    const auto name = magnetometer->name();
+    const auto kind = magnetometer->type();
+    QObject::connect(magnetometer, &Magnetometer::valueChanged, [=](const auto& value) {
+        this->valueChanged(name, kind, QVariant::fromValue(value));
     });
 
     // log new data in dsl format
-    QObject::connect(magnetometer, &Magnetometer::valueChanged, [&](const auto& value) {
+    QObject::connect(magnetometer, &Magnetometer::valueChanged, [=](const auto& value) {
         sink->write(value.toDslFormat().toUtf8());
     });
 

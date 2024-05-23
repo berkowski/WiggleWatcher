@@ -131,7 +131,8 @@ auto Value::toValue(Type type) const noexcept -> T {
 }
 
 
-auto Value::toInteger() const noexcept -> int64_t {
+auto Value::toInteger() const noexcept -> qint64
+{
     return toValue<int64_t>(Type::Integer);
 }
 

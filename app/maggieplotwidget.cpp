@@ -30,7 +30,7 @@ auto toString(MaggiePlotIndex index) -> QString {
 MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
   : QWidget(parent)
   , plot(new QCustomPlot(this))
-  ,  timer(new QTimer(this))
+  , timer(new QTimer(this))
 {
     const auto datetime_now = QDateTime::currentDateTimeUtc();
     plot->plotLayout()->clear();

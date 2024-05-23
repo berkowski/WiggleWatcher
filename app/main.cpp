@@ -5,6 +5,8 @@
 #include <core/iofactory.h>
 #include <core/textfilesink.h>
 #include <core/settings.h>
+#include <core/sensorfactory.h>
+#include <core/magnetometerlogger.h>
 
 #include <QApplication>
 #include <QDir>
@@ -13,6 +15,8 @@
 #include <QList>
 #include <QPair>
 #include <QMessageBox>
+#include <QVariant>
+#include <QScopedPointer>
 
 #include <chrono>
 
@@ -62,10 +66,40 @@ int main(int argc, char *argv[])
 
     // initialize state
     auto state = StateObject{&app, &gui};
+    state.setLogDirectory(settings.dir());
 
     // spin up IO threads;
     for(const auto& config: settings.sensors()) {
+        auto sensor = SensorFactory::create(config->kind, config->name, config->connection, config->description);
+        if(!sensor) {
+            auto error_message = QString{"Unable to load config from %1"}.arg(*config_file);
+            QMessageBox::critical(nullptr, QStringLiteral("Unable to load configuration"), error_message);
+            return 0;
+        }
+
+        switch (sensor->type()) {
+        case maggui::SensorKind::APS1540:
+        case maggui::SensorKind::HMR2300:
+        {
+            auto logger = new MagnetometerLogger(qobject_cast<Magnetometer*>(sensor.release()), &app);
+
+            // connect state updates
+            QObject::connect(&state, &StateObject::stateChanged, [&](const auto& s) {
+                logger->setLogDirectory(s.log_directory);
+                logger->setLoggingEnabled(s.recording);
+            });
+
+            // connect plot
+            QObject::connect(logger, &MagnetometerLogger::valueChanged, qApp, [&](const auto& name, const auto& kind, const auto& data) {
+                gui.addVectorMagnetometerData(name, qvariant_cast<VectorMagnetometerData>(data));
+            }, Qt::QueuedConnection);
+            break;
+        }
+        default:
+            Q_UNREACHABLE();
+        }
     }
+#if 0
     // setup IO threads
     auto raw_logger = TextFileSink{QDir::tempPath(), QStringLiteral("raw"), QStringLiteral(".txt")};
     auto io = IOFactory::from_string("udp://127.0.0.1:70001:70000");
@@ -108,15 +142,15 @@ int main(int argc, char *argv[])
         io_thread->start();
         io_threads.push_back(io_thread);
     }
+#endif
     // make connections
     QObject::connect(&state, &StateObject::stateChanged, &gui, &MainWindow::updateState);
     QObject::connect(&gui,
                      &MainWindow::setRecordingTriggered, &state, &StateObject::toggleRecordingEnabled);
     QObject::connect(&gui, &MainWindow::logDirectoryChanged, &state, &StateObject::setLogDirectory);
-    
+
     // propagate initial state to widgets
     state.stateChanged(state.currentState());
-
 
     gui.show();
 
