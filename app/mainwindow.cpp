@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent,  Qt::WindowFlags flags): QMainWindow(par
 
     QObject::connect(ui->actionAPS1540_Manual, &QAction::triggered, this, &MainWindow::showAps1540Manual);
     QObject::connect(ui->actionHMR2300_Manual, &QAction::triggered, this, &MainWindow::showHmr2300Manual);
-
+    QObject::connect(ui->actionE_xit, &QAction::triggered, this, &MainWindow::close);
 }
 
 MainWindow::~MainWindow() = default;
