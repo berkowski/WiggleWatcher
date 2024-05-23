@@ -3,11 +3,11 @@
 
 #include "centralwidget.h"
 
-#include <QtCore/qdir.h>
-#include <QtCore/qurl.h>
-#include <QtGui/qdesktopservices.h>
-#include <QtWidgets/qmessagebox.h>
-#include <QtWidgets/qfiledialog.h>
+#include <QDir>
+#include <QUrl>
+#include <QDesktopServices>
+#include <QMessageBox>
+#include <QFileDialog>
 
 #include <memory>
 

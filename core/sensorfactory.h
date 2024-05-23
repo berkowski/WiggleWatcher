@@ -4,8 +4,8 @@
 #include <core/global.h>
 #include <core/sensorbase.h>
 
-#include <QtCore/qstring.h>
-#include <QtCore/qvariantmap.h>
+#include <QString>
+#include <QVariantMap>
 
 #include <memory>
 

@@ -2,7 +2,7 @@
 #define MAGGUI_MAGGIEPLOTWIDGET_H
 
 #include <core/vectormagnetometerdata.h>
-#include <QtWidgets/qwidget.h>
+#include <QWidget>
 
 class QCustomPlot;
 class QCPAxisRect;

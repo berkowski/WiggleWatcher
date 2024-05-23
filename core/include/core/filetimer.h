@@ -1,7 +1,7 @@
 #ifndef MAGGUI_FILETIMER_H
 #define MAGGUI_FILETIMER_H
 
-#include <QtCore/qobject.h>
+#include <QObject>
 
 class QObject;
 class QTimer;

@@ -3,9 +3,9 @@
 
 #include <core/global.h>
 
-#include <QtCore/qmetatype.h>
-#include <QtCore/qobject.h>
-#include <QtCore/qstring.h>
+#include <QMetaType>
+#include <QObject>
+#include <QString>
 
 class QIODevice;
 

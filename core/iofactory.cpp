@@ -3,9 +3,9 @@
 #include "udpsocketfactory.h"
 #include <core/iofactory.h>
 
-#include <QtNetwork/qtcpsocket.h>
-#include <QtNetwork/qudpsocket.h>
-#include <QtSerialPort/qserialport.h>
+#include <QTcpSocket>
+#include <QUdpSocket>
+#include <QSerialPort>
 
 auto IOFactory::from_string(const QString &string) -> QIODevice *
 {

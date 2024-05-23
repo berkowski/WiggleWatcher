@@ -2,9 +2,9 @@
 
 #include <erbsland/qt/TomlValue.hpp>
 
-#include <QtCore/qstring.h>
-#include <QtCore/qpair.h>
-#include <QtCore/qtextstream.h>
+#include <QString>
+#include <QPair>
+#include <QTextStream>
 
 
 using namespace Qt::Literals::StringLiterals;

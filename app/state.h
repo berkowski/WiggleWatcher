@@ -1,8 +1,8 @@
 #ifndef MAGGUI_STATE_H
 #define MAGGUI_STATE_H
 
-#include <QtCore/qmetatype.h>
-#include <QtCore/qobject.h>
+#include <QMetaType>
+#include <QObject>
 
 namespace maggui
 {

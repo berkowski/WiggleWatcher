@@ -1,6 +1,6 @@
 #include "tcpsocketfactory.h"
 
-#include <QtNetwork/qtcpsocket.h>
+#include <QTcpSocket>
 
 const QRegularExpression TcpSocketFactory::RE
     = QRegularExpression("tcp://([^:]+):(\\d+)", QRegularExpression::CaseInsensitiveOption);

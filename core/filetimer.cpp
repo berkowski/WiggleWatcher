@@ -1,8 +1,8 @@
 
 #include <core/filetimer.h>
 
-#include <QtCore/qdatetime.h>
-#include <QtCore/qtimer.h>
+#include <QDateTime>
+#include <QTimer>
 
 #include <chrono>
 

@@ -4,7 +4,7 @@
 #include "state.h"
 #include <core/vectormagnetometerdata.h>
 
-#include <QtWidgets/qwidget.h>
+#include <QWidget>
 
 class LogControlWidget;
 class MaggiePlotWidget;

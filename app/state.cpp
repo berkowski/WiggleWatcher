@@ -1,6 +1,6 @@
 #include "state.h"
 #include <QtCore/qdir.h>
-#include <QtWidgets/qmessagebox.h>
+#include <QMessageBox>
 
 namespace maggui {
   State::State(): recording(false), log_directory(QDir::toNativeSeparators(QDir::currentPath())) {}

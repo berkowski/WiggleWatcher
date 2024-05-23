@@ -4,7 +4,7 @@
 
 #include <core/global.h>
 
-#include <QtCore/qmetatype.h>
+#include <QMetaType>
 
 #include <chrono>
 #include <memory>

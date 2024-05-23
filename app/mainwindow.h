@@ -1,7 +1,7 @@
 #ifndef MAGGUI_MAINWINDOW_H
 #define MAGGUI_MAINWINDOW_H
 
-#include <QtWidgets/qmainwindow.h>
+#include <QMainWindow>
 #include <core/vectormagnetometerdata.h>
 
 #include "state.h"

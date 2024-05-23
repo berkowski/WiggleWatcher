@@ -2,7 +2,7 @@
 #include "maggieplotwidget.h"
 #include "logcontrolwidget.h"
 
-#include <QtWidgets/qlayout.h>
+#include <QLayout>
 CentralWidget::CentralWidget(QWidget *parent): log_control_widget(new LogControlWidget), maggie_plot_widget(new MaggiePlotWidget) {
     auto layout = new QVBoxLayout();
     layout->addWidget(maggie_plot_widget, 1);

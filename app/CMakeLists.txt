@@ -23,6 +23,8 @@ target_sources(${PROJECT_NAME}
     mainwindow.ui
     mainwindow.h
     mainwindow.cpp
+    iopool.h
+
     main.cpp
 )
 

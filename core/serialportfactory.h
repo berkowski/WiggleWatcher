@@ -3,7 +3,7 @@
 
 #include <core/global.h>
 
-#include <QtCore/qstring.h>
+#include <QString>
 
 class QSerialPort;
 

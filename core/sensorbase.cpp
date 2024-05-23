@@ -1,7 +1,7 @@
 #include <core/sensorbase.h>
 
-#include <QtCore/qiodevice.h>
-#include <QtCore/qmetaobject.h>
+#include <QIODevice>
+#include <QMetaObject>
 
 SensorBase::SensorBase(QIODevice *io_, QObject *parent)
     : QObject(parent)

@@ -3,10 +3,10 @@
 
 #include <core/global.h>
 
-#include <QtCore/qdir.h>
-#include <QtCore/qobject.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qdatetime.h>
+#include <QDir>
+#include <QObject>
+#include <QString>
+#include <QDateTime>
 
 #include <chrono>
 

@@ -1,9 +1,6 @@
 #include "logcontrolwidget.h"
 #include "ui_logcontrolwidget.h"
 
-#include <QtWidgets/qfiledialog.h>
-#include <QtCore/qfileinfo.h>
-
 #include <memory>
 
 LogControlWidget::LogControlWidget(QWidget *parent): QWidget(parent), ui(std::make_unique<Ui::LogControlWidget>()) {

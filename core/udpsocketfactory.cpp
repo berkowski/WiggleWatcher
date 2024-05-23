@@ -1,6 +1,6 @@
 #include "udpsocketfactory.h"
 
-#include <QtNetwork/qudpsocket.h>
+#include <QUdpSocket>
 
 const QRegularExpression UdpSocketFactory::RE
     = QRegularExpression("udp://([^:]+):(\\d+)(:\\d+)?", QRegularExpression::CaseInsensitiveOption);

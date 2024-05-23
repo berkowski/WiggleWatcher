@@ -2,8 +2,8 @@
 #define MAGGUI_GLOBAL_H
 #include <core/export.h>
 
-#include <QtCore/qobject.h>
-#include <QtCore/qstring.h>
+#include <QObject>
+#include <QString>
 namespace maggui
 {
 MAGGUI_CORE_EXPORT

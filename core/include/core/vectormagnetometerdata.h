@@ -3,8 +3,8 @@
 
 #include <core/global.h>
 
-#include <QtCore/qdatetime.h>
-#include <QtCore/qmetatype.h>
+#include <QDateTime>
+#include <QMetaType>
 
 struct MAGGUI_CORE_EXPORT VectorMagnetometerData
 {

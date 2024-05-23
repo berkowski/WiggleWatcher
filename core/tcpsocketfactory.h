@@ -3,7 +3,7 @@
 
 #include <core/global.h>
 
-#include <QtCore/qregularexpression.h>
+#include <QRegularExpression>
 
 class QTcpSocket;
 

@@ -1,7 +1,7 @@
 #include <core/aps1540magnetometer.h>
 
-#include <QtCore/qiodevice.h>
-#include <QtCore/qregularexpression.h>
+#include <QIODevice>
+#include <QRegularExpression>
 
 Aps1540Magnetometer::Aps1540Magnetometer(QIODevice *io, QObject *parent)
     : Magnetometer(io, parent)

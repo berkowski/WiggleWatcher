@@ -1,9 +1,9 @@
 #include <core/textfilesink.h>
 
-#include <QtCore/qdir.h>
-#include <QtCore/qfile.h>
-#include <QtCore/qmap.h>
-#include <QtCore/qtimezone.h>
+#include <QDir>
+#include <QFile>
+#include <QMap>
+#include <QTimeZone>
 
 const QString TextFileSink::DATETIME_FMT = QStringLiteral("yyyyMMdd_HHmmss");
 

@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>906</width>
-     <height>33</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -50,7 +50,7 @@
     <string>E&amp;xit</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::MenuRole::QuitRole</enum>
+    <enum>QAction::QuitRole</enum>
    </property>
   </action>
   <action name="action_Load_Settings">
@@ -68,7 +68,7 @@
     <string>&amp;About</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::MenuRole::AboutRole</enum>
+    <enum>QAction::AboutRole</enum>
    </property>
   </action>
   <action name="actionAPS1540_Manual">
@@ -86,7 +86,7 @@
   <customwidget>
    <class>CentralWidget</class>
    <extends>QWidget</extends>
-   <header>centralwidget.h</header>
+   <header location="global">centralwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

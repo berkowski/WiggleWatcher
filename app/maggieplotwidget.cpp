@@ -1,8 +1,8 @@
 #include "maggieplotwidget.h"
 
 #include <qcustomplot.h>
-#include <QtCore/qtimer.h>
-#include <QtWidgets/qlayout.h>
+#include <QTimer>
+#include <QLayout>
 
 enum MaggiePlotIndex {
     X = 0,

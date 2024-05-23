@@ -5,7 +5,7 @@
 #include <erbsland/qt/all_toml.hpp>
 #include <memory>
 
-#include <QtCore/qmetatype.h>
+#include <QMetaType>
 
 extern const QString KEY_SENSOR_TYPE;
 extern const QString KEY_SENSOR_CONNECTION;

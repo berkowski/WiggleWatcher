@@ -1,5 +1,5 @@
 #include <core/global.h>
-#include <QtCore/qmetaobject.h>
+#include <QMetaEnum>
 
 namespace maggui
 {

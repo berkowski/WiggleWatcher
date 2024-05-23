@@ -3,7 +3,7 @@
 
 #include "state.h"
 
-#include <QtWidgets/qwidget.h>
+#include <QWidget>
 
 namespace Ui {
     class LogControlWidget;

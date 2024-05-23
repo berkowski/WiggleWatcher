@@ -1,8 +1,8 @@
 #include "serialportfactory.h"
 
-#include <QtCore/qpointer.h>
-#include <QtCore/qregularexpression.h>
-#include <QtSerialPort/qserialport.h>
+#include <QPointer>
+#include <QRegularExpression>
+#include <QSerialPort>
 
 const QRegularExpression SerialPortFactory::RE
     = QRegularExpression("serial://([^:]+):([5678])([NEOSM])(1|1\\.5|2)@(\\d+)",

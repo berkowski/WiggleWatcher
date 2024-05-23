@@ -5,9 +5,9 @@
 #include "state.h"
 #include "mainwindow.h"
 
-#include <QtWidgets/qapplication.h>
-#include <QtCore/qdir.h>
-#include <QtCore/qthread.h>
+#include <QApplication>
+#include <QDir>
+#include <QThread>
 
 #include <chrono>
 
