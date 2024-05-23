@@ -1,4 +1,4 @@
-#include "sensorfactory.h"
+#include "core/sensorfactory.h"
 #include <core/aps1540magnetometer.h>
 #include <core/iofactory.h>
 

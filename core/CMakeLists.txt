@@ -20,6 +20,9 @@ set(core-sources-public
     include/core/filetimer.h
     include/core/settings.h
     include/core/sensorbase.h
+    include/core/sensorfactory.h
+    include/core/sensorlogger.h
+    include/core/magnetometerlogger.h
 )
 
 set(core-sources-private
@@ -37,8 +40,9 @@ set(core-sources-private
     aps1540magnetometer.cpp
     filetimer.cpp
     settings.cpp
-    sensorfactory.h
     sensorfactory.cpp
+    sensorlogger.cpp
+    magnetometerlogger.cpp
     global.cpp
 )
 

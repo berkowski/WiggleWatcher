@@ -1,8 +1,8 @@
 #ifndef MAGGUI_SENSORFACTORY_H
 #define MAGGUI_SENSORFACTORY_H
 
-#include <core/global.h>
-#include <core/sensorbase.h>
+#include "global.h"
+#include "sensorbase.h"
 
 #include <QString>
 #include <QVariantMap>
