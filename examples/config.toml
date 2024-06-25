@@ -6,7 +6,7 @@ interval = 60 # Rollover interval in minutes
 [[sensor]]
 name = "towcam_aps1540"
 prefix = "towcam_spare" # optional prefix for files instead of the sensor name
-type = "aps1540"
+kind = "aps1540"
 description = "APS1540 S/N ###### installed in TowCam"
 connection = "serial://COM3:8N1@9600"
 plot = true

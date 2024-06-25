@@ -11,6 +11,16 @@ class QIODevice;
 class MAGGUI_CORE_EXPORT IOFactory
 {
 public:
+    enum class ErrorKind {
+        /// No error
+        NoError = 0,
+        /// Attempt to create IO object using config string of a different type
+        IncorrectKind,
+        /// Error in config string
+        ConfigParseError,
+        /// Error in underlying IO object (e.g. unable to bind local port because it's in use)
+        IoError,
+    };
     /// # Build a QIODevice from a string
     ///
     /// Helps provide protocol-agnostic IO interfaces using
@@ -54,9 +64,9 @@ public:
     /// - Data bits: 5, 6, 7, 8, or 9
     /// - Parity: N (none), E (even), O (odd), S (space), or M (mark)
     /// - Stop: 1, 1.5, or 2
-    static auto from_string(const QString &string) -> QIODevice *;
-
+    static auto from_string(const QString &string, ErrorKind *error = nullptr) -> QIODevice *;
     static auto to_string(const QIODevice *device) -> QString;
+    static auto last_error_string() -> QString;
 };
 
 #endif //IOFACTORY_H

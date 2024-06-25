@@ -20,18 +20,23 @@ private:
 void TestTcpSocketFactory::invalidConfig_data()
 {
     QTest::addColumn<QString>("config");
+    QTest::addColumn<IOFactory::ErrorKind>("expected_error");
 
-    QTest::newRow("wrong type (udp)") << "udp://127.0.0.1:4000";
-    QTest::newRow("wrong type (serial)") << "serial:///dev/ttyUSB0";
-    QTest::newRow("invalid hostname") << "tcp://&^%*^@!Q#$:4000";
-    QTest::newRow("invalid port (negative)") << "tcp://127.0.0.1:-2341";
+    QTest::newRow("wrong type (udp)") << "udp://127.0.0.1:4000" << IOFactory::ErrorKind::IncorrectKind;
+    QTest::newRow("wrong type (serial)") << "serial:///dev/ttyUSB0" << IOFactory::ErrorKind::IncorrectKind;
+    QTest::newRow("invalid hostname") << "tcp://&^%*^@!Q#$:4000" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("invalid port (negative)") << "tcp://127.0.0.1:-2341" << IOFactory::ErrorKind::ConfigParseError;
 }
 void TestTcpSocketFactory::invalidConfig()
 {
     QFETCH(QString, config);
+    QFETCH(IOFactory::ErrorKind, expected_error);
 
-    const auto result = TcpSocketFactory::from_string(config);
+    IOFactory::ErrorKind error;
+
+    const auto result = TcpSocketFactory::from_string(config, &error);
     QCOMPARE(result, nullptr);
+    QCOMPARE(error, expected_error);
 }
 void TestTcpSocketFactory::validConfig_data()
 {
@@ -48,12 +53,15 @@ void TestTcpSocketFactory::validConfig()
     QFETCH(QHostAddress, host);
     QFETCH(int, port);
 
+    IOFactory::ErrorKind error;
     auto server = QTcpServer{};
     QVERIFY(server.listen(QHostAddress::Any, port));
 
-    const auto result = TcpSocketFactory::from_string(config);
-    QTRY_COMPARE(result->waitForConnected(5000), true);
+    const auto result = TcpSocketFactory::from_string(config, &error);
     QCOMPARE_NE(result, nullptr);
+    QCOMPARE(error, IOFactory::ErrorKind::NoError);
+
+    QTRY_COMPARE(result->waitForConnected(5000), true);
     QCOMPARE(result->peerName(), host.toString());
 
     // can't test port value -- only available after connection is made

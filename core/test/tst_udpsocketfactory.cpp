@@ -23,8 +23,8 @@ private:
 
 void TestUdpSocketFactory::loopback()
 {
-    auto client = QPointer<QUdpSocket>(UdpSocketFactory::from_string("udp://127.0.0.1:70000:70001"));
-    auto server = QPointer<QUdpSocket>(UdpSocketFactory::from_string("udp://127.0.0.1:70001:70000"));
+    auto client = QPointer<QUdpSocket>(UdpSocketFactory::from_string("udp://127.0.0.1:70000:70001", nullptr));
+    auto server = QPointer<QUdpSocket>(UdpSocketFactory::from_string("udp://127.0.0.1:70001:70000", nullptr));
 
     QVERIFY(!client.isNull());
     QVERIFY(!server.isNull());
@@ -107,19 +107,24 @@ void TestUdpSocketFactory::loopback_raw()
 void TestUdpSocketFactory::invalidConfig_data()
 {
     QTest::addColumn<QString>("config");
+    QTest::addColumn<IOFactory::ErrorKind>("expected_error");
 
-    QTest::newRow("wrong type (tcp)") << "tcp://127.0.0.1:4000";
-    QTest::newRow("wrong type (serial)") << "serial:///dev/ttyUSB0";
-    QTest::newRow("invalid hostname") << "udp://&^%*^@!Q#$:4000";
-    QTest::newRow("invalid port (negative)") << "tcp://127.0.0.1:-2341";
-    QTest::newRow("missing hostname") << "udp://2341";
+    QTest::newRow("wrong type (tcp)") << "tcp://127.0.0.1:4000" << IOFactory::ErrorKind::IncorrectKind;
+    QTest::newRow("wrong type (serial)") << "serial:///dev/ttyUSB0" << IOFactory::ErrorKind::IncorrectKind;
+    QTest::newRow("invalid hostname") << "udp://&^%*^@!Q#$:4000" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("invalid port (negative)") << "udp://127.0.0.1:-2341" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("missing hostname") << "udp://2341" << IOFactory::ErrorKind::ConfigParseError;
 }
 void TestUdpSocketFactory::invalidConfig()
 {
     QFETCH(QString, config);
+    QFETCH(IOFactory::ErrorKind, expected_error);
 
-    const auto result = UdpSocketFactory::from_string(config);
-    QVERIFY(result == nullptr);
+    IOFactory::ErrorKind error;
+
+    const auto result = UdpSocketFactory::from_string(config, &error);
+    QCOMPARE(result, nullptr);
+    QCOMPARE(error, expected_error);
 }
 void TestUdpSocketFactory::validConfig_data()
 {
@@ -141,8 +146,10 @@ void TestUdpSocketFactory::validConfig()
     QFETCH(int, remote_port);
     QFETCH(int, local_port);
 
-    const auto result = UdpSocketFactory::from_string(config);
+    IOFactory::ErrorKind error;
+    const auto result = UdpSocketFactory::from_string(config, &error);
     QCOMPARE_NE(result, nullptr);
+    QVERIFY(error == IOFactory::ErrorKind::NoError);
     QVERIFY(result->peerAddress().isEqual(address, QHostAddress::TolerantConversion));
     QCOMPARE_EQ(result->peerPort(), remote_port);
     QCOMPARE_EQ(result->localPort(), local_port);

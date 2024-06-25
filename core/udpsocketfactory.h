@@ -2,6 +2,7 @@
 #define MAGGUI_UDPSOCKETFACTORY_H
 
 #include <core/global.h>
+#include <core/iofactory.h>
 
 #include <QRegularExpression>
 
@@ -31,9 +32,9 @@ public:
     ///
     /// \param string
     /// \return
-    static auto from_string(const QString &string) -> QUdpSocket *;
-
+    static auto from_string(const QString &string, IOFactory::ErrorKind *error=nullptr) -> QUdpSocket *;
     static auto to_string(const QUdpSocket *device) -> QString;
+    static auto last_error_string() -> QString;
 };
 
 #endif //MAGGUI_UDPSOCKETFACTORY_H

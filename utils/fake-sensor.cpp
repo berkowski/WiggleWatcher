@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    auto io_device = IOFactory::from_string(args.at(0));
+    auto io_device = IOFactory::from_string(args.at(0), nullptr);
     if (!io_device) {
         std::fputs(qPrintable(u"Unable to parse output config: '"_s), stderr);
         std::fputs(qPrintable(args.at(0)), stderr);

@@ -18,6 +18,7 @@ public:
     static auto create(maggui::SensorKind kind, const QString &name, const QString &connection,
                        const QString &description = {}, const QVariantMap &options = {}) -> std::unique_ptr<SensorBase>;
 
+    static auto last_error_string() -> QString;
     //static auto to_toml(const SensorBase *sensor) -> std::shared_ptr<erbsland::qt::toml::Value>;
 };
 

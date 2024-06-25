@@ -48,29 +48,38 @@ void TestSerialPortFactory::invalidConfigType()
 {
     QFETCH(QString, config);
 
-    const auto result = SerialPortFactory::from_string(config);
+    IOFactory::ErrorKind error;
+    const auto result = SerialPortFactory::from_string(config, &error);
+
+    // No IO device returned
     QCOMPARE(result, nullptr);
+    // No error indicated
+    QCOMPARE(error, IOFactory::ErrorKind::IncorrectKind);
 }
 
 void TestSerialPortFactory::invalidConfigParameters()
 {
     QFETCH(QString, config);
+    QFETCH(IOFactory::ErrorKind, expected_error);
 
-    const auto result = SerialPortFactory::from_string(config);
+    IOFactory::ErrorKind error;
+    const auto result = SerialPortFactory::from_string(config, &error);
     QCOMPARE(result, nullptr);
+    QCOMPARE(error, expected_error);
 }
 
 void TestSerialPortFactory::invalidConfigParameters_data()
 {
     QTest::addColumn<QString>("config");
+    QTest::addColumn<IOFactory::ErrorKind>("expected_error");
 
-    QTest::newRow("invalid baud (negative)") << "serial:///dev/ttyUSB0:8N1@-9600";
-    QTest::newRow("invalid baud (missing)") << "serial:///dev/ttyUSB0:8N1";
-    QTest::newRow("invalid data bits (10)") << "serial:///dev/ttyUSB0:10N1@9600";
-    QTest::newRow("invalid parity (Z)") << "serial:///dev/ttyUSB0:8Z1@9600";
-    QTest::newRow("invalid parity ('NONE')") << "serial:///dev/ttyUSB0:8NONE1@9600";
-    QTest::newRow("invalid stop bits (4)") << "serial:///dev/ttyUSB0:8N4@9600";
-    QTest::newRow("invalid stop bits (missing)") << "serial:///dev/ttyUSB0:8N@9600";
+    QTest::newRow("invalid baud (negative)") << "serial:///dev/ttyUSB0:8N1@-9600" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("invalid baud (missing)") << "serial:///dev/ttyUSB0:8N1" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("invalid data bits (10)") << "serial:///dev/ttyUSB0:10N1@9600" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("invalid parity (Z)") << "serial:///dev/ttyUSB0:8Z1@9600" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("invalid parity ('NONE')") << "serial:///dev/ttyUSB0:8NONE1@9600" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("invalid stop bits (4)") << "serial:///dev/ttyUSB0:8N4@9600" << IOFactory::ErrorKind::ConfigParseError;
+    QTest::newRow("invalid stop bits (missing)") << "serial:///dev/ttyUSB0:8N@9600" << IOFactory::ErrorKind::ConfigParseError;
 }
 
 void TestSerialPortFactory::validConfig()
@@ -83,7 +92,7 @@ void TestSerialPortFactory::validConfig()
     QFETCH(QSerialPort::StopBits, stop_bits);
 
     // wrap w/ a QPointer to make sure it gets deleted
-    const auto ptr = QPointer<QSerialPort>(SerialPortFactory::from_string(config));
+    const auto ptr = QPointer<QSerialPort>(SerialPortFactory::from_string(config, nullptr));
 
     QCOMPARE(ptr.isNull(), false);
     QVERIFY(ptr->isOpen());

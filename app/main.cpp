@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     for(const auto& config: settings.sensors()) {
         auto sensor = SensorFactory::create(config->kind, config->name, config->connection, config->description);
         if(!sensor) {
-            auto error_message = QString{"Unable to load config from %1"}.arg(*config_file);
+            auto error_message = QString{"Unable to load config from %1\n\n%2"}.arg(*config_file, SensorFactory::last_error_string());
             QMessageBox::critical(nullptr, QStringLiteral("Unable to load configuration"), error_message);
             return 0;
         }
