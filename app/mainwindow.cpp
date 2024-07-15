@@ -25,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent,  Qt::WindowFlags flags): QMainWindow(par
     QObject::connect(ui->actionAPS1540_Manual, &QAction::triggered, this, &MainWindow::showAps1540Manual);
     QObject::connect(ui->actionHMR2300_Manual, &QAction::triggered, this, &MainWindow::showHmr2300Manual);
     QObject::connect(ui->actionE_xit, &QAction::triggered, this, &MainWindow::close);
+
+    // Unused at the moment as we do not support run-time reqconfiguration
+    ui->action_Load_Settings->setVisible(false);
+    ui->action_Save_Settings->setVisible(false);
 }
 
 MainWindow::~MainWindow() = default;
@@ -53,7 +57,9 @@ auto MainWindow::showAps1540Manual() -> void
     }
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(local)))
     {
-        qWarning() << "Unable to open " << local << " using default application";
+        const auto message = QStringLiteral("Unable to open APS1540 manual copied to %1 using default application.").arg(local);
+        QMessageBox::warning(this, tr("Unable to open APS1540 manual"), message);
+        qWarning() << message;
     }
 }
 
@@ -69,7 +75,9 @@ auto MainWindow::showHmr2300Manual() -> void
     }
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(local)))
     {
-        qWarning() << "Unable to open " << local << " using default application";
+        const auto message = QStringLiteral("Unable to open HMR2300 manual copied to %1 using default application.").arg(local);
+        QMessageBox::warning(this, tr("Unable to open HMR2300 manual"), message);
+        qWarning() << message;
     }
 }
 
