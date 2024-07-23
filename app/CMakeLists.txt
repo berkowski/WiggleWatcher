@@ -44,6 +44,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE $<BUILD_INTERFACE:${CMAKE_CUR
 # endif()
 
 if(APPLE)
+  set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
   set(DEPLOY_TOOL_OPTIONS "-dmg")
 endif()
 
