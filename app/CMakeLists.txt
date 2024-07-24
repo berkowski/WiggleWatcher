@@ -45,7 +45,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE $<BUILD_INTERFACE:${CMAKE_CUR
 
 if(APPLE)
   set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
-  set(DEPLOY_TOOL_OPTIONS "-dmg")
+  # set(DEPLOY_TOOL_OPTIONS "-dmg")
 endif()
 
 if(WIN32)
@@ -74,10 +74,12 @@ qt_generate_deploy_app_script(
 install(SCRIPT ${deploy_script})
 
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Maples magnetometer logging GUI")
-set(CPACK_VENDOR "Woods Hole Oceanographic Institution")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
+#set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Maples magnetometer logging GUI")
+#set(CPACK_VENDOR "Woods Hole Oceanographic Institution")
+#set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
+string(TOLOWER "${CPACK_PACKAGE_NAME}-${CMAKE_PROJECT_VERSION}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}" CPACK_PACKAGE_FILE_NAME)
 set(CPACK_VERBATIM_VARIABLES ON)
-set(CPACK_PACKAGING_INSTALL_PREFIX "/${PROJECT_NAME}")
-
+if(NOT APPLE)
+    set(CPACK_PACKAGING_INSTALL_PREFIX "/${PROJECT_NAME}")
+endif()
 include(CPack)
