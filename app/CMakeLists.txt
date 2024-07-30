@@ -45,7 +45,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE $<BUILD_INTERFACE:${CMAKE_CUR
 
 if(APPLE)
   set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
-  # set(DEPLOY_TOOL_OPTIONS "-dmg")
 endif()
 
 if(WIN32)
@@ -64,7 +63,6 @@ qt_generate_deploy_app_script(
     OUTPUT_SCRIPT deploy_script
     NO_UNSUPPORTED_PLATFORM_ERROR
     NO_TRANSLATIONS
-    DEPLOY_TOOL_OPTIONS ${DEPLOY_TOOL_OPTIONS}
     # Fedora installs Qt libraries into /lib64, which is excluded due to QT_DEPLOY_IGNORED_LIB_DIRS
     # POST_INCLUDE_REGEXES here will make sure at at least the Qt libraries are grabbed.
     POST_INCLUDE_REGEXES "libQt6.*"

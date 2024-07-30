@@ -15,6 +15,7 @@ class MAGGUI_CORE_EXPORT SensorLogger: public QObject
 public:
     ~SensorLogger() override;
     Q_SIGNAL void valueChanged(const QString& name, const maggui::SensorKind& kind, const QVariant& value);
+    Q_SIGNAL void bytesWritten(qint64);
 
     Q_SLOT void setLogDirectory(const QString& directory);
     Q_SLOT void setLoggingEnabled(bool enabled);

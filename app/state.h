@@ -3,6 +3,9 @@
 
 #include <QMetaType>
 #include <QObject>
+#include <QStorageInfo>
+
+class QTimer;
 
 namespace maggui
 {
@@ -10,6 +13,8 @@ namespace maggui
     State();
     bool recording;
     QString log_directory;
+    qint64 bytes_available;
+    qint64 data_rate_Bps;
   };
 }
 
@@ -34,13 +39,19 @@ class StateObject: public QObject {
    auto setRecordingEnabled(bool enabled) noexcept -> void;
    auto toggleRecordingEnabled() noexcept -> void;
    auto setLogDirectory(QString directory) noexcept -> void;
+   auto updateBytesWritten(qint64 bytes) noexcept -> void;
 
  signals:
   auto stateChanged(maggui::State)->void;
-  
+
+ private slots:
+   auto handleTimerUpdate() noexcept -> void; 
  private:
   maggui::State state;
   QWidget* widget;
+  QTimer* timer;
+  QStorageInfo storage_info;
+  qint64 bytes_written_since_last;
 };
   
 
