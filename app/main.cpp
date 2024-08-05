@@ -2,11 +2,12 @@
 #include "mainwindow.h"
 
 #include <core/aps1540magnetometer.h>
-#include <core/iofactory.h>
 #include <core/textfilesink.h>
 #include <core/settings.h>
 #include <core/sensorfactory.h>
 #include <core/magnetometerlogger.h>
+
+#include <libqio/iofactory.h>
 
 #include <QApplication>
 #include <QDir>

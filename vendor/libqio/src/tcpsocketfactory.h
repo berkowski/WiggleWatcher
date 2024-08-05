@@ -1,14 +1,14 @@
-#ifndef MAGGUI_TCPSOCKETFACTORY_H
-#define MAGGUI_TCPSOCKETFACTORY_H
+#ifndef LIBQIO_TCPSOCKETFACTORY_H
+#define LIBQIO_TCPSOCKETFACTORY_H
 
-#include <core/global.h>
-#include <core/iofactory.h>
+//#include <core/global.h>
+#include <libqio/iofactory.h>
 
 #include <QRegularExpression>
 
 class QTcpSocket;
 
-class MAGGUI_CORE_EXPORT TcpSocketFactory
+class LIBQIO_EXPORT TcpSocketFactory
 {
 public:
     static const QRegularExpression RE;
@@ -17,4 +17,4 @@ public:
     static auto last_error_string() -> QString;
 };
 
-#endif //MAGGUI_TCPSOCKETFACTORY_H
+#endif //LIBQIO_TCPSOCKETFACTORY_H

@@ -1,7 +1,7 @@
-#include "core/sensorfactory.h"
+#include <core/sensorfactory.h>
 #include <core/aps1540magnetometer.h>
-#include <core/iofactory.h>
 
+#include <libqio/iofactory.h>
 #include <erbsland/qt/all_toml.hpp>
 #include <memory>
 

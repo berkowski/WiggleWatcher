@@ -1,14 +1,14 @@
 #ifndef IOFACTORY_H
 #define IOFACTORY_H
 
-#include <core/global.h>
+#include <libqio/export.h>
 
 #include <QString>
 
 class QIODevice;
 
 /// Helper class to build QIODevice objects from strings
-class MAGGUI_CORE_EXPORT IOFactory
+class LIBQIO_EXPORT IOFactory
 {
 public:
     enum class ErrorKind {

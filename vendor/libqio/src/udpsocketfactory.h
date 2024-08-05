@@ -1,14 +1,14 @@
-#ifndef MAGGUI_UDPSOCKETFACTORY_H
-#define MAGGUI_UDPSOCKETFACTORY_H
+#ifndef LIBQIO_UDPSOCKETFACTORY_H
+#define LIBQIO_UDPSOCKETFACTORY_H
 
-#include <core/global.h>
-#include <core/iofactory.h>
+//#include <core/global.h>
+#include <libqio/iofactory.h>
 
 #include <QRegularExpression>
 
 class QUdpSocket;
 
-class MAGGUI_CORE_EXPORT UdpSocketFactory
+class LIBQIO_EXPORT UdpSocketFactory
 {
 public:
     static const QRegularExpression RE;
@@ -37,4 +37,4 @@ public:
     static auto last_error_string() -> QString;
 };
 
-#endif //MAGGUI_UDPSOCKETFACTORY_H
+#endif //LIBQIO_UDPSOCKETFACTORY_H

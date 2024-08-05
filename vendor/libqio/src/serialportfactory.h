@@ -1,15 +1,15 @@
 #ifndef SERIALPORTFACTORY_H
 #define SERIALPORTFACTORY_H
 
-#include <core/global.h>
-#include <core/iofactory.h>
+//#include <core/global.h>
+#include <libqio/iofactory.h>
 
 #include <QString>
 #include <QSerialPort>
 
 class QSerialPort;
 
-class MAGGUI_CORE_EXPORT SerialPortFactory
+class LIBQIO_EXPORT SerialPortFactory
 {
 public:
     static const QRegularExpression RE;

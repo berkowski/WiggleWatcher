@@ -9,12 +9,12 @@ generate_export_header(core
     PREFIX_NAME MAGGUI_
     EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/include/core/export.h
 )
+
 set(core-sources-public
     include/core/global.h
     include/core/vectormagnetometerdata.h
     include/core/sensorbase.h
     include/core/textfilesink.h
-    include/core/iofactory.h
     include/core/magnetometer.h
     include/core/aps1540magnetometer.h
     include/core/filetimer.h
@@ -29,13 +29,6 @@ set(core-sources-private
     vectormagnetometerdata.cpp
     sensorbase.cpp
     textfilesink.cpp
-    iofactory.cpp
-    tcpsocketfactory.h
-    tcpsocketfactory.cpp
-    udpsocketfactory.h
-    udpsocketfactory.cpp
-    serialportfactory.cpp
-    serialportfactory.h
     magnetometer.cpp
     aps1540magnetometer.cpp
     filetimer.cpp
@@ -60,7 +53,7 @@ target_include_directories(core
 
 
 target_link_libraries(core
-    PUBLIC Qt::Core Qt::Network Qt::SerialPort
+    PUBLIC Qt::Core Qt::Network Qt::SerialPort libqio::libqio
     PRIVATE erbsland-qt-toml
 )
 

@@ -1,4 +1,4 @@
-#include <core/iofactory.h>
+#include <libqio/iofactory.h>
 
 #include <QtCore/qcommandlineparser.h>
 #include <QtCore/qcoreapplication.h>
