@@ -16,7 +16,7 @@ class MaggiePlotWidget: public QWidget {
 Q_OBJECT
 
 public:
-    static auto constexpr MAXIMUM_PLOT_HISTORY = std::chrono::minutes {1};
+    static auto constexpr MAXIMUM_PLOT_HISTORY = std::chrono::minutes {5};
     static auto constexpr PLOT_UPDATE_INTERVAL = std::chrono::milliseconds{2 * 16};
 
     explicit MaggiePlotWidget(QWidget* parent=nullptr);
