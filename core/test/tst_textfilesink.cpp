@@ -4,9 +4,20 @@
 #include <QtTest/qtest.h>
 #include <QtTest/qsignalspy.h>
 
+class RolloverTest: public TextFileSink
+{
+public:
+    RolloverTest(): TextFileSink(QDir::temp()) {}
+    void rollover(const QDateTime& datetime)
+    {
+        TextFileSink::rollover(datetime);
+    }
+};
+
 class TestTextFileSink : public QObject
 {
     Q_OBJECT
+
 private:
     Q_SLOT void nullDateTimeAlwaysLessThan();
     Q_SLOT void initialState();
@@ -14,8 +25,37 @@ private:
     Q_SLOT void callingStartWritesNoData();
     Q_SLOT void headerIsWritten();
     Q_SLOT void headerGetsANewline();
+    Q_SLOT void testRolloverFilename();
 };
 
+
+void TestTextFileSink::testRolloverFilename()
+{
+    auto sink = RolloverTest{};
+    const auto interval = std::chrono::hours{1};
+    sink.setRolloverInterval(interval);
+
+    const auto now = QDateTime::currentDateTimeUtc();
+
+    sink.rollover(now - interval); 
+
+    const auto old_filename = sink.currentFileName();
+    QVERIFY(!old_filename.isEmpty());
+
+    const auto expected_filetime = [&] {
+        auto expected = now;
+        const auto time = now.time();
+        expected.setTime(QTime{time.hour(), 0, 0, 0});
+        return expected;
+    }();
+
+    sink.write("somedata");
+    const auto expected_filename = sink.filenameForDateTime(expected_filetime);
+    const auto filename = sink.currentFileName();
+    QVERIFY(filename != old_filename);
+    QCOMPARE(filename, expected_filename);
+
+}
 
 void TestTextFileSink::nullDateTimeAlwaysLessThan()
 {

@@ -110,7 +110,7 @@ public slots:
 
     auto setDir(QDir dir) -> void;
 
-private:
+protected:
 
     /// Write future data into a new file
     ///

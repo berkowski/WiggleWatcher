@@ -39,7 +39,7 @@ auto TextFileSink::write(const QByteArray &bytes) -> void
 
     const auto now = QDateTime::currentDateTimeUtc();
     if (now >= next_rollover) {
-        qWarning() << "Rollover:  now: " << now << " next: " << next_rollover;
+        qInfo() << "current time: " << now << " next rollover due at: " << next_rollover;
         rollover(now);
     }
     if (!file->isOpen()) {
@@ -98,7 +98,7 @@ auto TextFileSink::rollover(const QDateTime &datetime) -> void
         next_rollover = QDateTime::fromSecsSinceEpoch(std::chrono::duration_cast<std::chrono::seconds>(next_rollover_ms).count(), QTimeZone::utc());
     }
     else {
-        while (next_rollover < datetime) {
+        while (datetime - next_rollover > rollover_interval) {
             next_rollover += rollover_interval;
         }
         file->setFileName(filenameForDateTime(next_rollover));
