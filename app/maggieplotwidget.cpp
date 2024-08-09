@@ -42,7 +42,8 @@ MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
 
     // x-axis datetime ticker
     auto datetime_ticker = QSharedPointer<QCPAxisTickerDateTime>{new QCPAxisTickerDateTime};
-    datetime_ticker->setDateTimeFormat("MMM dd\nHH:mm");
+    datetime_ticker->setDateTimeFormat("MMM dd\nHH:mm:ss");
+    datetime_ticker->setTickStepStrategy(QCPAxisTicker::tssReadability);
 
     // create plot axes
     auto enum_index = 0;

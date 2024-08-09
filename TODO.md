@@ -1,3 +1,1 @@
 - Fix log filename generation.  It's one hour ahead (e.g. timestamps 19:05:00 are in file for 20:00:00)
-- Fix x axis label formatting to include seconds
-- Add text to status bar indicating which config file is being used
