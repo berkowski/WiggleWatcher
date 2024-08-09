@@ -15,7 +15,7 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network)
 qt_standard_project_setup()
 
-qt_add_library(${PROJECT_NAME} SHARED)
+qt_add_library(${PROJECT_NAME} STATIC)
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 add_library(libqio::libqio ALIAS ${PROJECT_NAME})
 
