@@ -18,6 +18,7 @@
 #include <QMessageBox>
 #include <QVariant>
 #include <QScopedPointer>
+#include <QStatusBar>
 
 #include <chrono>
 
@@ -112,6 +113,8 @@ int main(int argc, char *argv[])
     // propagate initial state to widgets
     state.stateChanged(state.currentState());
 
+    // Display config file in status bar
+    gui.statusBar()->showMessage(QStringLiteral("config file: %1").arg(*config_file));
     gui.show();
 
     return QApplication::exec();
