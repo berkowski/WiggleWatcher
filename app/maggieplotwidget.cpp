@@ -47,6 +47,10 @@ MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
 
     // create plot axes
     auto enum_index = 0;
+
+    // margin group to align left and right axes
+    auto margin_group = new QCPMarginGroup(plot);
+
     std::for_each(std::begin(axis_rects), std::end(axis_rects), [&](auto& it) {
         // make a new axis item
         it = new QCPAxisRect(plot);
@@ -69,6 +73,7 @@ MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
           else if(axis->axisType() == QCPAxis::AxisType::atLeft) {
               axis->setLabel(QString("%1 (nT)").arg(toString(static_cast<MaggiePlotIndex>(enum_index))));
               axis->ticker()->setTickStepStrategy(QCPAxisTicker::TickStepStrategy::tssReadability);
+
           }
         });
         auto axes_layout = it->insetLayout();
@@ -77,6 +82,8 @@ MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
         legend->setFillOrder(QCPLayoutGrid::FillOrder::foColumnsFirst);
         axes_layout->addElement(static_cast<QCPLayoutElement*>(legend), Qt::AlignLeft | Qt::AlignTop);
 
+        // keep left and right axes aligned
+        it->setMarginGroup(QCP::msLeft | QCP::msRight,  margin_group);
         plot->plotLayout()->addElement(it);
         enum_index++;
     });
