@@ -1,7 +1,7 @@
 #ifndef WIGGLEWATCHER_SENSORFACTORY_H
 #define WIGGLEWATCHER_SENSORFACTORY_H
 
-#include "global.h"
+#include "core/global.h"
 #include "sensorbase.h"
 
 #include <QString>

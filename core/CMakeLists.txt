@@ -5,6 +5,11 @@ find_package(Qt6 REQUIRED COMPONENTS Core SerialPort Network)
 qt_add_library(core STATIC)
 add_library(${PROJECT_NAME}::Core ALIAS core)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/core)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/core/global.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/core/global.h
+    @ONLY
+)
+
 generate_export_header(core
     PREFIX_NAME WIGGLEWATCHER_
     EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/include/core/export.h

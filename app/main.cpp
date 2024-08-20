@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
 
     // setup gui
     auto gui = MainWindow{};
+    gui.setWindowTitle(QStringLiteral("WiggleWatcher v%1").arg(wigglewatcher::WIGGLEWATCHER_VERSION));
 
     // initialize state
     auto state = StateObject{&app, &gui};

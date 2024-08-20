@@ -1,12 +1,28 @@
-# MagGUI config uses TOML format: https://toml.io
+# WiggleWatcher config uses TOML format: https://toml.io
 [log]
 path = "/path/to/write/logs"
 interval = 60 # Rollover interval in minutes
 
 [[sensor]]
+# Some metadata used in the header written tot he beginning of each file produced by
+# the logger.
 name = "towcam_aps1540"
 prefix = "towcam_spare" # optional prefix for files instead of the sensor name
-kind = "aps1540"
 description = "APS1540 S/N ###### installed in TowCam"
-connection = "serial://COM3:8N1@9600"
-plot = true
+
+# What kind of sensor.  Only "aps1540" is valid at the moment.
+kind = "aps1540"
+
+# UDP connection: udp://$REMOTE_IP:$REMOTE_PORT:$LOCAL_PORT
+connection = "udp://127.0.0.1:4001:4000"
+
+# TCP connection: tcp:://$REMOTE_IP:$REMOTE_PORT
+# connection = "tcp://127.0.0.1:4000"
+
+# Serial port connection:  serial://$PORT:$DATA_BITS$PARITY$STOP_BITS@$BAUD where :
+# $PORT:      is the port name (e.g. /dev/ttyUSB0 or COM3)
+# $DATA_BITS: 7, 8, or 9
+# $PARITY:    'E' for even, 'O' for odd, 'N' for none
+# $STOP_BITS: 1, 1.5, or 2
+# $BAUD:      baudrate
+# connection = "serial://COM3:8N1@9600"

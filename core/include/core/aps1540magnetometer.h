@@ -1,7 +1,6 @@
 #ifndef WIGGLEWATCHER_APS1540MAGNETOMETER_H
 #define WIGGLEWATCHER_APS1540MAGNETOMETER_H
 
-#include <core/global.h>
 #include <core/magnetometer.h>
 
 class WIGGLEWATCHER_CORE_EXPORT Aps1540Magnetometer : public Magnetometer {
