@@ -1,5 +1,5 @@
-#ifndef MAGGUI_FILETIMER_H
-#define MAGGUI_FILETIMER_H
+#ifndef WIGGLEWATCHER_FILETIMER_H
+#define WIGGLEWATCHER_FILETIMER_H
 
 #include <QObject>
 
@@ -36,4 +36,4 @@ private:
     std::chrono::milliseconds interval_;
 };
 
-#endif //MAGGUI_FILETIMER_H
+#endif //WIGGLEWATCHER_FILETIMER_H

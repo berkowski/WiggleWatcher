@@ -1,5 +1,5 @@
-#ifndef MAGGUI_MAGGIEPLOTWIDGET_H
-#define MAGGUI_MAGGIEPLOTWIDGET_H
+#ifndef WIGGLEWATCHER_MAGGIEPLOTWIDGET_H
+#define WIGGLEWATCHER_MAGGIEPLOTWIDGET_H
 
 #include <core/vectormagnetometerdata.h>
 #include <QWidget>
@@ -36,4 +36,4 @@ private:
 };
 
 
-#endif //MAGGUI_MAGGIEPLOTWIDGET_H
+#endif //WIGGLEWATCHER_MAGGIEPLOTWIDGET_H

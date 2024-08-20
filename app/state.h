@@ -1,5 +1,5 @@
-#ifndef MAGGUI_STATE_H
-#define MAGGUI_STATE_H
+#ifndef WIGGLEWATCHER_STATE_H
+#define WIGGLEWATCHER_STATE_H
 
 #include <QMetaType>
 #include <QObject>
@@ -7,7 +7,7 @@
 
 class QTimer;
 
-namespace maggui
+namespace wigglewatcher
 {
   struct State {
     State();
@@ -18,7 +18,7 @@ namespace maggui
   };
 }
 
-Q_DECLARE_METATYPE(maggui::State)
+Q_DECLARE_METATYPE(wigglewatcher::State)
 
 
 class StateObject: public QObject {
@@ -31,7 +31,7 @@ class StateObject: public QObject {
     return state.recording;
   }
 
-  [[nodiscard]] auto currentState() const noexcept -> maggui::State {
+  [[nodiscard]] auto currentState() const noexcept -> wigglewatcher::State {
     return state;
   }
   
@@ -42,12 +42,12 @@ class StateObject: public QObject {
    auto updateBytesWritten(qint64 bytes) noexcept -> void;
 
  signals:
-  auto stateChanged(maggui::State)->void;
+  auto stateChanged(wigglewatcher::State)->void;
 
  private slots:
    auto handleTimerUpdate() noexcept -> void; 
  private:
-  maggui::State state;
+  wigglewatcher::State state;
   QWidget* widget;
   QTimer* timer;
   QStorageInfo storage_info;

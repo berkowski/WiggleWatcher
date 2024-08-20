@@ -1,5 +1,5 @@
-#ifndef MAGGUI_MAINWINDOW_H
-#define MAGGUI_MAINWINDOW_H
+#ifndef WIGGLEWATCHER_MAINWINDOW_H
+#define WIGGLEWATCHER_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <core/vectormagnetometerdata.h>
@@ -21,7 +21,7 @@ signals:
     auto logDirectoryChanged(const QString &directory) -> void;
 
 public slots:
-    auto updateState(maggui::State state) -> void;
+    auto updateState(wigglewatcher::State state) -> void;
     auto addVectorMagnetometerData(const QString& name, const VectorMagnetometerData& data) -> void;
     auto onSetLogDirectoryTriggered() -> void;
 
@@ -34,4 +34,4 @@ private:
     QString log_directory;
 };
 
-#endif //MAGGUI_MAINWINDOW_H
+#endif //WIGGLEWATCHER_MAINWINDOW_H

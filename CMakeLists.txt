@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
 
-project(maggui
+project(wigglewatcher
     VERSION 0.0.0
     LANGUAGES CXX)
 

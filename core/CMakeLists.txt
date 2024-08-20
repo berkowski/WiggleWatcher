@@ -6,7 +6,7 @@ qt_add_library(core STATIC)
 add_library(${PROJECT_NAME}::Core ALIAS core)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/core)
 generate_export_header(core
-    PREFIX_NAME MAGGUI_
+    PREFIX_NAME WIGGLEWATCHER_
     EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/include/core/export.h
 )
 

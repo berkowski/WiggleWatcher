@@ -1,10 +1,10 @@
-#ifndef MAGGUI_APS1540MAGNETOMETER_H
-#define MAGGUI_APS1540MAGNETOMETER_H
+#ifndef WIGGLEWATCHER_APS1540MAGNETOMETER_H
+#define WIGGLEWATCHER_APS1540MAGNETOMETER_H
 
 #include <core/global.h>
 #include <core/magnetometer.h>
 
-class MAGGUI_CORE_EXPORT Aps1540Magnetometer : public Magnetometer {
+class WIGGLEWATCHER_CORE_EXPORT Aps1540Magnetometer : public Magnetometer {
 Q_OBJECT
 
 public:
@@ -12,11 +12,11 @@ public:
 
     ~Aps1540Magnetometer() override = default;
 
-    [[nodiscard]] auto type() const noexcept -> maggui::SensorKind override { return maggui::SensorKind::APS1540; }
+    [[nodiscard]] auto type() const noexcept -> wigglewatcher::SensorKind override { return wigglewatcher::SensorKind::APS1540; }
 
     static auto stringToData(const QString &string) -> VectorMagnetometerData;
 
 protected:
     auto handleReadyRead(QIODevice *device) -> void override;
 };
-#endif //MAGGUI_APS1540MAGNETOMETER_H
+#endif //WIGGLEWATCHER_APS1540MAGNETOMETER_H

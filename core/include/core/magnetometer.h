@@ -1,11 +1,11 @@
-#ifndef MAGGUI_MAGNETOMETER_H
-#define MAGGUI_MAGNETOMETER_H
+#ifndef WIGGLEWATCHER_MAGNETOMETER_H
+#define WIGGLEWATCHER_MAGNETOMETER_H
 
 #include <core/global.h>
 #include <core/sensorbase.h>
 #include <core/vectormagnetometerdata.h>
 
-class MAGGUI_CORE_EXPORT Magnetometer : public SensorBase
+class WIGGLEWATCHER_CORE_EXPORT Magnetometer : public SensorBase
 {
     Q_OBJECT
 public:
@@ -15,4 +15,4 @@ public:
     ~Magnetometer() override = default;
 };
 
-#endif //MAGGUI_MAGNETOMETER_H
+#endif //WIGGLEWATCHER_MAGNETOMETER_H

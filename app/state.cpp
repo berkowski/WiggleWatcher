@@ -6,7 +6,7 @@
 
 #include <chrono>
 
-namespace maggui {
+namespace wigglewatcher {
   State::State(): recording(false), log_directory(QDir::toNativeSeparators(QDir::currentPath())), bytes_available(-1), data_rate_Bps(-1) {}
 }
 

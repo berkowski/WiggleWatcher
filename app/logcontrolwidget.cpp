@@ -11,7 +11,7 @@ LogControlWidget::LogControlWidget(QWidget *parent): QWidget(parent), ui(std::ma
 
 LogControlWidget::~LogControlWidget() = default;
 
-auto LogControlWidget::updateState(maggui::State state) -> void {
+auto LogControlWidget::updateState(wigglewatcher::State state) -> void {
 
   auto locale = QLocale();
   locale.setNumberOptions(QLocale::DefaultNumberOptions);

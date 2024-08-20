@@ -9,7 +9,7 @@
 
 class QIODevice;
 
-class MAGGUI_CORE_EXPORT SensorBase : public QObject {
+class WIGGLEWATCHER_CORE_EXPORT SensorBase : public QObject {
 Q_OBJECT
 
 public:
@@ -17,7 +17,7 @@ public:
 
     explicit SensorBase(QIODevice *io, QObject *parent = nullptr);
 
-    [[nodiscard]] virtual auto type() const noexcept -> maggui::SensorKind = 0;
+    [[nodiscard]] virtual auto type() const noexcept -> wigglewatcher::SensorKind = 0;
 
     [[nodiscard]] auto name() const noexcept -> QString {
         return objectName();

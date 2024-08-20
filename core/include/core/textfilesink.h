@@ -1,5 +1,5 @@
-#ifndef MAGGUI_TEXTFILESINK_H
-#define MAGGUI_TEXTFILESINK_H
+#ifndef WIGGLEWATCHER_TEXTFILESINK_H
+#define WIGGLEWATCHER_TEXTFILESINK_H
 
 #include <core/global.h>
 
@@ -15,7 +15,7 @@ class QDir;
 class QString;
 class QDateTime;
 
-class MAGGUI_CORE_EXPORT TextFileSink : public QObject
+class WIGGLEWATCHER_CORE_EXPORT TextFileSink : public QObject
 {
     Q_OBJECT
 public:
@@ -128,4 +128,4 @@ protected:
     QDateTime next_rollover;
 };
 
-#endif //MAGGUI_TEXTFILESINK_H
+#endif //WIGGLEWATCHER_TEXTFILESINK_H

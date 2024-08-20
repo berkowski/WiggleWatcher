@@ -13,11 +13,11 @@ private:
 
 void TestSettings::fromString()
 {
-    const auto log_path = QStringLiteral("/data/maggui");
+    const auto log_path = QStringLiteral("/data/wigglewatcher");
     const auto log_interval = std::chrono::minutes{60};
     const auto name = QString{"towcam_maggie"};
     const auto description = QString{"APS1540 installed in towcam"};
-    const auto kind = maggui::SensorKind::APS1540;
+    const auto kind = wigglewatcher::SensorKind::APS1540;
     const auto connection = QString{"udp://127.0.0.0:5000:5050"};
     const auto toml = QStringLiteral(
         R"([log]
@@ -29,7 +29,7 @@ name = "%3"
 kind = "%4"
 description = "%5"
 connection = "%6"
-)").arg(log_path, QString::number(log_interval.count()), name,  maggui::toString(kind), description, connection);
+)").arg(log_path, QString::number(log_interval.count()), name,  wigglewatcher::toString(kind), description, connection);
     const auto settings = Settings::fromString(toml);
     QVERIFY(settings.isValid());
     QCOMPARE(settings.dir(), log_path);
@@ -40,7 +40,7 @@ connection = "%6"
         QCOMPARE(settings.sensors().at(i)->name, expected_sensors.at(i).name);
         QCOMPARE(settings.sensors().at(i)->description, expected_sensors.at(i).description);
         QCOMPARE(settings.sensors().at(i)->connection, expected_sensors.at(i).connection);
-        QCOMPARE(maggui::toString(settings.sensors().at(i)->kind), maggui::toString(expected_sensors.at(i).kind));
+        QCOMPARE(wigglewatcher::toString(settings.sensors().at(i)->kind), wigglewatcher::toString(expected_sensors.at(i).kind));
     }
 
 }

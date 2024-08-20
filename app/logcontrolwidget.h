@@ -1,5 +1,5 @@
-#ifndef MAGGUI_LOGCONTROLWIDGET_H
-#define MAGGUI_LOGCONTROLWIDGET_H
+#ifndef WIGGLEWATCHER_LOGCONTROLWIDGET_H
+#define WIGGLEWATCHER_LOGCONTROLWIDGET_H
 
 #include "state.h"
 
@@ -21,7 +21,7 @@ signals:
     auto setRecordingTriggered() -> void;
 
 public slots:
-    auto updateState(maggui::State state) -> void;
+    auto updateState(wigglewatcher::State state) -> void;
   
 private:
     std::unique_ptr<Ui::LogControlWidget> ui;
@@ -29,4 +29,4 @@ private:
 };
 
 
-#endif //MAGGUI_LOGCONTROLWIDGET_H
+#endif //WIGGLEWATCHER_LOGCONTROLWIDGET_H

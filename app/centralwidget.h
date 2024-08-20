@@ -1,5 +1,5 @@
-#ifndef MAGGUI_CENTRALWIDGET_H
-#define MAGGUI_CENTRALWIDGET_H
+#ifndef WIGGLEWATCHER_CENTRALWIDGET_H
+#define WIGGLEWATCHER_CENTRALWIDGET_H
 
 #include "state.h"
 #include <core/vectormagnetometerdata.h>
@@ -20,7 +20,7 @@ signals:
     auto setRecordingTriggered() -> void;
 
 public slots:
-    auto updateState(maggui::State state) -> void;
+    auto updateState(wigglewatcher::State state) -> void;
     auto addVectorMagnetometerData(const QString& name, const VectorMagnetometerData& data) -> void;
 
 private:
@@ -29,4 +29,4 @@ private:
 };
 
 
-#endif //MAGGUI_CENTRALWIDGET_H
+#endif //WIGGLEWATCHER_CENTRALWIDGET_H

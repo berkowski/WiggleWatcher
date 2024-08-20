@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent,  Qt::WindowFlags flags): QMainWindow(par
 
 MainWindow::~MainWindow() = default;
 
-auto MainWindow::updateState(maggui::State state) -> void {
+auto MainWindow::updateState(wigglewatcher::State state) -> void {
     log_directory = state.log_directory;
     qobject_cast<CentralWidget*>(centralWidget())->updateState(std::move(state));
 }

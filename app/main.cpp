@@ -20,8 +20,6 @@
 #include <QScopedPointer>
 #include <QStatusBar>
 
-#include <chrono>
-
 int main(int argc, char *argv[])
 {
     auto app = QApplication{argc, argv};
@@ -30,8 +28,8 @@ int main(int argc, char *argv[])
         const auto CONFIG_PAIRS = QList<QPair<QDir, QString>> {
             { QApplication::applicationDirPath(), QStringLiteral("config.toml")},
             { QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation), QStringLiteral("config.toml") },
-            { QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), QStringLiteral("maggui.toml")},
-            { QStandardPaths::writableLocation(QStandardPaths::HomeLocation), QStringLiteral("maggui.toml")}
+            { QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), QStringLiteral("wigglewatcher.toml")},
+            { QStandardPaths::writableLocation(QStandardPaths::HomeLocation), QStringLiteral("wigglewatcher.toml")}
         };
         auto paths = QStringList{};
         std::for_each(std::begin(CONFIG_PAIRS), std::end(CONFIG_PAIRS),[&](const auto& pair) {
@@ -80,8 +78,8 @@ int main(int argc, char *argv[])
         }
 
         switch (sensor->type()) {
-        case maggui::SensorKind::APS1540:
-        case maggui::SensorKind::HMR2300:
+        case wigglewatcher::SensorKind::APS1540:
+        case wigglewatcher::SensorKind::HMR2300:
         {
             auto logger = new MagnetometerLogger(qobject_cast<Magnetometer*>(sensor.release()), &app);
 

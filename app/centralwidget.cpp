@@ -13,7 +13,7 @@ CentralWidget::CentralWidget(QWidget *parent): log_control_widget(new LogControl
     QObject::connect(log_control_widget, &LogControlWidget::setRecordingTriggered, this, &CentralWidget::setRecordingTriggered);
 }
 
-auto CentralWidget::updateState(maggui::State state) -> void {
+auto CentralWidget::updateState(wigglewatcher::State state) -> void {
     log_control_widget->updateState(std::move(state));
 }
 

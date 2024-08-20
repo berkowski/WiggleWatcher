@@ -1,12 +1,12 @@
-#ifndef MAGGUI_VECTORMAGNETOMETERDATA_H
-#define MAGGUI_VECTORMAGNETOMETERDATA_H
+#ifndef WIGGLEWATCHER_VECTORMAGNETOMETERDATA_H
+#define WIGGLEWATCHER_VECTORMAGNETOMETERDATA_H
 
 #include <core/global.h>
 
 #include <QDateTime>
 #include <QMetaType>
 
-struct MAGGUI_CORE_EXPORT VectorMagnetometerData
+struct WIGGLEWATCHER_CORE_EXPORT VectorMagnetometerData
 {
     inline VectorMagnetometerData() noexcept;
     explicit inline VectorMagnetometerData(
@@ -54,5 +54,5 @@ auto VectorMagnetometerData::operator==(const VectorMagnetometerData &other) con
     return !isNull() && !other.isNull() && timestamp == other.timestamp && x == other.x
            && y == other.y && z == other.z;
 }
-MAGGUI_CORE_EXPORT auto operator<<(QDebug dbg, const VectorMagnetometerData &data) -> QDebug;
+WIGGLEWATCHER_CORE_EXPORT auto operator<<(QDebug dbg, const VectorMagnetometerData &data) -> QDebug;
 #endif

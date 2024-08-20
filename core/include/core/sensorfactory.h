@@ -1,5 +1,5 @@
-#ifndef MAGGUI_SENSORFACTORY_H
-#define MAGGUI_SENSORFACTORY_H
+#ifndef WIGGLEWATCHER_SENSORFACTORY_H
+#define WIGGLEWATCHER_SENSORFACTORY_H
 
 #include "global.h"
 #include "sensorbase.h"
@@ -11,11 +11,11 @@
 
 class SensorBase;
 
-class MAGGUI_CORE_EXPORT SensorFactory
+class WIGGLEWATCHER_CORE_EXPORT SensorFactory
 {
 public:
 
-    static auto create(maggui::SensorKind kind, const QString &name, const QString &connection,
+    static auto create(wigglewatcher::SensorKind kind, const QString &name, const QString &connection,
                        const QString &description = {}, const QVariantMap &options = {}) -> std::unique_ptr<SensorBase>;
 
     static auto last_error_string() -> QString;
@@ -23,4 +23,4 @@ public:
 };
 
 
-#endif //MAGGUI_SENSORFACTORY_H
+#endif //WIGGLEWATCHER_SENSORFACTORY_H

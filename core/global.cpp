@@ -1,7 +1,7 @@
 #include <core/global.h>
 #include <QMetaEnum>
 
-namespace maggui
+namespace wigglewatcher
 {
 auto toString(SensorKind t) -> QString
 {
@@ -25,4 +25,4 @@ auto fromString(const QString &string, bool *ok) -> SensorKind
         return static_cast<SensorKind>(index);
     }
 }
-} // namespace maggui
+} // namespace wigglewatcher

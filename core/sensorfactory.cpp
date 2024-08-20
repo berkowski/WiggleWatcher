@@ -15,7 +15,7 @@ namespace {
     auto error_string = QString{};
 }
 
-auto SensorFactory::create(maggui::SensorKind kind, const QString &name, const QString &connection,
+auto SensorFactory::create(wigglewatcher::SensorKind kind, const QString &name, const QString &connection,
                            const QString &description, const QVariantMap &options) -> std::unique_ptr<SensorBase> {
 
     auto io = IOFactory::from_string(connection, nullptr);
@@ -28,10 +28,10 @@ auto SensorFactory::create(maggui::SensorKind kind, const QString &name, const Q
     auto sensor = std::unique_ptr<SensorBase>{};
 
     switch(kind) {
-        case maggui::SensorKind::APS1540:
+        case wigglewatcher::SensorKind::APS1540:
             sensor = std::make_unique<Aps1540Magnetometer>(io);
             break;
-        case maggui::SensorKind::HMR2300:
+        case wigglewatcher::SensorKind::HMR2300:
             Q_UNIMPLEMENTED();
             return {};
         default:

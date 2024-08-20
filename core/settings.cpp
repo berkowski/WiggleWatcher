@@ -90,7 +90,7 @@ namespace
                 }
             }
             auto ok = true;
-            maggui::fromString(sensor->stringValue(KEY_SENSOR_KIND), &ok);
+            wigglewatcher::fromString(sensor->stringValue(KEY_SENSOR_KIND), &ok);
             if (!ok) {
                 return {false, QString("kind = %1 is not a valid sensor type (sensor name = %2)").arg(sensor->stringValue(KEY_SENSOR_KIND), sensor->stringValue(KEY_SENSOR_NAME))};
             }
@@ -117,7 +117,7 @@ Settings::Settings(std::shared_ptr<Value> &&toml_ptr)
         sensor->name = it->stringValue(KEY_SENSOR_NAME);
         sensor->description = it->stringValue(KEY_SENSOR_DESCRIPTION);
         sensor->connection = it->stringValue(KEY_SENSOR_CONNECTION);
-        sensor->kind = maggui::fromString(it->stringValue(KEY_SENSOR_KIND));
+        sensor->kind = wigglewatcher::fromString(it->stringValue(KEY_SENSOR_KIND));
         sensors_.push_back(std::move(sensor));
     }
     is_valid = true;

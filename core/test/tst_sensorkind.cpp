@@ -1,7 +1,7 @@
 #include "../include/core/global.h"
 #include <QtTest/qtest.h>
 
-using namespace maggui;
+using namespace wigglewatcher;
 
 class TestSensorKind : public QObject
 {

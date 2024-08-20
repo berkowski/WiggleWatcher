@@ -1,5 +1,5 @@
-#ifndef MAGGUI_SETTINGS_H
-#define MAGGUI_SETTINGS_H
+#ifndef WIGGLEWATCHER_SETTINGS_H
+#define WIGGLEWATCHER_SETTINGS_H
 
 
 #include <core/global.h>
@@ -16,14 +16,14 @@ class Value;
 
 class SensorBase;
 
-class MAGGUI_CORE_EXPORT Settings
+class WIGGLEWATCHER_CORE_EXPORT Settings
 {
 public:
     struct Sensor {
         QString name;
         QString description;
         QString connection;
-        maggui::SensorKind kind;
+        wigglewatcher::SensorKind kind;
     };
 
     ~Settings() = default;
