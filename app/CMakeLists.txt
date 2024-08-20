@@ -23,25 +23,11 @@ target_sources(${PROJECT_NAME}
     mainwindow.ui
     mainwindow.h
     mainwindow.cpp
-    #iopool.h
-    #iopool.cpp
     main.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}::Core qcustomplot::qcustomplot Qt::Widgets Qt::Gui)
 target_include_directories(${PROJECT_NAME} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-
-# if(APPLE)
-#     set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
-#     get_target_property(qmake_executable Qt::qmake IMPORTED_LOCATION)
-#     get_filename_component(qt_bin_directory "${qmake_executable}" DIRECTORY)
-#     find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${qt_bin_directory}" REQUIRED)
-#     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-#             COMMAND ${MACDEPLOYQT_EXECUTABLE} ${PROJECT_NAME}.app -dmg
-#             WORKING_DIRECTORY ${CURRENT_CMAKE_BINARY_DIR}
-#             COMMENT "Run macdeployqt to create a macOS bundle"
-#     )
-# endif()
 
 if(APPLE)
   set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
@@ -72,9 +58,6 @@ qt_generate_deploy_app_script(
 install(SCRIPT ${deploy_script})
 
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
-#set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Maples magnetometer logging GUI")
-#set(CPACK_VENDOR "Woods Hole Oceanographic Institution")
-#set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 string(TOLOWER "${CPACK_PACKAGE_NAME}-${CMAKE_PROJECT_VERSION}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}" CPACK_PACKAGE_FILE_NAME)
 set(CPACK_VERBATIM_VARIABLES ON)
 if(NOT APPLE)
