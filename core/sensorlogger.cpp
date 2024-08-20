@@ -12,6 +12,8 @@ SensorLogger::SensorLogger(SensorBase *base, QObject *parent) : QObject(parent)
     sink = new TextFileSink{{}, prefix, suffix};
 
     QObject::connect(sink, &TextFileSink::bytesWritten, this, &SensorLogger::bytesWritten, Qt::QueuedConnection);
+    QObject::connect(sensor, &SensorBase::bytesRead, this, [&](const QByteArray& a){emit bytesRead(a.size());}, Qt::QueuedConnection);
+
     sink->moveToThread(thread);
     sensor->moveToThread(thread);
     thread->start();

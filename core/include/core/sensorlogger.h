@@ -16,6 +16,7 @@ public:
     ~SensorLogger() override;
     Q_SIGNAL void valueChanged(const QString& name, const wigglewatcher::SensorKind& kind, const QVariant& value);
     Q_SIGNAL void bytesWritten(qint64);
+    Q_SIGNAL void bytesRead(qint64);
 
     Q_SLOT void setLogDirectory(const QString& directory);
     Q_SLOT void setLoggingEnabled(bool enabled);

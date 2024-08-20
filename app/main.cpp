@@ -99,6 +99,11 @@ int main(int argc, char *argv[])
             }, Qt::QueuedConnection);
 
             QObject::connect(logger, &MagnetometerLogger::bytesWritten, &state, &StateObject::updateBytesWritten, Qt::QueuedConnection);
+            QObject::connect(logger, &MagnetometerLogger::bytesRead, &state, &StateObject::updateBytesRead, Qt::QueuedConnection);
+            QObject::connect(logger, &MagnetometerLogger::valueChanged, &state, [&](const auto& name, const auto& kind, const auto& data) {
+                state.updateSampleCount(1);
+            }, Qt::QueuedConnection);
+
             break;
         }
         default:
