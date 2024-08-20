@@ -1,1 +1,0 @@
-- Fix log filename generation.  It's one hour ahead (e.g. timestamps 19:05:00 are in file for 20:00:00)
