@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "aboutdialog.h"
 #include "centralwidget.h"
 
 #include <QDir>
@@ -25,7 +26,11 @@ MainWindow::MainWindow(QWidget *parent,  Qt::WindowFlags flags): QMainWindow(par
     QObject::connect(ui->actionAPS1540_Manual, &QAction::triggered, this, &MainWindow::showAps1540Manual);
     QObject::connect(ui->actionHMR2300_Manual, &QAction::triggered, this, &MainWindow::showHmr2300Manual);
     QObject::connect(ui->actionE_xit, &QAction::triggered, this, &MainWindow::close);
-
+    QObject::connect(ui->action_About, &QAction::triggered, [&]{
+                         auto dialog = AboutDialog(this);
+                         dialog.exec();
+                     });
+    
     // Unused at the moment as we do not support run-time reqconfiguration
     ui->action_Load_Settings->setVisible(false);
     ui->action_Save_Settings->setVisible(false);

@@ -11,6 +11,9 @@ qt_add_resources(${PROJECT_NAME} documents
 
 target_sources(${PROJECT_NAME}
     PRIVATE
+    aboutdialog.ui
+    aboutdialog.h
+    aboutdialog.cpp
     state.h
     state.cpp
     logcontrolwidget.ui
