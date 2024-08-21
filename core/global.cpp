@@ -3,6 +3,7 @@
 
 namespace wigglewatcher
 {
+
 auto toString(SensorKind t) -> QString
 {
     const auto meta = QMetaEnum::fromType<SensorKind>();
