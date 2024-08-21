@@ -102,6 +102,7 @@ auto TextFileSink::rollover(const QDateTime &datetime) -> void
             next_rollover += rollover_interval;
         }
         file->setFileName(filenameForDateTime(next_rollover));
+        next_rollover += rollover_interval;
         emit fileNameChanged(file->fileName());
     }
     qDebug() << "next rollover set to: " << next_rollover;
