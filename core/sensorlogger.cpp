@@ -35,3 +35,22 @@ void SensorLogger::setLoggingEnabled(bool enabled) {
         sink->stop();
     }
 }
+
+void SensorLogger::setRolloverInterval(const std::chrono::milliseconds& duration) noexcept
+{
+    if (duration == sink->rolloverIntervalAsDuration()) {
+        return;
+    }
+    
+    const auto active = sink->isActive();
+    
+    if (active) {
+        sink->stop();
+    }
+    
+    sink->setRolloverInterval(duration);
+    
+    if (active) {
+        sink->start();
+    }
+};

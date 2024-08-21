@@ -84,6 +84,9 @@ int main(int argc, char *argv[])
         {
             auto logger = new MagnetometerLogger(qobject_cast<Magnetometer*>(sensor.release()), &app);
 
+            // Set file interval
+            logger->setRolloverInterval(settings.interval());
+
             // connect state updates
             QObject::connect(&state, &StateObject::stateChanged, [&](const auto& s) {
                 logger->setLogDirectory(s.log_directory);

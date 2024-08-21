@@ -20,6 +20,8 @@ public:
     Q_SLOT void setLogDirectory(const QString& directory);
     Q_SLOT void setLoggingEnabled(bool enabled);
 
+    Q_SLOT void setRolloverInterval(const std::chrono::milliseconds& duration) noexcept;
+
 protected:
     explicit WIGGLEWATCHER_CORE_EXPORT SensorLogger(SensorBase* base, QObject* parent=nullptr);
     QThread* thread;
