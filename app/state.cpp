@@ -25,7 +25,17 @@ auto StateObject::setRecordingEnabled(bool enabled) noexcept -> void {
 
 auto StateObject::toggleRecordingEnabled() noexcept -> void
 {
-    state.recording = !state.recording;
+    if (state.recording) {
+      const auto clicked = QMessageBox::question(widget, "Stop Recording?", "Press 'Ok' to stop recording.",
+                                                 QMessageBox::StandardButton::Ok | QMessageBox::StandardButton::Cancel, 
+                                                 QMessageBox::StandardButton::Cancel);
+      if (clicked == QMessageBox::StandardButton::Ok) {
+        state.recording = !state.recording;
+      }
+    }
+    else {
+      state.recording = !state.recording;
+    }
     emit stateChanged(state);
 }
 
