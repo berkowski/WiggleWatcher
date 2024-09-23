@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
             logger->setRolloverInterval(settings.interval());
 
             // connect state updates
-            QObject::connect(&state, &StateObject::stateChanged, [&](const auto& s) {
+            QObject::connect(&state, &StateObject::stateChanged, [=](const auto& s) {
                 logger->setLogDirectory(s.log_directory);
                 logger->setLoggingEnabled(s.recording);
             });

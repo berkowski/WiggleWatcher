@@ -26,6 +26,7 @@ auto toString(MaggiePlotIndex index) -> QString {
         Q_UNREACHABLE();
     }
 }
+const auto COLORS = QList<QString>{"orangered", "mediumblue", "yellowgreen", "fuchsia"};
 
 MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
   : QWidget(parent)
@@ -105,8 +106,23 @@ MaggiePlotWidget::MaggiePlotWidget(QWidget *parent)
 
     // user interactions
     // plot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag);
-    plot->setInteractions(QCP::iNone);
+    plot->setInteractions(QCP::iSelectLegend);
 
+    QObject::connect(plot, &QCustomPlot::legendDoubleClick, [&](QCPLegend* legend, QCPAbstractLegendItem *item, QMouseEvent *event) {
+      Q_UNUSED(legend);
+      Q_UNUSED(event);
+      if(auto plottable_legend_item = qobject_cast<QCPPlottableLegendItem*>(item); plottable_legend_item) {
+	auto plottable_item = plottable_legend_item->plottable();
+	const auto is_visible = !plottable_item->visible();
+	auto font = plottable_legend_item->font();
+	font.setItalic(!is_visible);
+	plottable_legend_item->setFont(font);
+	plottable_legend_item->setTextColor(is_visible ? Qt::black : Qt::gray);
+
+	plottable_item->setVisible(is_visible);
+      }
+    });
+    
     // setup plot timer
     timer->setInterval(std::chrono::duration_cast<std::chrono::milliseconds>(PLOT_UPDATE_INTERVAL).count());
     QObject::connect(timer, &QTimer::timeout, this, &MaggiePlotWidget::onTimerUpdate);
@@ -150,19 +166,25 @@ auto MaggiePlotWidget::addVectorMagnetometerData(const QString& name, const Vect
   auto& maggie_graphs= data[name];
   
   if (maggie_graphs.isEmpty()) {
+    static auto color_index = 0;
+    auto pen = QPen{};
+    pen.setColor(QColor(COLORS.at(color_index)));
+    
     std::for_each(std::begin(axis_rects), std::end(axis_rects), [&](auto& it) {
       const auto x_axis = it->axis(QCPAxis::AxisType::atBottom);
       const auto y_axis = it->axis(QCPAxis::AxisType::atLeft);
       
       auto graph = plot->addGraph(x_axis, y_axis);
       graph->setName(name);
-
+      graph->setPen(pen);
+      
       // add to legend
       auto legend = dynamic_cast<QCPLegend*>(it->insetLayout()->elementAt(0));
       Q_ASSERT(legend);
       graph->addToLegend(legend);
       maggie_graphs.push_back(graph);
     });
+    color_index = (color_index + 1) % COLORS.size();
     assert(maggie_graphs.size() == MaggiePlotIndex::NUM_PLOTS);
   }
 
