@@ -21,6 +21,8 @@ target_sources(${PROJECT_NAME}
     logcontrolwidget.cpp
     maggieplotwidget.h
     maggieplotwidget.cpp
+    maggieplot.h
+    maggieplot.cpp
     centralwidget.h
     centralwidget.cpp
     mainwindow.ui
