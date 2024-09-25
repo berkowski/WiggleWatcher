@@ -6,6 +6,8 @@
 
 #include "state.h"
 
+class SensorLogger;
+
 namespace Ui {
 class MainWindow;
 }
@@ -22,7 +24,7 @@ signals:
 
 public slots:
     auto updateState(wigglewatcher::State state) -> void;
-    auto addVectorMagnetometerData(const QString& name, const VectorMagnetometerData& data) -> void;
+    auto addLogger(SensorLogger* logger) -> void;
     auto onSetLogDirectoryTriggered() -> void;
 
 private slots:

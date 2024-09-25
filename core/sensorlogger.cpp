@@ -56,3 +56,7 @@ void SensorLogger::setRolloverInterval(const std::chrono::milliseconds& duration
         sink->start();
     }
 };
+
+auto SensorLogger::name() const noexcept -> QString {
+  return sensor->name();
+}

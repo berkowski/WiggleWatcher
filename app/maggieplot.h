@@ -4,9 +4,11 @@
 #include <core/vectormagnetometerdata.h>
 
 #include <QObject>
+#include <QList>
 
 class QCPAxisRect;
 class QCustomPlot;
+class QCPGraph;
 
 class MaggiePlot: public QObject {
   Q_OBJECT
@@ -21,6 +23,7 @@ class MaggiePlot: public QObject {
 
  private:
    QCPAxisRect* axis_rect;
+   QList<QCPGraph*> graphs;
 
 };
 #endif

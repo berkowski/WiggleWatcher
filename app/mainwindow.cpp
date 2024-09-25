@@ -4,6 +4,8 @@
 #include "aboutdialog.h"
 #include "centralwidget.h"
 
+#include <core/sensorlogger.h>
+
 #include <QDir>
 #include <QUrl>
 #include <QDesktopServices>
@@ -43,9 +45,9 @@ auto MainWindow::updateState(wigglewatcher::State state) -> void {
     qobject_cast<CentralWidget*>(centralWidget())->updateState(std::move(state));
 }
 
-auto MainWindow::addVectorMagnetometerData(const QString& name, const VectorMagnetometerData& data) -> void {
+auto MainWindow::addLogger(SensorLogger* logger) -> void {
 
-    qobject_cast<CentralWidget*>(centralWidget())->addVectorMagnetometerData(name, data);
+    qobject_cast<CentralWidget*>(centralWidget())->addLogger(logger);
 
 }
 

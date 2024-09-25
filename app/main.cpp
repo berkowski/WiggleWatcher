@@ -93,16 +93,21 @@ int main(int argc, char *argv[])
                 logger->setLoggingEnabled(s.recording);
             });
 
-            // connect plot
-            QObject::connect(logger, &MagnetometerLogger::valueChanged, qApp, [&](const auto& name, const auto& kind, const auto& data) {
-                gui.addVectorMagnetometerData(name, qvariant_cast<VectorMagnetometerData>(data));
-            }, Qt::QueuedConnection);
 
             QObject::connect(logger, &MagnetometerLogger::bytesWritten, &state, &StateObject::updateBytesWritten, Qt::QueuedConnection);
             QObject::connect(logger, &MagnetometerLogger::bytesRead, &state, &StateObject::updateBytesRead, Qt::QueuedConnection);
             QObject::connect(logger, &MagnetometerLogger::valueChanged, &state, [&](const auto& name, const auto& kind, const auto& data) {
                 state.updateSampleCount(1);
             }, Qt::QueuedConnection);
+
+	    gui.addLogger(logger);
+
+	    #if 0
+            // connect plot
+            QObject::connect(logger, &MagnetometerLogger::valueChanged, qApp, [&](const auto& name, const auto& kind, const auto& data) {
+                gui.addVectorMagnetometerData(name, qvariant_cast<VectorMagnetometerData>(data));
+            }, Qt::QueuedConnection);
+            #endif
 
             break;
         }
