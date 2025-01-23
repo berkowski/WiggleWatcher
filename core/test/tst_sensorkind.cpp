@@ -26,7 +26,7 @@ void TestSensorKind::sensorKind()
         return;
     }
 
-    QCOMPARE_EQ(enum_from_string, enum_);
+    QCOMPARE_EQ(toString(enum_from_string), toString(enum_));
 
     const auto string_from_enum = toString(enum_);
     QCOMPARE_EQ(string_from_enum, string.toUpper());
