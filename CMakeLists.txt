@@ -4,7 +4,7 @@ project(wigglewatcher
     VERSION 1.0.0
     LANGUAGES CXX)
 # Set this when making release candidates (can't use alphanumeric 'tweak' values in VERSION statement above)
-set(PROJECT_VERSION_SUFFIX "-rc4")
+set(PROJECT_VERSION_SUFFIX "-rc5")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
